@@ -7,6 +7,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxPopper } from 'angular-popper';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -18,6 +19,7 @@ import { WrapperComponent } from './components/wrapper/wrapper.component';
     SidebarComponent,
     DashboardComponent,
     WrapperComponent,
+    FooterComponent,
    
    
 
