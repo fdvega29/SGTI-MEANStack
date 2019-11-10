@@ -8,6 +8,8 @@ import { NgxPopper } from 'angular-popper';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { SigninComponent } from './components/user/signin/signin.component';
+import { SignupComponent } from './components/user/signup/signup.component';
 
 
 
@@ -20,6 +22,8 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     DashboardComponent,
     WrapperComponent,
     FooterComponent,
+    SigninComponent,
+    SignupComponent,
    
    
 
