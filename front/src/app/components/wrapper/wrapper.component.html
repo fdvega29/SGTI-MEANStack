@@ -30,44 +30,70 @@
     </div>
   </div>
 
+<!--Tabla de usuarios simulacion-->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Listado de usuarios</h3>
 
-  <!-- Login -->
-<div class="row text-center">
-  <div class="col-md-12">
-    <div class="box">
-      <div class="box-header with-border">
-        <h3 class="box-title">Iniciar Sesión</h3>
-      </div>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <form class="form-horizontal">
-        <div class="box-body">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-3 control-label">Email:</label>
-    
-            <div class="col-sm-9">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Ingrese su email">
+          <div class="box-tools">
+            <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar...">
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-3 control-label">Contraseña:</label>
-    
-            <div class="col-sm-9">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Ingrese su contraseña">
-            </div>
-          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th>ID</th>
+                <th>Apellido y Nombre</th>
+                <th>Correo</th>
+                <th>Estado</th>
+              </tr>
+              <tr>
+                <td>183</td>
+                <td>Minuta H - Información Posesoria</td>
+                <td>11-7-2014</td>
+                <td><span class="label label-success">Aprobado</span></td>
+                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+              </tr>
+              <tr>
+                <td>219</td>
+                <td>Minuta H - Información Posesoria</td>
+                <td>11-7-2014</td>
+                <td><span class="label label-warning">Pendiente</span></td>
+                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+              </tr>
+              <tr>
+                <td>657</td>
+                <td>Minuta H - Información Posesoria</td>
+                <td>11-7-2014</td>
+                <td><span class="label label-success">Aprobado</span></td>
+                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+              </tr>
+              <tr>
+                <td>175</td>
+                <td>Minuta H - Información Posesoria</td>
+                <td>11-7-2014</td>
+                <td><span class="label label-danger">Denegado</span></td>
+                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-          <div class="col-md-12">            
-            <button class="btn btn-lg btn-primary btn-block" type="submit" >Iniciar Sesión</button>
-          </div>
-        </div>
-        <!-- /.box-footer -->
-      </form>      
+      </div>
+      <!-- /.box -->
     </div>
+
   </div>
-</div>
 
 
 
@@ -140,71 +166,6 @@
       </div>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="box">
-        <div class="box-header">
-          <h3 class="box-title">Historial de Trámites</h3>
-
-          <div class="box-tools">
-            <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar...">
-
-              <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive no-padding">
-          <table class="table table-hover">
-            <tbody>
-              <tr>
-                <th>ID</th>
-                <th>Tipo de Trámite</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>Comentarios</th>
-              </tr>
-              <tr>
-                <td>183</td>
-                <td>Minuta H - Información Posesoria</td>
-                <td>11-7-2014</td>
-                <td><span class="label label-success">Aprobado</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
-              <tr>
-                <td>219</td>
-                <td>Minuta H - Información Posesoria</td>
-                <td>11-7-2014</td>
-                <td><span class="label label-warning">Pendiente</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
-              <tr>
-                <td>657</td>
-                <td>Minuta H - Información Posesoria</td>
-                <td>11-7-2014</td>
-                <td><span class="label label-success">Aprobado</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
-              <tr>
-                <td>175</td>
-                <td>Minuta H - Información Posesoria</td>
-                <td>11-7-2014</td>
-                <td><span class="label label-danger">Denegado</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-    </div>
-
   </div>
 
   <div class="row">

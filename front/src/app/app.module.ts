@@ -9,6 +9,15 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+import { FormsModule } from '@angular/forms';
+import { UsersComponent } from './components/users/users.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+/*-----------------------------------------------------------------*/ 
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UsersService } from './services/users.service';
+
 
 
 
@@ -20,15 +29,19 @@ import { FooterComponent } from './components/footer/footer.component';
     DashboardComponent,
     WrapperComponent,
     FooterComponent,
-   
-   
-
+    UsersComponent,
+    RegisterComponent,
+    LoginComponent,
+    
   ],
   imports: [
     BrowserModule,
-    NgxPopper
+    NgxPopper,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

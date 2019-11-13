@@ -1,5 +1,5 @@
-const adminCtrl = {};
 const Admin = require('../models/admin.model');
+const adminCtrl = {};
 
 adminCtrl.getAdmin = async (req, res) => {
     const admin = await Admin.findById(req.params.id);

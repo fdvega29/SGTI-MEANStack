@@ -11,6 +11,10 @@ export class UsersService {
   user: UsersModule[]; //Almacena un array de usuarios
   readonly URL_API = ('http://localhost:3000/api/users');
 
+  constructor(private http: HttpClient) { 
+   this.selectedUser = new UsersModule();
+  }
+
   getUsers(){
     return this.http.get(this.URL_API);
   }
@@ -26,7 +30,4 @@ export class UsersService {
   deleteUser(_id: UsersModule){
     return this.http.delete(this.URL_API + `/${_id}`);
   }
-  
-  constructor(private http: HttpClient) { }
-
 }

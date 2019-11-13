@@ -1,5 +1,6 @@
+const User = require('../models/user.model');
+
 const usersCtrl = {}
-const User = require('../models/users.model');
 
 usersCtrl.getUsers = async (req, res) => {
     const users = await User.find();
@@ -20,7 +21,9 @@ usersCtrl.getUser = async (req, res) => {
 usersCtrl.editUser = async (req, res) => {
     const { id } = req.params;
     const user = {
-        apeNom: req.body.apeNom,
+        apellido: req.body.apellido,
+        nombre: req.body.nombre,
+        telefono: req.body.telefono,
         email: req.body.email,
         password: req.body.password
     }
