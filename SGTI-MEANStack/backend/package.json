@@ -1,0 +1,26 @@
+{
+  "name": "sgti-backend",
+  "version": "1.0.0",
+  "description": "En este package vamos a construir una API basada en el Stack MEAN - MongoDB, NodeJS, y ExpressJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpikeAsimov/SGTI-MEANStack.git"
+  },
+  "keywords": [
+    "SGTI",
+    "API",
+    "backend",
+    "Stack",
+    "MEAN"
+  ],
+  "author": "Arroyo Walter - Vega Fernando",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SpikeAsimov/SGTI-MEANStack/issues"
+  },
+  "homepage": "https://github.com/SpikeAsimov/SGTI-MEANStack#readme"
+}
