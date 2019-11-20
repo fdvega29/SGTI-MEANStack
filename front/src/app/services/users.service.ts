@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsersModule } from '../models/users/users.module';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UsersService {
 
   selectedUser: UsersModule; //Selecciona un usuario desde la clase o modulo UsersModule.

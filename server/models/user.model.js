@@ -2,14 +2,31 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
+mongoose.set('useCreateIndex', true);
+
 const usersSchema = new Schema({
 
-    apellido: { type: String, required: true, min: 5},
-    nombre: { type: String, required: true, min: 5},
-    telefono: { type: String, required: true},
-    email: { type: String, required: true},
-    password: { type: String, required: true}
-    //date: { type: Date, default: Date.now}
+    apellido: { type: String, 
+                required: true,
+                trim: true, 
+                min: 5},
+    nombre: { type: String, 
+              required: true,
+              trim: true,
+              min: 5},
+    telefono: { type: String, 
+                required: true,
+                trim: true,
+                min: 5},
+    email: { type: String, 
+             required: true,
+             trim: true,
+             unique: true},
+    password: { type: String, 
+                required: true,
+                trim: true},       
+}, {
+    timestamps: true // Registra fecha de creacion y actualizacion de datos.
 });
 
 /*

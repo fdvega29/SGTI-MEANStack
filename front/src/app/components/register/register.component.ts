@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { UsersModule } from 'src/app/models/users/users.module';
-/*import { NgForm } from '@angular/forms';*/
 import { UsersService } from 'src/app/services/users.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -36,8 +35,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm.reset();
   }
 
-  onSaveForm(){
+  onSaveForm(form): void{
     console.log(this.registerForm.value);
+    this.usersService.postUser(form.value).subscribe(res => {});
   }
-
 }

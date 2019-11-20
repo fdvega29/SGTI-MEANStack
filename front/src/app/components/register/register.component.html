@@ -7,7 +7,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="onSaveForm()">
+            <form class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="onSaveForm(registerForm)">
                 <div class="box-body">
                         <div class="row">
                             <div class="form-group">
@@ -50,7 +50,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <div class="col-md-7" id="btnRegis">
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!registerForm.valid">Registrarse</button>
                     </div>
                 </div>
                 <!-- /.box-footer -->
