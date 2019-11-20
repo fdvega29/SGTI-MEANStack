@@ -1,71 +1,12 @@
 const express = require('express');
-const app = express();
-const userRoute = express.Router();
+const router = express.Router();
+ 
+const users = require('../controllers/user.controller');
 
-//User model
-let User = require('../model/user.model');
+router.get('/', users.getUsers);
+router.post('/', users.createUser);
+router.get('/:id', users.getUser);
+router.put('/:id', users.editUser);
+router.delete('/:id', users.deleteUser);
 
-//add User
-userRoute.route('/add-user').post((req, res, next) => {
-    User.create(req.body,(error, data) => {
-        if(error){
-            return next(error)
-        }else {
-            res.json(data)
-        }
-    })
-});
-
-//get all user
-userRoute.route('/').get((req, res) => {
-    User.find((error, data)=> {
-        if(error){
-            return next(error)
-        } else {
-            res.json(data)
-        }
-    })
-})
-
-
-//get single user
-userRoute.route('/read-user/:id').get((req, res) => {
-    User.findById(req.params.id, (error, data) => {
-        if(error){
-            return next(error)
-        } else {
-            res.json(data)
-        }
-    })
-})
-
-//update user
-userRoute.route('/update-user/:id').put((req, res, next) => {
-    User.findByIdAndUpdate(req.params.id, {
-        $set: req.body
-    }, (error, data) => {
-        if(error) {
-            return next(error);
-            console.log(error)
-        } else {
-            res.json(data)
-            console.log('Usuario actualizado correctamente!')
-        }
-    })
-})
-
-
-//delete user
-userRoute.route('/delete-user/:id').delete((req, res, next) => {
-    User.findByIdAndRemove(req.params.id, (error, data) => {
-        if(error) {
-            return next(error);
-        } else {
-            res.status(200).json({
-                msg: data
-            })
-        }
-    })
-})
-
-module.exports = userRoute;
+module.exports = router;
