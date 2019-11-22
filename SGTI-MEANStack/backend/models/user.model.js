@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 //const bcrypt = require('bcrypt');
 
+mongoose.set('useCreateIndex', true);
+
 const usersSchema = new Schema({
 
     apellido: { 
