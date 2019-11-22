@@ -20,6 +20,10 @@ const  adminSchema = new Schema({
         min: 5,
         trim: true
     }
-});
+},
+    {
+        timestamps: true // Registra fecha de creacion y actualizacion de datos.
+    }
+);
 
 module.exports = mongoose.model('Admin', adminSchema);
