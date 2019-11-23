@@ -2,15 +2,45 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 //const bcrypt = require('bcrypt');
 
+mongoose.set('useCreateIndex', true);
+
 const usersSchema = new Schema({
 
-    apellido: { type: String, required: true, min: 5},
-    nombre: { type: String, required: true, min: 5},
-    telefono: { type: String, required: true},
-    email: { type: String, required: true},
-    password: { type: String, required: true}
+    apellido: { 
+                type: String,
+                required: true,
+                min: 5,
+                trim: true
+            },
+    nombre: {   
+                type: String,
+                required: true,
+                min: 5,
+                trim: true
+            },
+    telefono: { 
+                type: String,
+                required: true,
+                trim: true,
+                unique: true
+            },
+    email: {    
+                type: String,
+                required: true,
+                trim: true,
+                unique: true
+            },
+    password: { 
+                type: String,
+                required: true,
+                trim: true
+            }
     //date: { type: Date, default: Date.now}
-});
+},
+    {
+        timestamps: true // Registra fecha de creacion y actualizacion de datos.
+    }
+);
 
 /*
 //Funcion que encripta la contraseña, gracias al metodo getSalt y hash.
