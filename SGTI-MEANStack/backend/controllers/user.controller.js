@@ -1,21 +1,46 @@
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 const usersCtrl = {}
 
-usersCtrl.getUsers = async (req, res) => {
+usersCtrl.getAllUser = async (req, res) => {
     const users = await User.find();
     res.json(users);
 };
 
-usersCtrl.createUser = async (req, res) => {
+usersCtrl.createUser = async (req, res, next) => {
     const user = new User(req.body);
+    //user.password = await user.encryptPassword(user.password); 
     await user.save();
-    res.json({ 'status': 'Usuario registrado con exito' });
+    /*console.log(user);*/
+    const token = jwt.sign({ id: user._id }, 'mySecretToken', {  /*metodo sign: crea un token*/
+        expiresIn: 60 * 60 * 24 /*sesion expira en 24hs*/
+    });
+    res.json({ auth: true, token });
 };
 
-usersCtrl.getUser = async (req, res) => {
-    const user = await User.findById(req.params.id);
+usersCtrl.getUser = async (req, res, next) => {
+
+    const token = req.headers['x-access-token'];
+    if (!token) {
+        return res.status(401).json({
+            auth: false,
+            messages: 'No tienes permiso para recibir este contenido'
+        });
+    }
+
+    const decode = jwt.verify(token, 'mySecretToken'); /*Decodifica el token*/
+
+    const user = await User.findById(decode.id, {password: 0});
+    if (!user) {
+        return res.status(404).json({
+            auth: false,
+            messages: 'Usuario no encontrado'
+        });
+    }
     res.json(user);
+    /*const user = await User.findById(req.params.id);
+    res.json(user);*/
 };
 
 usersCtrl.editUser = async (req, res) => {
