@@ -2,7 +2,7 @@ const Admin = require('../models/admin.model');
 
 const adminCtrl = {}
 
-adminCtrl.getAdmins = async (req, res) => {
+adminCtrl.getAllAdmin = async (req, res) => {
     const admin = await Admin.find();
     res.json(admin);
 };
