@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 //const bcrypt = require('bcrypt');
 
+const bcrypt = require('bcryptjs');
+
 mongoose.set('useCreateIndex', true);
 
 const usersSchema = new Schema({
@@ -35,14 +37,13 @@ const usersSchema = new Schema({
                 required: true,
                 trim: true
             }
-    //date: { type: Date, default: Date.now}
 },
     {
         timestamps: true // Registra fecha de creacion y actualizacion de datos.
     }
 );
 
-/*
+
 //Funcion que encripta la contraseña, gracias al metodo getSalt y hash.
 usersSchema.methods.encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -53,6 +54,6 @@ usersSchema.methods.encryptPassword = async (password) => {
 usersSchema.methods.matchPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
-*/
+
 
 module.exports = mongoose.model('Users', usersSchema);

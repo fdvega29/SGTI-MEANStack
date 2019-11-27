@@ -10,7 +10,7 @@ usersCtrl.getAllUser = async (req, res) => {
 
 usersCtrl.createUser = async (req, res, next) => {
     const user = new User(req.body);
-    //user.password = await user.encryptPassword(user.password); 
+    user.password = await user.encryptPassword(user.password); 
     await user.save();
     /*console.log(user);*/
     const token = jwt.sign({ id: user._id }, 'mySecretToken', {  /*metodo sign: crea un token*/
