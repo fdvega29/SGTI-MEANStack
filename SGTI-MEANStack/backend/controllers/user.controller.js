@@ -53,7 +53,7 @@ usersCtrl.editUser = async (req, res) => {
         password: req.body.password
     }
     await User.findByIdAndUpdate(id, { $set: user }, { new: true });
-    res.json({ 'status': 'Usuario actualizado' });
+    res.json(user);
 };
 
 usersCtrl.deleteUser = async (req, res) => {
