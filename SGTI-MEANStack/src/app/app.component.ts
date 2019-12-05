@@ -11,6 +11,6 @@ import { Component } from '@angular/core';
 
 
 export class AppComponent {
-  title = 'SGTI-MEANStack';
+  title = 'actibot: SGTI-MEANStack';
 
 }
