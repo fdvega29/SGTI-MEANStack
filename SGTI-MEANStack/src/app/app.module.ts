@@ -49,7 +49,7 @@ const appRoutes :Routes = [
     NgxPopper,
     CommonModule,
     AppRoutingModule
-  ]
+  ],
   exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
