@@ -1,9 +1,423 @@
-<app-navbar></app-navbar>
-<app-sidebar></app-sidebar>
+<!--Navbar-->
+<header class="main-header">
+    <!-- Logo -->
+    <a href="/src/index.html" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>  {{title}}</b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>  {{title}}</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+      <!-- Messages: style can be found in dropdown.less-->
+      <li class="dropdown messages-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-envelope-o"></i>
+        <span class="label label-success">4</span>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="header">You have 4 messages</li>
+        <li>
+          <!-- inner menu: contains the actual data -->
+          <ul class="menu">
+            <li><!-- start message -->
+              <a href="#">
+                <div class="pull-left">
+                  <img src="./assets/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                </div>
+                <h4>
+                  Sender Name
+                  <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                </h4>
+                <p>Message Excerpt</p>
+              </a>
+            </li><!-- end message -->
+            ...
+          </ul>
+        </li>
+        <li class="footer"><a href="#">See All Messages</a></li>
+      </ul>
+      </li>
+      <!-- Notifications: style can be found in dropdown.less -->
+      <li class="dropdown notifications-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bell-o"></i>
+        <span class="label label-warning">10</span>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="header">You have 10 notifications</li>
+        <li>
+          <!-- inner menu: contains the actual data -->
+          <ul class="menu">
+            <li>
+              <a href="#">
+                <i class="ion ion-ios-people info"></i> Notification title
+              </a>
+            </li>
+            ...
+          </ul>
+        </li>
+        <li class="footer"><a href="#">View all</a></li>
+      </ul>
+      </li>
+      <!-- Tasks: style can be found in dropdown.less -->
+      <li class="dropdown tasks-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-flag-o"></i>
+        <span class="label label-danger">9</span>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="header">You have 9 tasks</li>
+        <li>
+          <!-- inner menu: contains the actual data -->
+          <ul class="menu">
+            <li><!-- Task item -->
+              <a href="#">
+                <h3>
+                  Design some buttons
+                  <small class="pull-right">20%</small>
+                </h3>
+                <div class="progress xs">
+                  <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                    <span class="sr-only">20% Complete</span>
+                  </div>
+                </div>
+              </a>
+            </li><!-- end task item -->
+            ...
+          </ul>
+        </li>
+        <li class="footer">
+          <a href="#">View all tasks</a>
+        </li>
+      </ul>
+      </li>
+      <!-- User Account: style can be found in dropdown.less -->
+      <li class="dropdown user user-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <img src="./assets/dist/img/avatar.png" class="user-image" alt="User Image">
+        <span class="hidden-xs">Walter Arroyo</span>
+      </a>
+      <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+          <img src="./assets/dist/img/avatar.png" class="img-circle" alt="User Image">
+          <p>
+            Walter Arroyo<small> Web Developer </small>
+          </p>
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+          <div class="pull-left">
+            <a routerLink="/signin" routerLinkActive="router-link-active"  class="btn btn-default btn-flat">Iniciar sesion</a>
+          </div>
+          <div class="pull-right">
+            <a routerLink="/signup" routerLinkActive="router-link-active" class="btn btn-default btn-flat">Registrarse</a>
+          </div>
+        </li>
+      </ul>
+      </li>
+      </ul>
+      </div>
+    </nav>
+  </header>
+  <!--Sidebar-->
+  <aside class="main-sidebar">
+    <!-- Inner sidebar -->
+    <section class="sidebar">
+      <!-- user panel (Optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="./assets/dist/img/avatar.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>Arroyo Walter</p>
+
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div><!-- /.user-panel -->
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu tree" data-widget="tree">
+        <li class="header">Menú Principal:</li>
+        <!-- Optionally, you can add icons to the links 
+        <li class="active"><a href="#"><span></span></a></li> -->
+        <li><a href="#"><i class="fa fa-edit"></i><span>Mis datos</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i><span>Mi cuenta</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i>Estadísticas</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Información</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-table"></i><span>Mis trámites</span><i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i>Listado de trámites</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Información</a></li>
+          </ul>
+        </li>
+        <li><a href="#"><i class="fa fa-sign-out"></i><span>Cerrar sesión</span></a></li>
+      </ul><!-- /.sidebar-menu -->
+  </section>
+</aside>
+<!--About-->
+       <!-- Main content -->
+       <section class="content container-fluid">
+        <!--------------------------
+                | Your Page Content Here |
+                -------------------------->
+      
+      
+      <div class="row text-center">
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header with-border">
+                <h1 class="display-4 text-center">Bienvenido </h1>
+                <p class="lead text-center">This is a simple hero unit, a simple jumbotron-style component for calling extra
+                  attention to featured content or information.</p>
+                  <div class="text-center">
+                    <a href="/#about" class="btn btn-primary btn-lg">Gestiona tu tramite</a>
+                  </div>      
+            
+                <div class="col-md-12">
+                  <h3 class="display-4 text-center text-white">Sistema de Gestión de Tramite Inmueble</h3>
+                  <h4 class="text-center text-white">Gestiona tus tramites del Registro de la propiedad Inmueble con solo registrarte</h4>
+                  <div class="text-center">
+                      <a href="/#about" class="btn btn-primary btn-lg">Registrate</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+      
+        <!--About-->
+                  
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header with-border">
+                    <h2 class="display-4" >¿Cómo funciona?</h2>
+                <p class="lead">Aplicación para la gestión de tramites le brinda al usuario, una interfaz simple y Incluye
+                                interfaz de Web y Mobile (Android e iOS).</p>
+                <hr class="my-4">
+                <p class="lead">Siguiendo estos simples pasos podes tener tu minuta lista:</p>    
+      
+            <!--- Iconos interfaz -->
+            
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle"></i></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text">Registro</span>
+                      <span class="info-box-number">Completa el formulario de registro con tu e-mail y contraseña.</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Tramite</span>
+                      <span class="info-box-number">Selecciona el trámite que te interesa realizar.</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-check-square-o"></i></span>
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Confirmación</span>
+                      <span class="info-box-number">Confirma tu operación ingresando los datos necesarios.</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa  fa-bell-o"></i></span>
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Notificación</span>
+                      <span class="info-box-number">Recibirás una notificación cuando tu tramite esté listo para retirar.</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            
+            </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                  <h2 class="display-4">Historial</h2>
+                <div class="box-tools">
+                  <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar...">
+      
+                    <div class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <tbody>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tipo de Trámite</th>
+                      <th>Fecha</th>
+                      <th>Estado</th>
+                      <th>Comentarios</th>
+                    </tr>
+                    <tr>
+                      <td>183</td>
+                      <td>Minuta H - Información Posesoria</td>
+                      <td>11-7-2014</td>
+                      <td><span class="label label-success">Aprobado</span></td>
+                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                    <tr>
+                      <td>219</td>
+                      <td>Minuta H - Información Posesoria</td>
+                      <td>11-7-2014</td>
+                      <td><span class="label label-warning">Pendiente</span></td>
+                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                    <tr>
+                      <td>657</td>
+                      <td>Minuta H - Información Posesoria</td>
+                      <td>11-7-2014</td>
+                      <td><span class="label label-success">Aprobado</span></td>
+                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                    <tr>
+                      <td>175</td>
+                      <td>Minuta H - Información Posesoria</td>
+                      <td>11-7-2014</td>
+                      <td><span class="label label-danger">Denegado</span></td>
+                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+      
+        </div>
+      
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3>50</h3>
+                  <p>Usuarios registrados</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-circle"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Más info<i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>150</h3>
+                  <p>Solicitudes Aceptadas</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-check-square-o"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Más info<i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3>44</h3>
+                  <p>Solicitudes pendientes</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-edit"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Más info<i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3>5</h3>
+      
+                  <p>Solicitudes rechazadas</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-times-circle"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                  Más info<i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+        <!-- /.content -->
+      
+      </section>
+ <!--- Footer -->
+<footer id="footerPrincipal">
+
+       
+    
+    <div class="row text-center">
+        <div class="col-12">
+            <hr class="light-100">
+                <h5>Copyright &copy; 2019 - Secretaria de Tierras y Hábitat Social - La Rioja, Argentina.</h5>
+        </div>
+    </div>
+    
+</footer>  
 
 
-<div class="content-wrapper">
-        <router-outlet></router-outlet>
-</div>
-
-<app-footer></app-footer>
