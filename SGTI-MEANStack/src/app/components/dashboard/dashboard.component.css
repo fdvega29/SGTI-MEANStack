@@ -1,0 +1,41 @@
+#info{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#bienvenida{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#about{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#listado-tramites{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#footerPrincipal{
+    color: white;
+    background: #3c8dbc;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.box{
+    position: relative;
+    border-radius: 5px;
+    background:#ffffff;
+    border-top: 7px solid #3c8dbc;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
