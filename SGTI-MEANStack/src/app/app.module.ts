@@ -11,6 +11,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { CoreModule } from './components/core/core.module';
+import { CoreRoutingModule } from './components/core/core-routing.module';
+import { HomeComponent } from './components/core/home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +23,16 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     DashboardComponent,
     FooterComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     NgxPopper,
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    CoreRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

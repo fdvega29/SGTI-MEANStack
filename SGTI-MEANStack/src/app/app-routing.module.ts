@@ -6,12 +6,13 @@ import { SigninComponent } from './components/user/signin/signin.component';
 import { SignupComponent } from './components/user/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
+
+
 const routes: Routes = [
 
   {path: 'user/signin', component: SigninComponent},
   {path: 'user/signup', component: SignupComponent},
-  {path: '', component: DashboardComponent}
-  
+  {path: 'dashboard', component: DashboardComponent}
 ];
 
 @NgModule({
@@ -19,3 +20,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
