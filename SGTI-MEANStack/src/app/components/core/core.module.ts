@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CoreRoutingModule } from './core-routing.module';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -9,6 +9,7 @@ import { CoreRoutingModule } from './core-routing.module';
   imports: [
     CommonModule,
     CoreRoutingModule
-  ]
+  ],
+  exports: []
 })
 export class CoreModule { }
