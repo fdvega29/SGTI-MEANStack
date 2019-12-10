@@ -14,6 +14,7 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { CoreModule } from './components/core/core.module';
 import { CoreRoutingModule } from './components/core/core-routing.module';
 import { HomeComponent } from './components/core/home/home.component';
+import { AboutComponent } from './components/shared/about/about.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HomeComponent } from './components/core/home/home.component';
     FooterComponent,
     SigninComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
