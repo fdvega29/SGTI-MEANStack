@@ -11,13 +11,13 @@ import { HomeComponent } from './components/core/home/home.component';
 
 
 const routes: Routes = [
-  
-  {path: '', 
-   redirectTo: '/home', 
+
+  {path: '',
+   redirectTo: '/home',
    pathMatch: 'full'},
 
-  {path: 'home/user/signin', component: SigninComponent},
-  {path: 'home/user/signup', component: SignupComponent},
+  {path: 'user/signin', component: SigninComponent},
+  {path: 'user/signup', component: SignupComponent},
   {path: 'home', component: HomeComponent},
   {path: 'dashboard/principal', component: DashboardComponent}
 ];
