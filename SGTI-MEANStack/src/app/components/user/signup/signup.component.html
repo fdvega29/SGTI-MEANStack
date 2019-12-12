@@ -13,39 +13,195 @@
     <ul class="nav navbar-nav">
 
     <!-- User Account: style can be found in dropdown.less -->
-    <li class="dropdown user user-menu">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <span class="hidden-xs">
-        <a routerLink="/user/signin" routerLinkActive="router-link-active"  class="btn btn-default ">Iniciar sesion</a>
-      </span>
-      <span class="hidden-xs">
-        <a routerLink="/user/signup" routerLinkActive="router-link-active"  class="btn btn-default ">Registrarse</a>
-      </span>
-    </a>
-
-    </li>
+      <li class="dropdown user user-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <span class="hidden-xs">
+            <a routerLink="/user/signin" routerLinkActive="router-link-active"  class="btn btn-default ">Iniciar sesion</a>
+          </span>
+          <span class="hidden-xs">
+            <a routerLink="/user/signup" routerLinkActive="router-link-active"  class="btn btn-default ">Registrarse</a>
+          </span>
+        </a>
+      </li>
     </ul>
     </div>
   </nav>
 </header>
-<!-- Signup -->
+<!-- Contenido-->
 <div class="container">
+  <div class="row text-center">
+      <div class="col-md-12">
+          <div class="box" id="box-shadow">
+              <div class="box-header with-border">
+                  <h2 class="display-4" >Registro de usuario del sistema</h2>
+              </div>
+              <div class="nav-tabs-custom">
+                  <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Registrarse</a></li>
+                      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Personal</a></li>
+                      <li><a href="#tab_3" data-toggle="tab">Administrador</a></li>
+                    </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+
+                        <div class="box" id="box-shadow">
+                          <p>
+                            <strong>Elegir el tipo de usuario que desea registrar: </strong>
+                              <a href="#tab_2" data-toggle="tab" class="btn btn-primary btn-lg btn-block">Personal</a>
+                              <a href="#tab_3" data-toggle="tab" class="btn btn-primary btn-lg btn-block">Administrador</a>
+                           </p>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <div class="col-md-12">
+                          <div class="box" id="box-shadow">
+                              <div class="box-header with-border">
+                                  <h3 class="display-4" >Personal</h3>
+                                    <hr>
+                                    <div class="box-body" id="personal">
+                                      <form class="form-horizontal" action="/user/signup" method="POST">
+                                        <div class="form-group">
+                                          <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
+                                          <div class="col-sm-8">
+                                              <input type="text" class="form-control" name="apellido" id="apellido">
+                                          </div>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
+                                          <div class="col-sm-8">
+                                              <input type="text" class="form-control" name="nombre" id="nombre">
+                                          </div>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
+                                          <div class="col-sm-8">
+                                              <input type="text" class="form-control" name="telefono" id="telefono">
+                                          </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
+                                            <div class="col-sm-8">
+                                                <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
+                                            <div class="col-sm-8">
+                                                <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
+                                            <div class="col-sm-8">
+                                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
+                                            </div>
+                                        </div>
+                                                    <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <div class="col-md-12">
+                                              <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+                                            </div>
+                                          </div>
+                                          <!-- /.box-footer -->
+                                          <div>
+                                              <a href="/user/signin">¿Ya estas registrado?</a>
+                                          </div>
+                                      </form>
+                                    </div>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_3">
+                        <div class="col-md-12">
+                            <div class="box" id="box-shadow">
+                                <div class="box-header with-border">
+                                    <h3 class="display-4" >Administrador</h3>
+                                      <hr>
+                                      <div class="box-body" id="administrador">
+                                        <form class="form-horizontal" action="" method="POST">
+                                          <div class="form-group">
+                                              <label for="inputUsuario" class="col-sm-3 control-label">usuario</label>
+                                              <div class="col-sm-8">
+                                                  <input type="text" class="form-control " name="usuario" id="usuario" placeholder="usuario" value="{{usuario}}">
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
+                                              <div class="col-sm-8">
+                                                  <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
+                                              <div class="col-sm-8">
+                                                  <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
+                                              <div class="col-sm-8">
+                                                  <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
+                                              </div>
+                                          </div>
+                                                      <!-- /.box-body -->
+                                          <div class="box-footer">
+                                              <div class="col-md-12">
+                                                <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+                                              </div>
+                                            </div>
+                                            <!-- /.box-footer -->
+                                            <div>
+                                                <a href="/user/signin">¿Ya estas registrado?</a>
+                                            </div>
+                                        </form>
+                                      </div>
+                              </div>
+
+                          </div>
+                          </div>
+                    </div>
+
+                  </div>
+                  <!-- /.tab-content -->
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<!--    <div class="container">
     <div class="row text-center">
         <div class="col-md-12">
-          <div class="box" id="box-shadow">
-            <div class="box-header with-border">
+           <div class="contenedor-formularios">
+              <ul class="contenedor-tabs">
+                  <li class="tab tab-segunda active"><a href="#personal">personal</a></li>
+                  <li class="tab tab-primera"><a href="#administrador">admin</a></li>
+              </ul>
+                 Links de los formularios
                 <h2 class="display-4" >Formulario de registro</h2>
-                <hr>
-                <div class="col-md-6">
-                    <a href="#personal" class="btn btn-primary btn-lg btn-block">Personal</a>
-                  </div>
-                  <div class="col-md-6">
-                      <a href="#administrador" class="btn btn-primary btn-lg btn-block">Administrador</a>
-                  </div>
-                  <br>
-                  <hr>
-                  <div class="box-body" id="personal">
-                    <form class="form-horizontal" action="/user/signup" method="POST">
+                <ul class="contenedor-tabs">
+                  <li class="tab tab-segunda active">
+                      <div class="col-md-6">
+                          <a href="#personal" class= "btn btn-primary btn-lg btn-block">Personal</a>
+                      </div>
+                  </li>
+                  <li class="tab tab-primera">
+                    <div class="col-md-6">
+                        <a  href="#administrador" class="btn btn-primary btn-lg btn-block">Administrador</a>
+                    </div>
+                  </li>
+
+                </ul>
+
+                <div class="contenido-tab">
+                <div id="personal">
+                    <form class="form-horizontal" action="#" method="POST">
                       <div class="form-group">
                         <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
                         <div class="col-sm-8">
@@ -82,23 +238,70 @@
                               <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
                           </div>
                       </div>
-                                  <!-- /.box-body -->
+
                       <div class="box-footer">
                           <div class="col-md-12">
                             <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
                           </div>
                         </div>
-                        <!-- /.box-footer -->
+
                         <div>
                             <a href="/signin">¿Ya estas registrado?</a>
                         </div>
                     </form>
                   </div>
-          </div>
-        </div>
+
+                  <div class="contenido-tab">
+
+                    <div id="administrador">
+                      <form class="form-horizontal" action="#" method="POST">
+                        <div class="form-group">
+                          <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="form-control" name="nombre" id="nombre">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="form-control" name="telefono" id="telefono">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <div class="col-md-12">
+                              <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+                            </div>
+                          </div>
+
+                          <div>
+                              <a href="/signin">¿Ya estas registrado?</a>
+                          </div>
+                      </form>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
-
-</div>
+    </div> -->
 
 <app-footer></app-footer>
