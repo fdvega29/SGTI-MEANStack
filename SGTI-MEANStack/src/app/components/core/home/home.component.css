@@ -19,28 +19,24 @@
 }
 
 .text1{
-    color: #fff;
+    color: #3c8dbc;
     font-size: 60px;
     font-weight: 700;
     letter-spacing: 8px;
     margin-block: 20px;
-    background: #1e3c72;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #d2d6de;  /* fallback for old browsers */
     position: relative;
     animation: text 3s 1;
 }
 
 .text2{
     font-size: 30px;
-    color: #eef2f3;
+    color: #3c8dbc;
 }
 
 @keyframes text{
     0%{
-        background: #1e3c72;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: #d2d6de;  /* fallback for old browsers */
         margin-bottom: -40px;
     }
     30%{
