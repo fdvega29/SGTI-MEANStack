@@ -1,6 +1,6 @@
 <header class="main-header">
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" role="navigation">
+  <nav class="navbar navbar-static-top" role="navigation" id="navbar">
     <!--Logo-->
     <a href="/"routerLink="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -16,9 +16,6 @@
     <li class="dropdown user user-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       <span class="hidden-xs">
-        <a routerLink="/user/signin" routerLinkActive="router-link-active"  class="btn btn-default ">Iniciar sesion</a>
-      </span>
-      <span class="hidden-xs">
         <a routerLink="/user/signup" routerLinkActive="router-link-active"  class="btn btn-default ">Registrarse</a>
       </span>
     </a>
@@ -32,36 +29,38 @@
 <div class="container">
 <div class="row text-center">
     <div class="col-md-12">
-      <div class="box" id="box-shadow">
-        <div class="box-header with-border">
-            <h2 class="display-4" >Iniciar Sesión</h2>
+        <div class="box box-solid box-info" id="box-signin">
+          <div class="box-header">
+            <h2 class="display-4 text-uppercase">Iniciar Sesión</h2>
+          </div>
+          <div class="box-body">
+            <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-md-4 control-label">Correo:</label>
+                      <div class="col-md-6">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="usuario@mail.com">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-md-4 control-label">Contraseña:</label>
+                  <div class="col-md-6">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="********">
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="col-md-12">
+                  <button class="btn btn-lg btn-primary btn-block" type="submit" >Iniciar Sesión</button>
+                </div>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal">
-          <div class="box-body">
-            <div class="form-group">
-              <label for="inputEmail3" class="col-md-4 control-label">Correo:</label>
-                  <div class="col-md-6">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="usuario@mail.com">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputPassword3" class="col-md-4 control-label">Contraseña:</label>
-              <div class="col-md-6">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="********">
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <div class="col-md-12">
-              <button class="btn btn-lg btn-primary btn-block" type="submit" >Iniciar Sesión</button>
-            </div>
-          </div>
-          <!-- /.box-footer -->
-        </form>
-      </div>
     </div>
   </div>
 </div>

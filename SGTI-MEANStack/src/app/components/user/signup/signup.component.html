@@ -1,6 +1,7 @@
+<!--Navbar-->
 <header class="main-header">
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" role="navigation">
+  <nav class="navbar navbar-static-top" role="navigation" id="navbar">
     <!--Logo-->
     <a href="/"routerLink="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -18,9 +19,6 @@
           <span class="hidden-xs">
             <a routerLink="/user/signin" routerLinkActive="router-link-active"  class="btn btn-default ">Iniciar sesion</a>
           </span>
-          <span class="hidden-xs">
-            <a routerLink="/user/signup" routerLinkActive="router-link-active"  class="btn btn-default ">Registrarse</a>
-          </span>
         </a>
       </li>
     </ul>
@@ -30,104 +28,44 @@
 <!-- Contenido-->
 <div class="container">
   <div class="row text-center">
-      <div class="col-md-12">
-          <div class="box" id="box-shadow">
-              <div class="box-header with-border">
-                  <h2 class="display-4" >Registro de usuario del sistema</h2>
-              </div>
-              <div class="nav-tabs-custom">
-                  <ul class="nav nav-tabs">
-                      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Registrarse</a></li>
-                      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Personal</a></li>
-                      <li><a href="#tab_3" data-toggle="tab">Administrador</a></li>
-                    </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1">
-
-                        <div class="box" id="box-shadow">
-                          <p>
-                            <strong>Elegir el tipo de usuario que desea registrar: </strong>
-                              <a href="#tab_2" data-toggle="tab" class="btn btn-primary btn-lg btn-block">Personal</a>
-                              <a href="#tab_3" data-toggle="tab" class="btn btn-primary btn-lg btn-block">Administrador</a>
-                           </p>
-                        </div>
-
-                    </div>
-                    <div class="tab-pane" id="tab_2">
-                        <div class="col-md-12">
-                          <div class="box" id="box-shadow">
-                              <div class="box-header with-border">
-                                  <h3 class="display-4" >Personal</h3>
-                                    <hr>
-                                    <div class="box-body" id="personal">
-                                      <form class="form-horizontal" action="/user/signup" method="POST">
-                                        <div class="form-group">
-                                          <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
-                                          <div class="col-sm-8">
-                                              <input type="text" class="form-control" name="apellido" id="apellido">
-                                          </div>
-                                        </div>
-                                        <div class="form-group">
-                                          <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
-                                          <div class="col-sm-8">
-                                              <input type="text" class="form-control" name="nombre" id="nombre">
-                                          </div>
-                                        </div>
-                                        <div class="form-group">
-                                          <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
-                                          <div class="col-sm-8">
-                                              <input type="text" class="form-control" name="telefono" id="telefono">
-                                          </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
-                                            <div class="col-sm-8">
-                                                <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
-                                            <div class="col-sm-8">
-                                                <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
-                                            <div class="col-sm-8">
-                                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
-                                            </div>
-                                        </div>
-                                                    <!-- /.box-body -->
-                                        <div class="box-footer">
-                                            <div class="col-md-12">
-                                              <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
-                                            </div>
-                                          </div>
-                                          <!-- /.box-footer -->
-                                          <div>
-                                              <a href="/user/signin">¿Ya estas registrado?</a>
-                                          </div>
-                                      </form>
-                                    </div>
-                            </div>
-
-                        </div>
-                        </div>
-                    </div>
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_3">
-                        <div class="col-md-12">
-                            <div class="box" id="box-shadow">
-                                <div class="box-header with-border">
-                                    <h3 class="display-4" >Administrador</h3>
-                                      <hr>
-                                      <div class="box-body" id="administrador">
-                                        <form class="form-horizontal" action="" method="POST">
+      <div class="col-md-12" id="col">
+              <div class="box box-solid box-info" id="box-signup">
+                <div class="box-header">
+                  <h2 class="display-4 text-uppercase">Registro de usuario</h2>
+                </div>
+                <div class="box-body">
+                 <nav>
+                    <ul class="nav nav-tabs" id="tab" role="tablist">
+                        <li class="nav-item">
+                          <a href="#nav_pers" data-toggle="tab" role="tab" class="nav-link active" aria-controls="personal" aria-selected="true" id="nav-pers-tab">Personal</a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#nav_admin" data-toggle="tab" role="tab" class="nav-link" aria-controls="administrador" aria-selected="false" id="nav-admin-tab">Administrador</a>
+                        </li>
+                      </ul>  
+                    <div class="tab-content" id="tabContent">
+                      <div class="tab-pane active" id="nav_pers" role="tabpanel" aria-labelledby="nav-pers-tab">
+                          <div class="col-md-12">
+                                    <h3 class="display-4" >Personal</h3>
+                                      <div class="box-body" id="personal">
+                                        <form class="form-horizontal" action="/user/signup" method="POST">
                                           <div class="form-group">
-                                              <label for="inputUsuario" class="col-sm-3 control-label">usuario</label>
-                                              <div class="col-sm-8">
-                                                  <input type="text" class="form-control " name="usuario" id="usuario" placeholder="usuario" value="{{usuario}}">
-                                              </div>
+                                            <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="apellido" id="apellido">
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="nombre" id="nombre">
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefono" id="telefono">
+                                            </div>
                                           </div>
                                           <div class="form-group">
                                               <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
@@ -158,17 +96,59 @@
                                                 <a href="/user/signin">¿Ya estas registrado?</a>
                                             </div>
                                         </form>
-                                      </div>
-                              </div>
-
+                                  </div>
                           </div>
-                          </div>
-                    </div>
-
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane fade" id="nav_admin" role="tabpanel" aria-labelledby="nav-admin-tab">
+                          <div class="col-md-12">
+                                      <h3 class="display-4" >Administrador</h3>
+                                        <div class="box-body" id="administrador">
+                                          <form class="form-horizontal" action="" method="POST">
+                                            <div class="form-group">
+                                                <label for="inputUsuario" class="col-sm-3 control-label">usuario</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control " name="usuario" id="usuario" placeholder="usuario" value="{{usuario}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
+                                                <div class="col-sm-8">
+                                                    <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
+                                                <div class="col-sm-8">
+                                                    <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
+                                                <div class="col-sm-8">
+                                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
+                                                </div>
+                                            </div>
+                                                        <!-- /.box-body -->
+                                            <div class="box-footer">
+                                                <div class="col-md-12">
+                                                  <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+                                                </div>
+                                              </div>
+                                              <!-- /.box-footer -->
+                                              <div>
+                                                  <a href="/user/signin">¿Ya estas registrado?</a>
+                                              </div>
+                                          </form>
+                                    </div>
+                            </div>
+                      </div>
+  
                   </div>
-                  <!-- /.tab-content -->
-              </div>
-          </div>
+                    <!-- /.tab-content -->
+                  </nav>  
+                </div>
+            </div>
       </div>
   </div>
 </div>
