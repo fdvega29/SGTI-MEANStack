@@ -22,43 +22,43 @@
                           <div class="col-md-12">
                                     <h3 class="display-4" >Personal</h3>
                                       <div class="box-body" id="personal">
-                                        <form class="form-horizontal" action="/user/signup" method="POST">
+                                        <form class="form-horizontal" [formGroup]="signupForm" (ngSubmit)="onSaveForm(signupForm)">
                                           <div class="form-group">
                                             <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="apellido" id="apellido">
+                                                <input type="text" class="form-control" formControlName = "apellido" name="apellido" id="apellido">
                                             </div>
                                           </div>
                                           <div class="form-group">
                                             <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="nombre" id="nombre">
+                                                <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre">
                                             </div>
                                           </div>
                                           <div class="form-group">
                                             <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="telefono" id="telefono">
+                                                <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono">
                                             </div>
                                           </div>
                                           <div class="form-group">
                                               <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
                                               <div class="col-sm-8">
-                                                  <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
+                                                  <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
                                               </div>
                                           </div>
                                           <div class="form-group">
                                               <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
                                               <div class="col-sm-8">
-                                                  <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
+                                                  <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="********" value="{{password}}">
                                               </div>
                                           </div>
-                                          <div class="form-group">
+                                          <!--<div class="form-group">
                                               <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
                                               <div class="col-sm-8">
                                                   <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
                                               </div>
-                                          </div>
+                                          </div>-->
                                                       <!-- /.box-body -->
                                           <div class="box-footer">
                                               <div class="col-md-12">
@@ -88,13 +88,13 @@
                                             <div class="form-group">
                                                 <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
                                                 <div class="col-sm-8">
-                                                    <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
+                                                    <input type="email" class="form-control " name="email" placeholder="usuario@mail.com" value="{{email}}">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
                                                 <div class="col-sm-8">
-                                                    <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
+                                                    <input type="password" class="form-control " name="password" placeholder="********" value="{{password}}">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -126,136 +126,4 @@
       </div>
   </div>
 </div>
-
-
-
-<!--    <div class="container">
-    <div class="row text-center">
-        <div class="col-md-12">
-           <div class="contenedor-formularios">
-              <ul class="contenedor-tabs">
-                  <li class="tab tab-segunda active"><a href="#personal">personal</a></li>
-                  <li class="tab tab-primera"><a href="#administrador">admin</a></li>
-              </ul>
-                 Links de los formularios
-                <h2 class="display-4" >Formulario de registro</h2>
-                <ul class="contenedor-tabs">
-                  <li class="tab tab-segunda active">
-                      <div class="col-md-6">
-                          <a href="#personal" class= "btn btn-primary btn-lg btn-block">Personal</a>
-                      </div>
-                  </li>
-                  <li class="tab tab-primera">
-                    <div class="col-md-6">
-                        <a  href="#administrador" class="btn btn-primary btn-lg btn-block">Administrador</a>
-                    </div>
-                  </li>
-
-                </ul>
-
-                <div class="contenido-tab">
-                <div id="personal">
-                    <form class="form-horizontal" action="#" method="POST">
-                      <div class="form-group">
-                        <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="apellido" id="apellido">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nombre" id="nombre">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="telefono" id="telefono">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
-                          <div class="col-sm-8">
-                              <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
-                          <div class="col-sm-8">
-                              <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
-                          <div class="col-sm-8">
-                              <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
-                          </div>
-                      </div>
-
-                      <div class="box-footer">
-                          <div class="col-md-12">
-                            <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
-                          </div>
-                        </div>
-
-                        <div>
-                            <a href="/signin">¿Ya estas registrado?</a>
-                        </div>
-                    </form>
-                  </div>
-
-                  <div class="contenido-tab">
-
-                    <div id="administrador">
-                      <form class="form-horizontal" action="#" method="POST">
-                        <div class="form-group">
-                          <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
-                          <div class="col-sm-8">
-                              <input type="text" class="form-control" name="nombre" id="nombre">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
-                          <div class="col-sm-8">
-                              <input type="text" class="form-control" name="telefono" id="telefono">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control " name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
-                            <div class="col-sm-8">
-                                <input type="password" class="form-control " name="password" id="password" placeholder="********" value="{{password}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
-                            <div class="col-sm-8">
-                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
-                            </div>
-                        </div>
-
-                        <div class="box-footer">
-                            <div class="col-md-12">
-                              <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
-                            </div>
-                          </div>
-
-                          <div>
-                              <a href="/signin">¿Ya estas registrado?</a>
-                          </div>
-                      </form>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div> -->
-
 <app-footer></app-footer>
