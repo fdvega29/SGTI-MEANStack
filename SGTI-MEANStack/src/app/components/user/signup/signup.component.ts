@@ -12,6 +12,9 @@ import { AdminModule } from '../usersModel/adminModel/admin.module';
 })
 export class SignupComponent implements OnInit {
 
+  signupFormUser: FormGroup;
+  signupFormAdmin: FormGroup;
+
   createFormGroupUser() {
     return new FormGroup({
       apellido: new FormControl(''),
@@ -30,8 +33,6 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  signupFormUser: FormGroup;
-  signupFormAdmin: FormGroup;
 
   constructor(private usersService: UserServiceService) {
       this.signupFormUser = this.createFormGroupUser();
@@ -42,8 +43,11 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSaveForm(form): void{
+  onSaveFormUser(form): void{
     console.log(this.signupFormUser.value);
+  }
+
+  onSaveFormAdmin(form): void{
     console.log(this.signupFormAdmin.value);
   }
 

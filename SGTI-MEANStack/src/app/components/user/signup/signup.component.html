@@ -22,7 +22,7 @@
                           <div class="col-md-12">
                                     <h3 class="display-4" >Personal</h3>
                                       <div class="box-body" id="personal">
-                                        <form class="form-horizontal" [formGroup]="signupFormUser" (ngSubmit)="onSaveForm(signupFormUser)">
+                                        <form class="form-horizontal" [formGroup]="signupFormUser" (ngSubmit)="onSaveFormUser(signupFormUser)">
                                           <div class="form-group">
                                             <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
                                             <div class="col-sm-8">
@@ -78,7 +78,7 @@
                           <div class="col-md-12">
                                       <h3 class="display-4" >Administrador</h3>
                                         <div class="box-body" id="administrador">
-                                          <form class="form-horizontal" [formGroup]="signupFormAdmin" (ngSubmit)="onSaveForm(signupFormAdmin)">
+                                          <form class="form-horizontal" [formGroup]="signupFormAdmin" (ngSubmit)="onSaveFormAdmin(signupFormAdmin)">
                                             <div class="form-group">
                                                 <label for="inputUsuario" class="col-sm-3 control-label">usuario</label>
                                                 <div class="col-sm-8">
