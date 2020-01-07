@@ -9,8 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms'
 //component
-import { SigninComponent } from './components/user/signin/signin.component';
-import { SignupComponent } from './components/user/signup/signup.component';
+import { SigninComponent } from './components/user/auth/signin/signin.component';
+import { SignupComponent } from './components/user/auth/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
@@ -20,7 +20,7 @@ import { CoreRoutingModule } from './components/core/core-routing.module';
 import { HomeComponent } from './components/core/home/home.component';
 import { AboutComponent } from './components/shared/about/about.component';
 //Services
-import { UserServiceService } from './components/user/userService/users.service';
+import { UserServiceService } from './components/user/service/user.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { UserServiceService } from './components/user/userService/users.service'
     SigninComponent,
     SignupComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

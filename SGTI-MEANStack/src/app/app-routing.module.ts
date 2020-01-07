@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
-import { SigninComponent } from './components/user/signin/signin.component';
-import { SignupComponent } from './components/user/signup/signup.component';
+import { SigninComponent } from './components/user/auth/signin/signin.component';
+import { SignupComponent } from './components/user/auth/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AboutComponent } from './components/shared/about/about.component';
 import { HomeComponent } from './components/core/home/home.component';
 
 
