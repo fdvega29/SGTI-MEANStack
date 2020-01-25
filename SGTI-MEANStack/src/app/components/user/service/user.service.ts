@@ -61,7 +61,10 @@ export class UserServiceService {
    }
 
   isLoggedIn() {
-    return false;
+      if (!localStorage.getItem('TOKEN')) {
+        return false;
+      }
+      return true;
   }
 }
 
