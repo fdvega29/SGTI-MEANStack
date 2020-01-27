@@ -5,7 +5,7 @@ import { JwtResponseI } from '../model/jwt-response-i';
 import { tap } from 'rxjs/operators';
 import {Observable, BehaviorSubject} from 'rxjs';
 import { Router } from '@angular/router';
- 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +30,7 @@ export class UserServiceService {
               this.saveToken(res.dataUser.token, res.dataUser.expiresIn);
             }
         })
-      );  
+      );
    }
 
    signin(user: UsersModule): Observable<JwtResponseI>{
@@ -57,9 +57,15 @@ export class UserServiceService {
    private saveToken(token: string, expiresIn: string): void{
      localStorage.setItem("TOKEN", token);
      localStorage.setItem("EXPIRES_IN", expiresIn);
-     this.token = token; 
+     this.token = token;
    }
 
+  isLoggedIn() {
+      if (!localStorage.getItem('TOKEN')) {
+        return false;
+      }
+      return true;
+  }
 }
 
 

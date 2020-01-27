@@ -21,6 +21,7 @@ import { HomeComponent } from './components/core/home/home.component';
 import { AboutComponent } from './components/shared/about/about.component';
 //Services
 import { UserServiceService } from './components/user/service/user.service';
+import { AuthGuard} from './components/core/guards/guards';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { UserServiceService } from './components/user/service/user.service';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [UserServiceService],
+  providers: [UserServiceService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
