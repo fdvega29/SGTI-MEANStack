@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-//const bcrypt = require('bcrypt');
-
 const bcrypt = require('bcryptjs');
 
 mongoose.set('useCreateIndex', true);
@@ -51,8 +49,8 @@ usersSchema.methods.encryptPassword = async (password) => {
     return hash;
 };
 //Funcion que compara contraseñas ingresadas desde Regist a Login, gracias al metedo compare.
-usersSchema.methods.matchPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
+usersSchema.methods.comparePassword = async function (password) {
+    return await bcrypt.compareSync(password, this.password);
 };
 
 

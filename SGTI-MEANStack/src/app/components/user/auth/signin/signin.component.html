@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+<!-- Login -->
+<div class="container">
+<div class="row text-center">
+    <div class="col-md-12">
+        <div class="box box-solid box-info" id="box-signin">
+          <div class="box-header">
+            <h2 class="display-4 text-uppercase">Iniciar Sesión</h2>
+          </div>
+          <div class="box-body">
+            <form class="form-horizontal" [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-md-4 control-label">Correo:</label>
+                      <div class="col-md-6">
+                    <input type="email" class="form-control" formControlName = "email" id="inputEmail3" placeholder="usuario@mail.com">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-md-4 control-label">Contraseña:</label>
+                  <div class="col-md-6">
+                    <input type="password" class="form-control" formControlName = "password" id="password" placeholder="********">
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="col-md-12">
+                  <button class="btn btn-lg btn-primary btn-block" type="submit" >Iniciar Sesión</button>
+                </div>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
