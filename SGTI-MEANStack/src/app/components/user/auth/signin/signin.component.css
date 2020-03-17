@@ -16,4 +16,9 @@
 #box-signin{
     border: 0px solid #00c0ef;
     border-radius: 15px;
+    margin: auto;
+}
+
+#img-logo {
+    height: 85px
 }

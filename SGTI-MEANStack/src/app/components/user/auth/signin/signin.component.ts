@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 //Service
 import { UserServiceService } from '../../service/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -20,7 +21,7 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  constructor(private usersService: UserServiceService, private router: Router) { 
+  constructor(private usersService: UserServiceService, private router: Router, private toastr: ToastrService) { 
     this.signinFormUser = this.createFormGroupUser();
   }
 
@@ -38,4 +39,15 @@ export class SigninComponent implements OnInit {
     )
   }
 
+  showToatr(){
+    this.toastr.success('¡Bien hecho!', 'Success',{
+      timeOut: 1000,
+      progressBar: true,
+      progressAnimation: 'increasing'
+    });
+  }
+
+
 }
+
+ 

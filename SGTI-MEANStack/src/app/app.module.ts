@@ -7,7 +7,9 @@ import { NgxPopper } from 'angular-popper';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 //component
 import { SigninComponent } from './components/user/auth/signin/signin.component';
 import { SignupComponent } from './components/user/auth/signup/signup.component';
@@ -44,7 +46,9 @@ import { AuthGuard} from './components/core/guards/guards';
     CoreRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [UserServiceService, AuthGuard],
   bootstrap: [AppComponent]
