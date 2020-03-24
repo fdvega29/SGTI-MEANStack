@@ -34,12 +34,18 @@ const usersSchema = new Schema({
                 type: String,
                 required: [true, 'La contraseña es requerida'],
                 trim: true
-            }
+            },
     /*roles: {
         type: String,
         required: true,
         default: "USER_ROLE"
     }*/
+
+    google: {
+            type: Boolean,
+            required: true,
+            default: false
+    }
 },
     {
         timestamps: true // Registra fecha de creacion y actualizacion de datos.
