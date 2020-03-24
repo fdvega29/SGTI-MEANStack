@@ -50,7 +50,10 @@
       </li>
       <li class="nav-item">
         <a class="nav-link">
-          <i class="fa fa-sign-out">Salir</i>
+          
+          <a (click)="usersService.logout()" routerLinkActive="router-link-active" class="btn btn-default btn-flat">
+            <i class="fa fa-sign-out">Salir</i>
+          </a>
         </a>
       </li>
     </ul>
