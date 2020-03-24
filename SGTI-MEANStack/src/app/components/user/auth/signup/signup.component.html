@@ -125,13 +125,13 @@
     <div>
       <h3>Registro de usuario</h3>
     </div>
-    <form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
+<!--     <form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
       <div class="box-body">
         <div class="row">
       <div class="form-group has-feedback">
         <div>
             <input type="text" class="form-control" formControlName="apellido" name="apellido" id="apellido" placeholder="Ingrese Apellido">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <i class="fa fa-user form-control-feedback" aria-hidden="true"></i>
         </div>
       </div>
       <div class="form-group has-feedback">
@@ -174,6 +174,56 @@
         </div>
       </div>
     </div> 
+    </form> -->
+
+    <form form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
+    <div class="box-body">
+      <div class="input-group mb-12 form-group has-feedback">
+          <div class="input-group-prepend">
+            <span class="input-group-text form-control-feedback"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+          </div>
+          <input type="text" class="form-control" formControlName="apellido" name="apellido" id="apellido" placeholder="Ingrese Apellido">
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+          <div class="input-group-prepend">
+            <span class="input-group-text form-control-feedback"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+          </div>
+          <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre">
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+        </div>
+        <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono">
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+        </div>
+        <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="Correo" value="{{email}}">
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
+        </div>
+        <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="Contraseña" value="{{password}}">
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
+        </div>
+        <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirma Contraseña" value="{{confirmPassword}}">
+      </div>
+    </div>
+          <div class="box-footer">
+          <div class="col-md-12">
+            <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+          </div>
+        </div>
+        <div class="col-md-12">
+            <a href="/user/signin">¿Ya estas registrado?</a>
+        </div>
+
     </form>
   </div>
 </div>
