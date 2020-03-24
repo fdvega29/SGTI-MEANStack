@@ -8,33 +8,38 @@ const usersSchema = new Schema({
 
     apellido: { 
                 type: String,
-                required: true,
+                required: [true, 'El apellido es requerido'],
                 min: 5,
                 trim: true
             },
     nombre: {   
                 type: String,
-                required: true,
+                required: [true, 'El nombre es requerido'],
                 min: 5,
                 trim: true
             },
     telefono: { 
                 type: String,
-                required: true,
+                required: [true, 'El telefono es requerido'],
                 trim: true,
                 unique: true
             },
     email: {    
                 type: String,
-                required: true,
+                required: [true, 'El correo es requerido'],
                 trim: true,
                 unique: true
             },
     password: { 
                 type: String,
-                required: true,
+                required: [true, 'La contraseña es requerida'],
                 trim: true
             }
+    /*roles: {
+        type: String,
+        required: true,
+        default: "USER_ROLE"
+    }*/
 },
     {
         timestamps: true // Registra fecha de creacion y actualizacion de datos.
