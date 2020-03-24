@@ -1,28 +1,24 @@
-<header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a href="/"routerLink="/" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>SGTI</b></span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b> SGTI</b></span>
-          </a>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#">Iniciar sesion</a>
-            </li>
-            <li>
-              <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#">Registrarse</a>
-            </li>
-          </ul>
-        </div>        <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
+ <!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-static-top">
+    <div class="container">
+      <a href="/"routerLink="/" class="brand-link navbar-brand">
+        <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">{{title}}</span>
+      </a>
+      <!-- Right navbar links -->
+      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+        <li class="nav-item">
+          <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="nav-link">Iniciar Sesión</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="nav-link">Registrarse</a>
+        </li>
+      </ul>
+    </div>
+    </div>
 
+</nav>  
+
+  <!-- /.navbar -->
