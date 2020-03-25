@@ -26,6 +26,7 @@ import { EditarPerfilComponent } from './components/dashboard/editar-perfil/edit
 //Services
 import { UserServiceService } from './components/user/service/user.service';
 import { AuthGuard} from './components/core/guards/guards';
+import { CambiarPasswordComponent } from './components/dashboard/cambiar-password/cambiar-password.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AuthGuard} from './components/core/guards/guards';
     AboutComponent,
     PerfilComponent,
     EditarPerfilComponent,
+    CambiarPasswordComponent,
   ],
   imports: [
     BrowserModule,
