@@ -31,7 +31,7 @@ usersCtrl.createUser = async (req, res, next) => {
 //=================================================================
 const client = new OAuth2Client(CLIENT_ID);
 async function verify() {
-  const ticket = await client.verifyIdToken({
+  const ticket = await client.verifyIdToken({ 
       idToken: token,
       audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
       // Or, if multiple clients access the backend:
