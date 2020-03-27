@@ -21,9 +21,12 @@ import { CoreModule } from './components/core/core.module';
 import { CoreRoutingModule } from './components/core/core-routing.module';
 import { HomeComponent } from './components/core/home/home.component';
 import { AboutComponent } from './components/shared/about/about.component';
+import { PerfilComponent } from './components/dashboard/perfil/perfil.component';
+import { EditarPerfilComponent } from './components/dashboard/editar-perfil/editar-perfil.component';
 //Services
 import { UserServiceService } from './components/user/service/user.service';
 import { AuthGuard} from './components/core/guards/guards';
+import { CambiarPasswordComponent } from './components/dashboard/cambiar-password/cambiar-password.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { AuthGuard} from './components/core/guards/guards';
     SignupComponent,
     HomeComponent,
     AboutComponent,
+    PerfilComponent,
+    EditarPerfilComponent,
+    CambiarPasswordComponent,
   ],
   imports: [
     BrowserModule,
