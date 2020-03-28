@@ -1,22 +1,43 @@
 <div class="wrapper">
-<app-navbar></app-navbar>
 
-<section class="content-wrapper">
-		<div class="container">
-			<div class="row">
-		      	<div class="col-md-12 animate">
-		      		<div class="col-md-6">
-		      			
-					        <span class="text1">¡Bienvenidos a SGTI!</span>
-					        <span class="text2">Sistema de Gestion de Tramite de Inmueble</span>
-				    	
-		      		</div>		      			
-		        	<div class="col-md-6">
-		        		<a href="/user/signup" class="btn btn-info btn-lg">Comenzar</a>		
-		        	</div>
-		      	</div>
+	 <!-- Navbar -->
+	<nav class="main-header navbar layout-navbar-fixed navbar-expand navbar-static-top">
+	    <div class="container">
+	      <a href="/"routerLink="/" class="brand-link navbar-brand">
+	        <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+	        <span class="brand-text text-light">{{title}}</span>
+	      </a>
+	      <!-- Right navbar links -->
+	      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+	      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+	        <li class="nav-item">
+	          <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Iniciar Sesión</a>
+	        </li>
+	        <li class="nav-item">
+	          <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Registrarse</a>
+	        </li>
+	      </ul>
+	    </div>
+	    </div>
+	</nav>
+
+	<!-- /.navbar -->
+	<section class="content-wrapper">
+			<div class="container">
+				<div class="row">
+			      		<div class="col-md-12 animate">
+						        <span class="text1">¡Bienvenidos a SGTI!</span>
+						        <span class="text2">
+						        	Sistema de Gestion de Tramite de Inmueble
+						        	<a href="/user/signup" class="btn btn-info btn-lg">Comenzar</a>
+						        </span>
+			      		</div>
+				</div>
 			</div>
-		</div>
-</section>
-  	
+	</section>
+	<footer id="footerHome">
+	<div class="text-light text-center d-sm-block">
+		 <p>Copyright &copy; 2020 - Secretaria de Tierras y Hábitat Social - La Rioja, Argentina.</p>
+	</div>
+</footer>
 </div>
