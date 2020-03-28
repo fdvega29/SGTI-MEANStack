@@ -1,0 +1,11 @@
+.sidebar {
+	overflow-y: initial !important;
+}
+
+.main-sidebar:before {
+    width: 350px !important;
+}
+
+.main-header:before {
+   margin-left: 350px !important;
+}
