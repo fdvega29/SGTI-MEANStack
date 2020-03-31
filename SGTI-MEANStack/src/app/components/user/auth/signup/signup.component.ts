@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersModule } from '../../model/user/user.module';
 import { UserServiceService } from '../../service/user.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,12 +17,12 @@ export class SignupComponent implements OnInit {
 
   createFormGroupUser() {
     return new FormGroup({
-      apellido: new FormControl(''),
-      nombre: new FormControl(''),
-      telefono: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
-      confirmPassword: new FormControl('')
+      apellido: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', Validators.required),
+      telefono: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+      confirmPassword: new FormControl('', Validators.required)
     });
   }
 
@@ -54,3 +54,10 @@ export class SignupComponent implements OnInit {
     )
   }
 }
+
+/*
+import swal from 'SweetAlert';
+
+      swal("Good job!", "You clicked the button!", "success");
+
+*/

@@ -176,43 +176,43 @@
     </div> 
     </form> -->
 
-    <form form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
+    <form ngNativeValidate form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
     <div class="box-body">
       <div class="input-group mb-12 form-group has-feedback">
           <div class="input-group-prepend">
             <span class="input-group-text form-control-feedback"><i class="fa fa-id-card" aria-hidden="true"></i></span>
           </div>
-          <input type="text" class="form-control" formControlName="apellido" name="apellido" id="apellido" placeholder="Ingrese Apellido">
+          <input type="text" class="form-control" formControlName="apellido" name="apellido" id="apellido" placeholder="Ingrese Apellido" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
           <div class="input-group-prepend">
             <span class="input-group-text form-control-feedback"><i class="fa fa-address-card" aria-hidden="true"></i></span>
           </div>
-          <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre">
+          <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
         <div class="input-group-prepend">
           <span class="input-group-text form-control-feedback"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
         </div>
-        <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono">
+        <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
         <div class="input-group-prepend">
           <span class="input-group-text form-control-feedback"><i class="fa fa-envelope" aria-hidden="true"></i></span>
         </div>
-        <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="Correo" value="{{email}}">
+        <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="Correo" value="{{email}}" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
         <div class="input-group-prepend">
           <span class="input-group-text form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
         </div>
-        <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="Contraseña" value="{{password}}">
+        <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="Contraseña" value="{{password}}" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
         <div class="input-group-prepend">
           <span class="input-group-text form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
         </div>
-        <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirma Contraseña" value="{{confirmPassword}}">
+        <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirma Contraseña" value="{{confirmPassword}}" required>
       </div>
     </div>
           <div class="box-footer">

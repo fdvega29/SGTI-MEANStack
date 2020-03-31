@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 //Service
 import { UserServiceService } from '../../service/user.service';
@@ -14,10 +14,14 @@ export class SigninComponent implements OnInit {
 
   signinFormUser: FormGroup;
 
+  recuerdame: boolean = false;
+  email: string;
+
   createFormGroupUser() {
     return new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl('')
+      email: new FormControl('', Validators.email),
+      password: new FormControl('', Validators.required),
+      recuerdame: new FormControl('')
     });
   }
 
@@ -26,10 +30,16 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
+
+    this.email = localStorage.getItem("EMAIL") || '';
+    if ( this.email.length > 1 ) {
+      this.recuerdame = true;
+    }
+
+  };
 
   onSignin(FormGroup): void{
-    //console.log(this.signupFormUser.value);
+    console.log(this.signinFormUser.value);
     this.usersService.signin(FormGroup.value)
     .subscribe(
       res =>{
@@ -39,13 +49,13 @@ export class SigninComponent implements OnInit {
     )
   }
 
-  showToatr(){
+showToatr(){
     this.toastr.success('¡Bien hecho!', 'Success',{
       timeOut: 1000,
       progressBar: true,
       progressAnimation: 'increasing'
     });
-  }
+}
 
 
 }

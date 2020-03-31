@@ -23,24 +23,36 @@ export class UserServiceService {
    }
 
    signup(user: UsersModule): Observable<JwtResponseI>{
-     return this.http.post<JwtResponseI>(`${this.AUTH_SERVER}/signup`,
+   return this.http.post<JwtResponseI>(`${this.AUTH_SERVER}/signup`,
       user).pipe(tap(
         (res: JwtResponseI) => {
             if (res){
-              this.saveToken(res.dataUser.token, res.dataUser.expiresIn);
+              this.saveToken(
+                res.dataUser.email,
+                res.dataUser.token, 
+                res.dataUser.expiresIn);
             }
         })
       );
    }
 
-   signin(user: UsersModule): Observable<JwtResponseI>{
-     return this.http.post<JwtResponseI>(`${this.AUTH_SERVER}/signin`,
+   signin(user: UsersModule, recuerdame: boolean = false): Observable<JwtResponseI>{
+     if(recuerdame){
+        localStorage.setItem("EMAIL", user.email);
+     }else{
+       localStorage.removeItem("EMAIL");
+     }
+    return this.http.post<JwtResponseI>(`${this.AUTH_SERVER}/signin`,
      user).pipe(tap(
        (res: JwtResponseI) => {
          if (res) {
-           this.saveToken(res.dataUser.token, res.dataUser.expiresIn);
+           this.saveToken(
+             res.dataUser.email,
+             res.dataUser.token, 
+             res.dataUser.expiresIn);
          }
        }
+       
      ));
    }
 
@@ -52,13 +64,14 @@ export class UserServiceService {
 
     getToken(){
       this.token = localStorage.getItem("TOKEN");
-    }
+    };
 
-   private saveToken(token: string, expiresIn: string): void{
+   private saveToken(email: string, token: string, expiresIn: string): void{
+     localStorage.setItem("EMAIL", email)
      localStorage.setItem("TOKEN", token);
      localStorage.setItem("EXPIRES_IN", expiresIn);
      this.token = token;
-   }
+   };
 
   isLoggedIn() {
       if (!localStorage.getItem('TOKEN')) {

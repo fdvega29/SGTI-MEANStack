@@ -35,15 +35,15 @@ const usersSchema = new Schema({
                 required: [true, 'La contraseña es requerida'],
                 trim: true
             },
-    /*roles: {
+    roles: {
         type: String,
-        required: true,
+        required: false,
         default: "USER_ROLE"
-    }*/
+    },
 
     google: {
             type: Boolean,
-            required: true,
+            required: false,
             default: false
     }
 },

@@ -37,51 +37,63 @@
     </div>
   </div>-->
 
-  
-    <div class="login-box text-center">
-      <!--<div class="login-logo">
+
+<div class="login-box text-center">
+  <!--<div class="login-logo">
         <img src="./assets/dist/img/avatar.png" id="img-logo">
       </div>-->
-      <div class="login-box-body">
-        <div>
-          <div class="login-logo">
-            <img src="./assets/dist/img/avatar.png" id="img-logo">
-          </div>
-          <h3>Iniciar Sesión</h3>
-        </div>
-        <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
-          <div class="box-body">
-            <div class="form-group has-feedback">
-              <input type="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
-              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+  <div class="login-box-body">
+    <div>
+      <div class="login-logo">
+        <img src="./assets/dist/img/avatar.png" id="img-logo">
+      </div>
+      <h3>Iniciar Sesión</h3>
+    </div>
+    <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
+      <div class="box-body">
+        <div class="form-group input-group mb-3">
+          <input type="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fa fa-envelope"></span>
             </div>
-            <div class="form-group has-feedback"> 
-              <div>
-                <input type="password" class="form-control" formControlName="password" id="password"
-                  placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+        </div>
+        <div class="form-group input-group mb-3">
+            <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fa fa-lock"></span>
               </div>
             </div>
           </div>
-          <div class="box-footer">
-            <div>
-              <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="showToatr()">Ingresar</button>
-            </div>
-            <div class="social-auth-links text-center">
-              <button class="btn btn-block btn-social btn-google btn-flat">
-                <i class="fa fa-google-plus"></i>Inicia sesion con Google
-              </button>
-            </div>
-            <div class="col-md-8">
-              <a href="#"><h5>¿Olvidaste tu contraseña?</h5></a>
-            </div>
-            <div class="col-md-4">
-              <a href="/user/signup"><h5>Registrase</h5></a>
-            </div>
-          </div>
-        </form>
+        <div class="form-group row">
+          <div class="col-md-12">
+              <div class="checkbox checkbox-primary pull-left p-t-0">
+                  <input formControlName="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+                  <label for="checkbox-signup"> Recuérdame </label>
+              </div>
+              <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a> </div>
+        </div>
       </div>
-    </div>
+      <div class="box-footer">
+        <div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="showToatr()">Ingresar</button>
+        </div>
+        <div class="social-auth-links text-center">
+          <button class="btn btn-block btn-danger">
+            <i class="fa fa-google-plus mr-2"></i>Inicia sesion con Google
+          </button>
+        </div>
+        <div class="col-md-12">
+          <a href="/user/signup">
+            <h5>Registrarse</h5>
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
 
-  <app-footer></app-footer>
+<app-footer></app-footer>
