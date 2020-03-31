@@ -1,7 +1,11 @@
-
-
 .content-wrapper{
     background: #141E30;
+    margin-left: 75px;
+    min-height: 520px !important;
+}
+
+.navbar-static-top{
+      margin-left: 0px !important;
 }
 
 .animate {
@@ -18,9 +22,9 @@
 
 .text1{
     color: #e0eafc;
-    font-size: 80px;
-    font-weight: 100;
-    letter-spacing: 5px;
+    font-size: 50px;
+    font-weight: 100px;
+    letter-spacing: 2px;
     margin-block: 10px;
     background: #141E30;
     position: relative;
@@ -35,14 +39,31 @@
 @keyframes text{
     0%{
         background: #141E30;
-        margin-bottom: -55px;
-    }
-    30%{
-        letter-spacing: 20px;
         margin-bottom: -65px;
     }
-    85%{
-        letter-spacing: 5px;
+    30%{
+        letter-spacing: 6px;
         margin-bottom: -75px;
+    }
+    85%{
+        letter-spacing: 4px;
+        margin-bottom: -65px;
+    }
+}
+
+
+/* Diseño responsive para tabletas */
+@media screen and (min-width: 800px) {
+    .content-wrapper {
+        margin-left: 150px;
+        min-height: 510px !important;
+    }
+}
+
+/* Diseño responsive para PC */
+@media screen and (min-width: 1025px) {
+    .content-wrapper {
+        margin-left: 200px;
+        min-height: 500px !important;
     }
 }

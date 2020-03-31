@@ -1,3 +1,11 @@
+.navbar {
+	background-color: #343a40 !important;
+}
+
 .navbar-static-top{
-      margin-left: 0px !important;
+    margin-left: 0px !important;
+}
+
+.fa {
+	color: white !important;
 }
