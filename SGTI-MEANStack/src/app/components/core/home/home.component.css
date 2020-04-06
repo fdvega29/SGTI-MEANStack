@@ -36,6 +36,13 @@
     color: #e0eafc;
 }
 
+#img-business{
+    width: 500px;
+}
+#Text-Home{
+    padding-top: 115px;
+}
+
 @keyframes text{
     0%{
         background: #141E30;

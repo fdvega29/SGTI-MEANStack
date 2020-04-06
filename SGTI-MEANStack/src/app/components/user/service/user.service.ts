@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsersModule } from '../model/user/user.module';
 import { JwtResponseI } from '../model/jwt-response-i';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import {Observable, BehaviorSubject} from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,9 @@ export class UserServiceService {
   authSubject = new BehaviorSubject(false);
   selectedUser: UsersModule;
   user: UsersModule[];
-  private token: string;
+  
+  token: string;
+  usuario: UsersModule;
 
   constructor(private http: HttpClient, private router: Router) {
       this.selectedUser = new UsersModule();
@@ -36,6 +38,30 @@ export class UserServiceService {
       );
    }
 
+   saveStorage(id: string, token: string, usuario: UsersModule){
+     localStorage.setItem('ID', id);
+     localStorage.setItem('TOKEN', token);
+     localStorage.setItem('USUARIO', JSON.stringify(UsersModule));
+
+     this.token = token;
+     this.usuario = usuario;
+   }
+
+   //Login Google
+   signinGoogle( token: string){
+    const url = this.AUTH_SERVER + '/signin/google';
+    return this.http.post(url, {token})
+                    .pipe(map((res: any) =>{
+                      this.saveStorage(
+                        res.id,
+                        res.token,
+                        res.usuario
+                      );
+                      return true
+                    }));            
+    };
+
+   //Login Normal
    signin(user: UsersModule, recuerdame: boolean = false): Observable<JwtResponseI>{
      if(recuerdame){
         localStorage.setItem("EMAIL", user.email);
@@ -59,7 +85,9 @@ export class UserServiceService {
    logout(){
      localStorage.removeItem("TOKEN");
      localStorage.removeItem("EXPIRES_IN");
-     this.router.navigate(['/home']);
+     localStorage.removeItem("ID");
+     localStorage.removeItem("USUARIO");
+     window.location.href = '#/home'
   };
 
     getToken(){

@@ -13,3 +13,9 @@
 #img-logo {
     height: 85px
 }
+
+.login-box{
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}

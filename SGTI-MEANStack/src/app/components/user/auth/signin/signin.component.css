@@ -22,3 +22,9 @@
 	color: white;
 	background-color: #DD4B39;
 }
+
+.login-box{
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}

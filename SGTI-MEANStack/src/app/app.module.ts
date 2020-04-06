@@ -28,6 +28,7 @@ import { UserServiceService } from './components/user/service/user.service';
 import { AuthGuard} from './components/core/guards/guards';
 import { CambiarPasswordComponent } from './components/dashboard/cambiar-password/cambiar-password.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,7 @@ import { CambiarPasswordComponent } from './components/dashboard/cambiar-passwor
     AboutComponent,
     PerfilComponent,
     EditarPerfilComponent,
-    CambiarPasswordComponent,
+    CambiarPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +55,7 @@ import { CambiarPasswordComponent } from './components/dashboard/cambiar-passwor
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot()  
   ],
   providers: [UserServiceService, AuthGuard],
   bootstrap: [AppComponent]
