@@ -48,7 +48,7 @@ export class SigninComponent implements OnInit {
     this.usersService.signin(FormGroup.value)
       .subscribe(
         res => {
-          this.router.navigate(['/dashboard/principal']);
+          this.router.navigate(['/dashboard']);
         },
         err => console.log(err)
       )

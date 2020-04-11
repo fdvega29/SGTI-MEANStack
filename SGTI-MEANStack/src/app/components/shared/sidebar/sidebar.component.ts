@@ -9,6 +9,7 @@ export class SidebarComponent implements OnInit {
 
   constructor() { }
 
+  title = "SGTI";
   ngOnInit() {
   }
 

@@ -1,12 +1,12 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="#" class="brand-link elevation-4">
+  <a href="#" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4">
     <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png"
          alt="AdminLTE Logo"
          class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text font-weight-light">{{title}}</span>
+    <span class="brand-text">{{title}}</span>
   </a>
 
 <!-- Sidebar -->
@@ -17,7 +17,7 @@
           <img src="assets/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Walter Arroyo</a>
+          <a href="#" routerLink="/dashboard/ver-perfil" class="d-block" routerLinkActive="router-link-active">Arroyo Walter</a>
         </div>
       </div>
 
@@ -27,7 +27,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="" class="nav-link">
               <i class="fa fa-user-circle-o" aria-hidden="true"></i>
               <p>
                  Perfil
@@ -36,7 +36,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/editar-perfil" routerLinkActive="router-link-active">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Editar Perfil</p>
                 </a>
@@ -44,7 +44,7 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/cambiar-password" routerLinkActive="router-link-active">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Cambiar contraseña</p>
                 </a>
@@ -52,7 +52,7 @@
             </ul>
           </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="" class="nav-link">
               <i class="fa fa-file-text-o" aria-hidden="true"></i>
               <p>
                  Trámites
@@ -61,19 +61,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/guia-tramite" routerLinkActive="router-link-active">
                   <i class="fa fa-circle nav-icon"></i>
                   <p>Guía de uso</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/nuevo-tramite" routerLinkActive="router-link-active">
                   <i class="fa fa-circle nav-icon"></i>
                   <p>Nuevo trámite</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/mis-tramites" routerLinkActive="router-link-active">
                   <i class="fa fa-circle nav-icon"></i>
                   <p>Mis trámites</p>
                 </a>
@@ -81,7 +81,7 @@
             </ul>
           </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="" class="nav-link">
               <i class="fa fa-info-circle" aria-hidden="true"></i>
               <p>
                  Acerca de
@@ -90,13 +90,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/informacion" routerLinkActive="router-link-active">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Información</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" routerLink="/dashboard/preguntas" routerLinkActive="router-link-active">
                   <i class="nav-icon fa fa-circle-o text-info"></i>
                   <p>Preguntas Frecuentes</p>
                 </a>

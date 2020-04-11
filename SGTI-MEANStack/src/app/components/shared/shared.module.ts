@@ -6,6 +6,9 @@ import { FooterComponent } from "./footer/footer.component";
 import { AboutComponent } from './about/about.component';
 import { PipesModule } from '../pipes/pipes/pipes.module';
 
+//Servicios
+import { UserServiceService } from '../user/service/user.service';
+
 @NgModule({
     imports: [
         RouterModule,
@@ -21,7 +24,8 @@ import { PipesModule } from '../pipes/pipes/pipes.module';
         NavbarComponent,
         SidebarComponent,
         FooterComponent
-    ]
+    ],
+  providers: [UserServiceService]
 })
 
 export class SharedModule{}

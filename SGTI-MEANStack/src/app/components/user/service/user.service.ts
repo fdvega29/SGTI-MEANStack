@@ -82,7 +82,7 @@ export class UserServiceService {
      ));
    }
 
-   logout(){
+   public logout(){
      localStorage.removeItem("TOKEN");
      localStorage.removeItem("EXPIRES_IN");
      localStorage.removeItem("ID");
