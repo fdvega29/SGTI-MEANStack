@@ -10,7 +10,7 @@ export class NavbarComponent implements OnInit {
 
   title = 'SGTI';
 
-  constructor() { }
+  constructor( public userService : UserServiceService) { }
 
   ngOnInit() {
     

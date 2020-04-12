@@ -48,7 +48,7 @@ export class SigninComponent implements OnInit {
     this.usersService.signin(FormGroup.value)
       .subscribe(
         res => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/principal']);
         },
         err => console.log(err)
       )
@@ -76,7 +76,8 @@ export class SigninComponent implements OnInit {
       const token = googleUser.getAuthResponse().id_token;
       this.usersService.signinGoogle(token)
         .subscribe(resp => {
-          this.router.navigate(['/dashboard/principal']);
+          window.location.href = 'dashboard/principal';
+          //this.router.navigate(['dashboard/principal']);
           console.log(resp);
         },
         err => console.log(err));
