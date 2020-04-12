@@ -41,7 +41,7 @@ export class UserServiceService {
    saveStorage(id: string, token: string, usuario: UsersModule){
      localStorage.setItem('ID', id);
      localStorage.setItem('TOKEN', token);
-     localStorage.setItem('USUARIO', JSON.stringify(UsersModule));
+     localStorage.setItem('USUARIO', JSON.stringify(usuario));
 
      this.token = token;
      this.usuario = usuario;
