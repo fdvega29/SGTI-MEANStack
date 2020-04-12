@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 //Modulos
 import { DashboardModule } from './components/dashboard/dashboard.module';
+import { AdminPanelModule } from './components/admin-panel/admin-panel.module';
 
 //component
 import { SigninComponent } from './components/user/auth/signin/signin.component';
@@ -30,7 +31,7 @@ import {SharedModule} from "./components/shared";
     AppComponent,
     SigninComponent,
     SignupComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +39,7 @@ import {SharedModule} from "./components/shared";
     CommonModule,
     AppRoutingModule,
     DashboardModule,
+    AdminPanelModule,
     SharedModule,
     CoreModule,
     CoreRoutingModule,
