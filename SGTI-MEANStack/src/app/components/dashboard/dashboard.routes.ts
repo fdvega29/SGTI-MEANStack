@@ -38,7 +38,9 @@ const dashboardRoutes: Routes = [
       { path: 'preguntas', component: PreguntasComponent},
 
       //Principal
-      { path: 'principal', component: PrincipalComponent,canActivate: [AuthGuard]}
+      { path: 'principal', component: PrincipalComponent
+      //,canActivate: [AuthGuard]
+      }
 
   //      ,{ path: 'dashboard', component:PrincipalComponent, pathMatch: 'full'}
 		]
