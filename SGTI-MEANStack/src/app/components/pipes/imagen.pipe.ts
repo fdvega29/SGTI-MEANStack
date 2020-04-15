@@ -5,7 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ImagenPipe implements PipeTransform {
 
-  transform(value: any, ...args: any[]): any {
+  transform(img: string, tipo: string = 'usuario'): any {
+
+    if(img.indexOf('https') >= 0){
+      return img;
+    }
+  
     return 'Fernando Daniel Vega';
   }
 
