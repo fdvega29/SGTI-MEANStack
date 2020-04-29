@@ -1,0 +1,19 @@
+.invoice {
+  position: relative;
+
+  border: 1px solid #f4f4f4;
+  padding: 20px;
+  margin: 10px 25px;
+}
+
+.sw-theme-dots .sw-container {
+  min-height: 300px !important;
+  background: #ffffff !important;
+}
+
+.thumbnail {
+  margin: 0 0 0px;
+  font-size: 150px;
+}
+
+
