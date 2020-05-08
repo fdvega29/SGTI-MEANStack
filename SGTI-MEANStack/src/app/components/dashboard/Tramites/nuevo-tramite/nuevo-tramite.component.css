@@ -17,3 +17,34 @@
 }
 
 
+/*Selecionar trámite*/
+
+
+label {
+  width: 100%;
+}
+
+label:not(.form-check-label):not(.custom-file-label) {
+  font-weight: 100;
+}
+
+
+.card-input-element {
+  display: none;
+}
+
+.card-input {
+  margin: 50px 50px 50px 50px;
+  padding: 5px;
+  max-width: 500px;
+}
+
+.card-input:hover {
+  cursor: pointer;
+}
+
+.card-input-element:checked + .card-input {
+  box-shadow: 0 0 5px 5px #17a2b8;
+}
+
+

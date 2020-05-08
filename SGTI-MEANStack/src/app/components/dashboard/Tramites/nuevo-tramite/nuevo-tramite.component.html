@@ -23,13 +23,14 @@
           <ul>
             <li><a href="#step1"><span><i class="fa fa-list-alt"></i></span><br><small>1 - Elegí el trámite.</small></a></li>
             <li><a href="#step2"><span><i class="fa fa-pencil"></i></span><br><small>2 - Completa el formulario.</small></a></li>
-            <li><a href="#step3"><span><i class="fa fa-money"></i></span><br><small>3 - Realizá el pago.</small></a></li>
-            <li><a href="#step4"><span><i class="fa fa-check-square-o"></i></span><br><small>4 - Confirmá los datos ingresados.</small></a></li>
-            <li><a href="#step5"><span><i class="fa fa-bell-o"></i></span><br><small>5 - Consulta el estado.</small></a></li>
+            <li><a href="#step3"><span><i class="fa fa-check-square-o"></i></span><br><small>3 - Confirmá los datos ingresados</small></a></li>
+            <li><a href="#step4"><span><i class="fa fa-money"></i></span><br><small>4 -  Realizá el pago</small></a></li>
           </ul>
+
+          <!-- DIV -->
           <div>
             <!-- DIV Elegir el trámite -->
-              <div id="step1">
+            <div id="step1">
                 <section class="invoice">
                   <!-- titulo row -->
                   <div class="col-xs-12 text-center">
@@ -38,19 +39,53 @@
                     </h2>
                   </div>
                   <!-- /.col -->
+
                   <div class="row">
-                    <form class="form-group col-md-12">
-                      <select class="form-control" id="SelectTramite">
-                        <option selected>Seleccionar</option>
-                        <option value="1">Búsqueda de titulares dominiales</option>
-                        <option value="2">Búsqueda de estado jurídico de inmueble</option>
-                      </select>
-                    </form>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                      <label>
+                        <input type="radio" name="tramite" class="card-input-element" />
+
+                        <div class="card card-input text-center">
+                          <div class="small-box bg-info-gradient">
+                            <div class="inner">
+                              <h4 class="card-header">Búsqueda de titulares dominiales</h4>
+                              <p class="lead">Búsqueda de inmuebles registrados a nombre de una persona humana ó persona jurídica, según el Índice de Titulares de Dominio.</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fa fa-list-alt"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </label>
+
+                    </div>
+                    <div class="col-md-4">
+                      <label>
+                        <input type="radio" name="tramite" class="card-input-element" />
+
+                        <div class="card card-input text-center">
+                          <div class="small-box bg-info-gradient">
+                            <div class="inner">
+                              <h4 class="card-header">Búsqueda de estado jurídico de inmueble</h4>
+                              <p>Verificar el estado actual de la propiedad respecto a cargas y gravámenes que pudieran figurar asentadas en el registro</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fa fa-list-alt"></i>
+                            </div>
+                          </div>
+                        </div>
+
+                      </label>
+                    </div>
+                    <div class="col-md-2"></div>
+
                   </div>
+
                 </section>
               </div>
             <!-- DIV Completa formulario -->
-              <div id="step2">
+            <div id="step2">
                 <section class="invoice">
                   <!-- titulo row -->
                   <div class="row">
@@ -117,10 +152,84 @@
                   </form>
                 </section>
               </div>
+            <!-- DIV Confirma los datos -->
+            <div id="step3">
+              <section class="invoice">
+                <!-- titulo row -->
+                <div class="col-xs-12">
+                  <h2 class="page-header">
+                    Confirmá los datos ingresados
+                  </h2>
+                </div>
+                <form>
+                  <fieldset disabled>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Tipo de trámite</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <input type="text" id="disabledInputTramite" class="form-control" placeholder="Busqueda de titulares dominiales">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Datos de identidad de la persona</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputApellido">Apellido</label>
+                        <input type="text" id="disabledInputApellido" class="form-control" placeholder="Perez">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNombre">Nombre</label>
+                        <input type="text" id="disabledInputNombre" class="form-control" placeholder="Juan">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputEstado">Estado Civil</label>
+                        <input type="text" id="disabledInputEstado" class="form-control" placeholder="Soltero">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNumero">Numero de documento</label>
+                        <input type="text" id="disabledInputNumero" class="form-control" placeholder="25999222">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNacionalidad">Nacionalidad</label>
+                        <input type="text" id="disabledInputNacionalidad" class="form-control" placeholder="Argentino">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputFecha">Fecha de nacimiento</label>
+                        <input type="text" id="disabledInputFecha" class="form-control" placeholder="02/10/1995">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Datos del cónyugue</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="disabledInputApellidoConyugue">Apellido</label>
+                        <input type="text" class="form-control" id="disabledInputApellidoConyugue" placeholder="Diaz">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="disabledInputNombresConyugue">Nombres</label>
+                        <input type="text" class="form-control" id="disabledInputNombresConyugue" placeholder="María">
+                      </div>
+                    </div>
 
-              <!-- DIV Realiza el Pago -->
+                  </fieldset>
+                </form>
 
-              <div id="step3">
+              </section>
+            </div>
+            <!-- DIV Realiza el Pago -->
+            <div id="step4">
                 <section style="padding-bottom: 50px;" class="invoice">
                   <!-- titulo row -->
                   <div class="row">
@@ -226,104 +335,10 @@
                 </section>
                </div>
 
-
-
-              <!-- DIV Confirma los datos -->
-              <div id="step4">
-                  <section class="invoice">
-                    <!-- titulo row -->
-                    <div class="col-xs-12">
-                      <h2 class="page-header">
-                         Confirmá los datos ingresados
-                      </h2>
-                    </div>
-                    <form>
-                      <fieldset disabled>
-                        <div class="form-row">
-                          <div class="form-group col-md-12 text-center">
-                            <label class="lead">Tipo de trámite</label>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-12">
-                            <input type="text" id="disabledInputTramite" class="form-control" placeholder="Busqueda de titulares dominiales">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-12 text-center">
-                            <label class="lead">Datos de identidad de la persona</label>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-4">
-                            <label for="disabledInputApellido">Apellido</label>
-                            <input type="text" id="disabledInputApellido" class="form-control" placeholder="Perez">
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="disabledInputNombre">Nombre</label>
-                            <input type="text" id="disabledInputNombre" class="form-control" placeholder="Juan">
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="disabledInputEstado">Estado Civil</label>
-                            <input type="text" id="disabledInputEstado" class="form-control" placeholder="Soltero">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-4">
-                            <label for="disabledInputNumero">Numero de documento</label>
-                            <input type="text" id="disabledInputNumero" class="form-control" placeholder="25999222">
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="disabledInputNacionalidad">Nacionalidad</label>
-                            <input type="text" id="disabledInputNacionalidad" class="form-control" placeholder="Argentino">
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="disabledInputFecha">Fecha de nacimiento</label>
-                            <input type="text" id="disabledInputFecha" class="form-control" placeholder="02/10/1995">
-                          </div>
-                        </div>
-                        <br>
-                        <div class="form-row">
-                          <div class="form-group col-md-12 text-center">
-                            <label class="lead">Datos del cónyugue</label>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="disabledInputApellidoConyugue">Apellido</label>
-                            <input type="text" class="form-control" id="disabledInputApellidoConyugue" placeholder="Diaz">
-                          </div>
-                          <div class="form-group col-md-6">
-                            <label for="disabledInputNombresConyugue">Nombres</label>
-                            <input type="text" class="form-control" id="disabledInputNombresConyugue" placeholder="María">
-                          </div>
-                        </div>
-
-                      </fieldset>
-                    </form>
-
-                  </section>
-              </div>
-
-              <!-- DIV Seguimiento del trámite -->
-              <div id="step5">
-                <section class="invoice">
-                  <div class="col-xs-12">
-                    <h2 class="page-header">
-                      Seguí el estado de tu trámite
-                    </h2>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12 text-center">
-                      <div class="thumbnail"><i class="fa fa-check-square-o" aria-hidden="true"></i></div>
-                      <p class="lead">Una vez confirmado el proceso, podes hacer el seguimiento de tu trámite en la sección de
-                        <a href="dashboard/mis-tramites">Mis trámites</a>
-                      </p>
-                    </div>
-                  </div>
-                </section>
-              </div>
+            <!--/ Fin Div -->
           </div>
+
+          <!--/ FIN StepWizard  -->
         </div>
 
 
