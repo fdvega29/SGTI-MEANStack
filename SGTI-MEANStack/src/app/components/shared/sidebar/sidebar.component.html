@@ -1,43 +1,139 @@
-<aside class="main-sidebar">
-        <!-- Inner sidebar -->
-        <section class="sidebar">
-          <!-- user panel (Optional) -->
-          <div class="user-panel">
-            <div class="pull-left image">
-              <img src="./assets/dist/img/avatar.png" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-              <p>Arroyo Walter</p>
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="#" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
+    <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
+    <span class="brand-text text-white">SGTI</span>
+  </a>
 
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-          </div><!-- /.user-panel -->
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image widget-user-image text-center">
+          <img [src]="usuario.img"class="img-circle elevation-2" alt="User Image">
+        </div>
+          <div class="info m-auto">
+            <h5 class="text-white d-block" style="font-size: 19px !important;">{{usuario.nombre}}</h5>
+            <span class="text-white d-block" style="font-size: 15px !important;">{{usuario.email}}</span>
+          </div>
+    </div>
 
-          <!-- Sidebar Menu -->
-          <ul class="sidebar-menu tree" data-widget="tree">
-            <li class="header">Menú Principal:</li>
-            <!-- Optionally, you can add icons to the links 
-            <li class="active"><a href="#"><span></span></a></li> -->
-            <li><a href="#"><i class="fa fa-edit"></i><span>Mis datos</span></a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-user"></i><span>Mi cuenta</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>Estadísticas</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i>Información</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-table"></i><span>Mis trámites</span><i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>Listado de trámites</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i>Información</a></li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-sign-out"></i><span>Cerrar sesión</span></a></li>
-          </ul><!-- /.sidebar-menu -->
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav flex-column nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
+<!--          <li class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+              <p>
+                 Perfil
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/editar-perfil" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Editar Perfil</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/cambiar-password" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Cambiar contraseña</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <i class="fa fa-file-text-o" aria-hidden="true"></i>
+              <p>
+                 Trámites
+                <span class="right fa fa-angle-left"></span>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/guia-tramite" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Guía de uso</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/nuevo-tramite" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Nuevo trámite</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/mis-tramites" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Mis trámites</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <p>
+                 Acerca de
+                <span class="right fa fa-angle-left"></span>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/informacion" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Información</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" routerLink="/dashboard/preguntas" routerLinkActive="router-link-active">
+                  <i class="nav-icon fa fa-circle-o text-info"></i>
+                  <p>Preguntas Frecuentes</p>
+                </a>
+              </li>
+            </ul>
+          </li>-->
 
-      
 
-      </section>
-</aside>
+
+          <!-- MenuSidebar dinamico -->
+
+          <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <i [class]="menuSidebar.icono"></i>
+              <p>
+                {{menuSidebar.titulo}}
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item">
+                <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>{{subMenus.titulo}}</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <ul class="nav">
+              <a href="#" (click)="usuarioService.logout()" routerLinkActive="router-link-active" class="nav-link">
+                <i class="fa fa-sign-out"> </i>
+                <p>Cerrar sessión</p>
+              </a>
+            </ul>
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

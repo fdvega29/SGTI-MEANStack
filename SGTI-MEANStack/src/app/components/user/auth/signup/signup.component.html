@@ -1,5 +1,22 @@
-<app-navbar></app-navbar>
-<!-- Contenido-->
+   <!-- Navbar -->
+  <nav class="main-header navbar layout-navbar-fixed navbar-expand navbar-static-top" id="navbar">
+      <div class="container">
+        <a href="/"routerLink="/" class="brand-link navbar-brand">
+          <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+          <span class="brand-text text-light">SGTI</span>
+        </a>
+        <!-- Right navbar links -->
+        <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+          <li class="nav-item">
+            <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Iniciar Sesión</a>
+          </li>
+        </ul>
+      </div>
+      </div>
+  </nav>
+
+<!-- Contenido
 <div class="container">
   <div class="row text-center">
       <div class="col-md-12" id="col">
@@ -59,13 +76,11 @@
                                                   <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
                                               </div>
                                           </div>
-                                                      <!-- /.box-body -->
                                           <div class="box-footer">
                                               <div class="col-md-12">
                                                 <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
                                               </div>
                                             </div>
-                                            <!-- /.box-footer -->
                                             <div>
                                                 <a href="/user/signin">¿Ya estas registrado?</a>
                                             </div>
@@ -73,7 +88,6 @@
                                   </div>
                           </div>
                       </div>
-                      <!-- /.tab-pane -->
                       <div class="tab-pane fade" id="nav_admin" role="tabpanel" aria-labelledby="nav-admin-tab">
                           <div class="col-md-12">
                                       <h3 class="display-4" >Administrador</h3>
@@ -103,13 +117,11 @@
                                                     <input type="password" class="form-control" name="confirmPassword2" id="confirmPassword2" placeholder="********" value="{{confirmPassword}}">
                                                 </div>
                                             </div>
-                                                        <!-- /.box-body -->
                                             <div class="box-footer">
                                                 <div class="col-md-12">
-                                                  <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+                                                  <button class="btn btn-lg btn-success btn-block" type="submit" (click)="msgSuccess()">Registrarme</button>
                                                 </div>
                                               </div>
-                                              <!-- /.box-footer -->
                                               <div>
                                                   <a href="/user/signin">¿Ya estas registrado?</a>
                                               </div>
@@ -117,13 +129,115 @@
                                     </div>
                             </div>
                       </div>
-
-                  </div>
-                    <!-- /.tab-content -->
+                    </div>
                   </nav>
                 </div>
             </div>
       </div>
   </div>
+</div>-->
+
+<div class="login-box text-center">
+  <div class="login-box-body">
+    <div>
+      <h3>Registro de usuario</h3>
+    </div>
+<!--     <form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
+      <div class="box-body">
+        <div class="row">
+      <div class="form-group has-feedback">
+        <div>
+            <input type="text" class="form-control" formControlName="apellido" name="apellido" id="apellido" placeholder="Ingrese Apellido">
+            <i class="fa fa-user form-control-feedback" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <div>
+            <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <div>
+            <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono">
+            <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+          <div>
+              <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="Correo" value="{{email}}">
+              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+      </div>
+      <div class="form-group has-feedback">
+          <div>
+              <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="Contraseña" value="{{password}}">
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+      </div>
+      <div class="form-group has-feedback">
+          <div>
+              <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirma Contraseña" value="{{confirmPassword}}">
+              <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+          </div>
+      </div>
+      <div class="box-footer">
+          <div class="col-md-12">
+            <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+          </div>
+        </div>
+        <div>
+            <a href="/user/signin">¿Ya estas registrado?</a>
+        </div>
+      </div>
+    </div>
+    </form> -->
+
+    <form ngNativeValidate form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
+    <div class="box-body">
+      <div class="input-group mb-12 form-group has-feedback">
+          <div class="input-group-prepend">
+            <span class="input-group-text form-control-feedback"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+          </div>
+          <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre completo" required>
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+        </div>
+        <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono" required>
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+        </div>
+        <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="Correo" value="{{email}}" required>
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
+        </div>
+        <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="Contraseña" value="{{password}}" required>
+      </div>
+      <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
+        </div>
+        <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirma Contraseña" value="{{confirmPassword}}" required>
+      </div>
+    </div>
+          <div class="box-footer">
+          <div class="col-md-12">
+            <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
+          </div>
+        </div>
+        <div class="col-md-12">
+            <a href="/user/signin">¿Ya estas registrado?</a>
+        </div>
+
+    </form>
+  </div>
 </div>
+
 <app-footer></app-footer>
+

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersModule } from '../../model/user/user.module';
-import { UserServiceService } from '../../service/user.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { usersModule } from '../../../models/user.module';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AutenticacionService } from 'src/app/components/services/autenticacion.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  providers: [UsersModule]
+  providers: [usersModule]
 })
 export class SignupComponent implements OnInit {
 
@@ -16,17 +17,16 @@ export class SignupComponent implements OnInit {
 
   createFormGroupUser() {
     return new FormGroup({
-      apellido: new FormControl(''),
-      nombre: new FormControl(''),
-      telefono: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
-      confirmPassword: new FormControl('')
+      nombre: new FormControl('', Validators.required),
+      telefono: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+      confirmPassword: new FormControl('', Validators.required)
     });
   }
 
 
-  constructor(private usersService: UserServiceService, private router: Router) {
+  constructor(private authService: AutenticacionService, private router: Router, private toastr: ToastrService) {
       this.signupFormUser = this.createFormGroupUser();
    }
 
@@ -34,14 +34,29 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {}
 
+  msgSuccess(){
+    this.toastr.success('¡Registro exitoso!', 'Success',{
+      timeOut: 2000,
+      progressBar: true,
+      progressAnimation: 'increasing'
+    })
+  }
+
   onSignup(FormGroup): void{
     //console.log(this.signupFormUser.value);
-    this.usersService.signup(FormGroup.value)
-    .subscribe(
-      res =>{
+    this.authService.signup(FormGroup.value)
+    .subscribe( res => {
+      //this.usersService.setUser(res);
       this.router.navigate(['user/signin']);
     },
     err => console.log(err)
     )
   }
 }
+
+/*
+import swal from 'SweetAlert';
+
+      swal("Good job!", "You clicked the button!", "success");
+
+*/

@@ -9,3 +9,13 @@
     border: 0px solid #00c0ef;
     border-radius: 15px;
 }
+
+#img-logo {
+    height: 85px
+}
+
+.login-box{
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}

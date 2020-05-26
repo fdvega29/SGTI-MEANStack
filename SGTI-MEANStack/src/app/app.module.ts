@@ -7,46 +7,51 @@ import { NgxPopper } from 'angular-popper';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
+//Modulos
+import { DashboardModule } from './components/dashboard/dashboard.module';
+import { AdminPanelModule } from './components/admin-panel/admin-panel.module';
+
 //component
 import { SigninComponent } from './components/user/auth/signin/signin.component';
 import { SignupComponent } from './components/user/auth/signup/signup.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
-import { FooterComponent } from './components/shared/footer/footer.component';
 import { CoreModule } from './components/core/core.module';
 import { CoreRoutingModule } from './components/core/core-routing.module';
 import { HomeComponent } from './components/core/home/home.component';
-import { AboutComponent } from './components/shared/about/about.component';
 //Services
-import { UserServiceService } from './components/user/service/user.service';
 import { AuthGuard} from './components/core/guards/guards';
+import {SharedModule} from "./components/shared";
+import { PipesModule } from './components/pipes/pipes/pipes.module';
+import { AutenticacionService } from './components/services/autenticacion.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    SidebarComponent,
-    DashboardComponent,
-    FooterComponent,
     SigninComponent,
     SignupComponent,
     HomeComponent,
-    AboutComponent,
   ],
   imports: [
     BrowserModule,
     NgxPopper,
     CommonModule,
     AppRoutingModule,
+    DashboardModule,
+    AdminPanelModule,
+    SharedModule,
     CoreModule,
     CoreRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    PipesModule
   ],
-  providers: [UserServiceService, AuthGuard],
+  providers: [AutenticacionService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

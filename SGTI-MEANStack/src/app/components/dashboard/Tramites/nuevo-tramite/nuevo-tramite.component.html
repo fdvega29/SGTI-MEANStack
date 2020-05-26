@@ -1,0 +1,352 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+        </div>
+        <!-- Breadcrumb -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Trámites</a></li>
+            <li class="breadcrumb-item active">Nuevo trámite</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+  <section class="content">
+    <div class="row" >
+      <div class="col-md-12">
+        <div id="stepwizard">
+          <ul>
+            <li><a href="#step1"><span><i class="fa fa-list-alt"></i></span><br><small>1 - Elegí el trámite.</small></a></li>
+            <li><a href="#step2"><span><i class="fa fa-pencil"></i></span><br><small>2 - Completa el formulario.</small></a></li>
+            <li><a href="#step3"><span><i class="fa fa-check-square-o"></i></span><br><small>3 - Confirmá los datos ingresados</small></a></li>
+            <li><a href="#step4"><span><i class="fa fa-money"></i></span><br><small>4 -  Realizá el pago</small></a></li>
+          </ul>
+
+          <!-- DIV -->
+          <div>
+            <!-- DIV Elegir el trámite -->
+            <div id="step1">
+                <section class="invoice">
+                  <!-- titulo row -->
+                  <div class="col-xs-12 text-center">
+                    <h2 class="page-header">
+                      Tipos de trámites
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+
+                  <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                      <label>
+                        <input type="radio" name="tramite" class="card-input-element" />
+
+                        <div class="card card-input text-center">
+                          <div class="small-box bg-info-gradient">
+                            <div class="inner">
+                              <h4 class="card-header">Búsqueda de titulares dominiales</h4>
+                              <p class="lead">Búsqueda de inmuebles registrados a nombre de una persona humana ó persona jurídica, según el Índice de Titulares de Dominio.</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fa fa-list-alt"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </label>
+
+                    </div>
+                    <div class="col-md-4">
+                      <label>
+                        <input type="radio" name="tramite" class="card-input-element" />
+
+                        <div class="card card-input text-center">
+                          <div class="small-box bg-info-gradient">
+                            <div class="inner">
+                              <h4 class="card-header">Búsqueda de estado jurídico de inmueble</h4>
+                              <p>Verificar el estado actual de la propiedad respecto a cargas y gravámenes que pudieran figurar asentadas en el registro</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fa fa-list-alt"></i>
+                            </div>
+                          </div>
+                        </div>
+
+                      </label>
+                    </div>
+                    <div class="col-md-2"></div>
+
+                  </div>
+
+                </section>
+              </div>
+            <!-- DIV Completa formulario -->
+            <div id="step2">
+                <section class="invoice">
+                  <!-- titulo row -->
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <h3 class="page-header">
+                        Datos de identidad de la persona
+                      </h3>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <form>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="inputApellido">Apellido:</label>
+                        <input type="text" class="form-control" id="inputApellido" placeholder="">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputNombres">Nombres:</label>
+                        <input type="text" class="form-control" id="inputNombres" placeholder="">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputEstadoCivil">Estado Civil</label>
+                        <select id="inputEstadoCivil" class="form-control">
+                          <option selected>Soltero/a</option>
+                          <option>Casado/a.</option>
+                          <option>Divorciado/a</option>
+                          <option>Viudo/a</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="inputTipoDoc">Tipo de documento:</label>
+                        <select id="inputTipoDoc" class="form-control">
+                          <option selected>Documento Nacional de Identidad (DNI)</option>
+                          <option>Cédula de Identidad (CI)</option>
+                          <option>Libreta de Enrolamiento (LE)</option>
+                          <option>Libreta Cívica (LC)</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="inputNumeroDocumento">Número:</label>
+                        <input type="text" class="form-control" id="inputNumeroDocumento">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="inputNacionalidad">Nacionalidad</label>
+                        <input type="text" class="form-control" id="inputNacionalidad">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="inputFecha">Fecha de nacimiento:</label>
+                        <input class="form-control" type="date" id="inputFecha">
+                      </div>
+                    </div>
+                    <br>
+                    <label>Datos del cónyugue</label>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputApellidoConyugue">Apellido</label><input type="text" class="form-control" id="inputApellidoConyugue">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputNombresConyugue">Nombres</label><input type="text" class="form-control" id="inputNombresConyugue">
+                      </div>
+                    </div>
+                  </form>
+                </section>
+              </div>
+            <!-- DIV Confirma los datos -->
+            <div id="step3">
+              <section class="invoice">
+                <!-- titulo row -->
+                <div class="col-xs-12">
+                  <h2 class="page-header">
+                    Confirmá los datos ingresados
+                  </h2>
+                </div>
+                <form>
+                  <fieldset disabled>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Tipo de trámite</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <input type="text" id="disabledInputTramite" class="form-control" placeholder="Busqueda de titulares dominiales">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Datos de identidad de la persona</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputApellido">Apellido</label>
+                        <input type="text" id="disabledInputApellido" class="form-control" placeholder="Perez">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNombre">Nombre</label>
+                        <input type="text" id="disabledInputNombre" class="form-control" placeholder="Juan">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputEstado">Estado Civil</label>
+                        <input type="text" id="disabledInputEstado" class="form-control" placeholder="Soltero">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNumero">Numero de documento</label>
+                        <input type="text" id="disabledInputNumero" class="form-control" placeholder="25999222">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNacionalidad">Nacionalidad</label>
+                        <input type="text" id="disabledInputNacionalidad" class="form-control" placeholder="Argentino">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputFecha">Fecha de nacimiento</label>
+                        <input type="text" id="disabledInputFecha" class="form-control" placeholder="02/10/1995">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Datos del cónyugue</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="disabledInputApellidoConyugue">Apellido</label>
+                        <input type="text" class="form-control" id="disabledInputApellidoConyugue" placeholder="Diaz">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="disabledInputNombresConyugue">Nombres</label>
+                        <input type="text" class="form-control" id="disabledInputNombresConyugue" placeholder="María">
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+
+              </section>
+            </div>
+            <!-- DIV Realiza el Pago -->
+            <div id="step4">
+                <section style="padding-bottom: 50px;" class="invoice">
+                  <!-- titulo row -->
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <h3>
+                        Método de pago
+                      </h3>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- info row -->
+                  <div class="row invoice-info">
+                    <div class="col-sm-4 invoice-col">
+                      De
+                      <address>
+                        <strong>Secretaría de Tierras y Hábitat Social.</strong><br>
+                        Teléfono: (3804) 426-352<br>
+                        Email: info@secretariadetierras.com.ar
+                      </address>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4 invoice-col">
+                      Para
+                      <address>
+                        <strong>Arroyo Walter</strong><br>
+                        Teléfono: (3804) 443867<br>
+                        Email: walterarroyo@gmail.com
+                      </address>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4 invoice-col">
+                      <strong>Factura #00001</strong><br>
+                      <br>
+                      <strong>Numero de orden:</strong> A0001<br>
+                      <strong>Fecha:</strong> 2/12/2020<br>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+
+                  <!-- Table row -->
+                  <div class="row">
+                    <div class="col-xs-12 table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                        <tr>
+                          <th>Producto</th>
+                          <th>Descripción</th>
+                          <th>Subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+
+                          <td>Minuta H</td>
+                          <td>Búsqueda de titulares dominiales</td>
+                          <td>$250.00</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+
+                  <div class="row">
+                    <div class="col-md-8"></div>
+                    <!-- /.col -->
+                    <div class="col-md-4">
+                      <p class="lead">Monto adeudado:</p>
+
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tbody>
+                          <tr>
+                            <th style="width:50%">Subtotal:</th>
+                            <td>$250.00</td>
+                          </tr>
+                          <tr>
+                            <th>IVA 20%:</th>
+                            <td>$50.00</td>
+                          </tr>
+                          <tr>
+                            <th>Total:</th>
+                            <td>$300.00</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+
+                  <!-- este row no deberia aparacer cuando se imprime la pagina -->
+                  <div class="row no-print pull-right">
+                    <div class="col-xs-12">
+                      <a href="" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+                      <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Pagar
+                      </button>
+                    </div>
+                  </div>
+                </section>
+               </div>
+
+            <!--/ Fin Div -->
+          </div>
+
+          <!--/ FIN StepWizard  -->
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+

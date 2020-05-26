@@ -1,42 +1,122 @@
-<app-navbar></app-navbar>
-<!-- Login -->
+
+<div class="wrapper">
+
+
+ <!-- Navbar -->
+<nav class="main-header navbar layout-navbar-fixed navbar-expand navbar-static-top" id="navbar">
+    <div class="container">
+      <a href="/"routerLink="/" class="brand-link navbar-brand">
+        <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+        <span class="brand-text text-light">SGTI</span>
+      </a>
+      <!-- Right navbar links -->
+      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+        <li class="nav-item">
+          <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Registrarse</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+</nav>
+
+<!-- Login
 <div class="container">
-<div class="row text-center">
-    <div class="col-md-12">
-        <div class="box box-solid box-info" id="box-signin">
-          <div class="box-header">
-            <h2 class="display-4 text-uppercase">Iniciar Sesión</h2>
-          </div>
-          <div class="box-body">
-            <form class="form-horizontal" [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-md-4 control-label">Correo:</label>
-                      <div class="col-md-6">
-                    <input type="email" class="form-control" formControlName = "email" id="inputEmail3" placeholder="usuario@mail.com">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-md-4 control-label">Contraseña:</label>
-                  <div class="col-md-6">
-                    <input type="password" class="form-control" formControlName = "password" id="password" placeholder="********">
+  <div class="row">
+    <div class="col-md-5 text-center">
+      <div class="box box-solid box-primary" id="box-signin">
+        <div class="box-header">
+          <h3>Iniciar Sesión</h3>
+        </div>
+        <div class="box-body">
+          <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
+            <div class="box-body">
+              <div class="col-md-12 input-group">
+                <input type="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
                   </div>
                 </div>
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <div class="col-md-12">
-                  <button class="btn btn-lg btn-primary btn-block" type="submit" >Iniciar Sesión</button>
+              <div class="col-md-12 input-group mt-3 mb-3">
+                <div>
+                  <input type="password" class="form-control" formControlName="password" id="password"
+                    placeholder="Password">
                 </div>
               </div>
-              <!-- /.box-footer -->
-            </form>
+            </div>
+            <div class="box-footer">
+              <div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="showToatr()">Iniciar
+                  Sesión</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
+
+<div class="login-box text-center">
+  <!--<div class="login-logo">
+        <img src="./assets/dist/img/avatar.png" id="img-logo">
+      </div>-->
+  <div class="login-box-body">
+    <div>
+      <div class="login-logo">
+        <img src="./assets/dist/img/avatar.png" id="img-logo">
+      </div>
+      <h3>Iniciar Sesión</h3>
+    </div>
+    <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
+      <div class="box-body">
+        <div class="form-group input-group mb-3">
+          <input type="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fa fa-envelope"></span>
+            </div>
           </div>
         </div>
-        <!-- /.box-header -->
-        <!-- form start -->
-    </div>
+        <div class="form-group input-group mb-3">
+            <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fa fa-lock"></span>
+              </div>
+            </div>
+          </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+              <div class="checkbox checkbox-primary pull-left p-t-0">
+                  <input formControlName="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+                  <label for="checkbox-signup"> Recuérdame </label>
+              </div>
+              <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a> </div>
+        </div>
+      </div>
+      <div class="box-footer">
+        <div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="showToatr()">Ingresar</button>
+        </div>
+        <div class="social-auth-links text-center">
+          <button class="btn btn-googleplus" id="btnGoogle" type="button">
+            <i class="fa fa-google-plus mr-2"></i>Inicia sesión con Google
+          </button>
+        </div>
+        <div class="col-md-12">
+          <a href="/user/signup">
+            <h5>Crear Cuenta</h5>
+          </a>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
+
+</div>
+
 
 <app-footer></app-footer>

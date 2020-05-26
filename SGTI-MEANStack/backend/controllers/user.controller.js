@@ -4,31 +4,63 @@ const jwt = require('jsonwebtoken');
 const usersCtrl = {}
 
 usersCtrl.getUser = async (req, res) => {
-    const user = await User.findById(req.params.id);
-    res.json(user);
+    const id = req.params.id;
+    if (!id) {
+        return res.status(400).json({
+            ok: false,
+            message: "Error al obtener usuario por id"
+        });
+    }
+    const user = await User.findById(id);
+    res.status(200).json({
+        ok: true,
+        usuario: user
+    });
 };
 
 usersCtrl.getAllUser = async (req, res) => {
     const users = await User.find();
-    res.json(users);
+    if (!users) {
+        return res.status(400).json({
+            ok: false,
+            message: 'Error al obtener usuarios'
+        });
+    }
+
+    return res.status(200).json({
+        ok: true,
+        usuarios: users
+    });
 };
 
 usersCtrl.editUser = async (req, res) => {
-    const { id } = req.params;
-    const user = {
-        apellido: req.body.apellido,
+    const dataUser = {
         nombre: req.body.nombre,
         telefono: req.body.telefono,
         email: req.body.email,
-        password: req.body.password
+        img: req.body.img,
+        roles: req.body.roles
     }
-    await User.findByIdAndUpdate(id, { $set: user }, { new: true });
-    res.json(user);
+    if (!dataUser) {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'Error al obtener datos del usuario'
+        });
+    }
+    await User.findByIdAndUpdate(req.params.id, { $set: dataUser }, { new: true });
+    return res.status(200).json({
+        ok: true,
+        usuario: dataUser,
+        message: "Usuario actualizado correctamente"
+    })
 };
 
 usersCtrl.deleteUser = async (req, res) => {
     await User.findByIdAndRemove(req.params.id);
-    res.json({ status: 'Usuario Eliminado' });
+    return res.status(200).json({
+        ok: true,
+        message: 'Usuario Eliminado'
+    });
 };
 
 module.exports = usersCtrl;
