@@ -1,11 +1,19 @@
 .sidebar {
-	overflow-y: initial !important;
+    overflow-y: initial !important;
+    background: #3c3d47;
 }
-
 .main-sidebar:before {
     width: 350px !important;
 }
 
+.main-sidebar{
+    background: #3c3d47;
+}
+
 .main-header:before {
    margin-left: 350px !important;
+}
+
+.elevation-4{
+    box-shadow: none !important;
 }

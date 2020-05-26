@@ -1,7 +1,5 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const googleStrategy = require('passport-google-oauth');
 
 //Google-Auth-Library
 const { OAuth2Client } = require('google-auth-library');
@@ -23,13 +21,11 @@ usersCtrl.createUser = async (req, res, next) => {
         expiresIn: expiresIn
     });
     const dataUser = {
-        apellido: user.apellido,
-        nombre: user.nombre,
-        email: user.email,
         token: token,
-        expiresIn: expiresIn
+        expiresIn: expiresIn,
+        usuario: user
     }
-    res.json({ auth: true, dataUser, token });
+    res.status(200).json({ auth: true, dataUser, user });
 };
 
 //=================================================================
@@ -41,15 +37,15 @@ usersCtrl.loginUserGoogle = async (req, res) => {
 
     const token = req.body.token;
 
-        const login = await client.verifyIdToken({
-            idToken: token,
-            idClient: CLIENT_ID,
-        });
+    const login = await client.verifyIdToken({
+        idToken: token,
+        idClient: CLIENT_ID,
+    });
 
-        const payload = login.getPayload();
-        const userid = payload['sub']
-        // If request specified a G Suite domain:
-        //const domain = payload['hd'];
+    const payload = login.getPayload();
+    const userid = payload['sub']
+    // If request specified a G Suite domain:
+    //const domain = payload['hd'];
 
     User.findOne({ email: payload.email }, (err, usuario) => {
         if (err) {
@@ -69,16 +65,21 @@ usersCtrl.loginUserGoogle = async (req, res) => {
             } else {
 
                 usuario.password = ':)';
+                const expiresIn = 14400;
 
-                const token = jwt.sign({ usuario: usuario }, 'mySecretToken', { 
-                    expiresIn: 14400 // 4 horas
-                }); 
+                const token = jwt.sign({ usuario: usuario }, 'mySecretToken', {
+                    expiresIn: expiresIn // 4 horas
+                });
 
-                res.status(200).json({
-                    ok: true,
-                    usuario: usuario,
+                const dataUser = {
                     token: token,
-                    id: usuario._id
+                    expiresIn: expiresIn,
+                    usuario: usuario
+                }
+                res.status(200).json({
+                    auth: true,
+                    dataUser: dataUser,
+                    usuario: usuario
                 });
 
             }
@@ -101,16 +102,19 @@ usersCtrl.loginUserGoogle = async (req, res) => {
                         errors: err
                     });
                 }
-
+                const expiresIn = 14400;
                 const token = jwt.sign({ googleUser: userDB }, 'mySecretToken', {
-                    expiresIn: 14400 //4 horas
+                    expiresIn: expiresIn //4 horas
                 });
-
-                return res.status(200).json({
-                    ok: true,
-                    googleUser: userDB,
+                const dataUser = {
                     token: token,
-                    id: userDB._id
+                    expiresIn: expiresIn,
+                    usuario: userDB
+                }
+                return res.status(200).json({
+                    auth: true,
+                    dataUser: dataUser,
+                    usuario: userDB
                 });
             });
         }
@@ -132,11 +136,11 @@ usersCtrl.loginUser = async (req, res, next) => {
             expiresIn: expiresIn
         });
         const dataUser = {
-            email: user.email,
             token: token,
-            expiresIn: expiresIn
+            expiresIn: expiresIn,
+            usuario: user
         }
-        res.status(200).json({ auth: true, dataUser, token });
+        res.status(200).json({ auth: true, dataUser, user });
     } else {
         return res.status(401).send({ auth: false, token: null });
     };

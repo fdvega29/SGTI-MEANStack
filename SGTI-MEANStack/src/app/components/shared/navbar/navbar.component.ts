@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserServiceService} from "../../user/service/user.service";
+import { sessionUser } from '../../models/session.module';
+import { UsuarioService } from '../../services/usuario.service';
+import { AutenticacionService } from '../../services/autenticacion.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,12 +10,13 @@ import {UserServiceService} from "../../user/service/user.service";
 })
 export class NavbarComponent implements OnInit {
 
+  usuario: sessionUser;
   title = 'SGTI';
 
-  constructor( public userService : UserServiceService) { }
+  constructor(public authService: AutenticacionService,public userService : UsuarioService) { }
 
   ngOnInit() {
-    
+    this.usuario = this.userService.getCurrentUser();
   }
 
 }

@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { UserServiceService } from '../../user/service/user.service';
-import { UsersModule } from '../../user/model/user/user.module';
+import { sessionUser } from '../../models/session.module';
+import { UsuarioService } from '../../services/usuario.service';
+
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
-  providers: [UsersModule]
+  providers: []
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(public userService: UserServiceService, public usuario: UsersModule) { }
+  constructor(public usuarioService: UsuarioService) {}
 
+  usuario: sessionUser;
   title = "SGTI";
   ngOnInit() {
+    this.usuario = this.usuarioService.getCurrentUser();
+    console.log(this.usuario);
   }
 
 }

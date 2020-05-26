@@ -22,16 +22,17 @@ import { CoreModule } from './components/core/core.module';
 import { CoreRoutingModule } from './components/core/core-routing.module';
 import { HomeComponent } from './components/core/home/home.component';
 //Services
-import { UserServiceService } from './components/user/service/user.service';
 import { AuthGuard} from './components/core/guards/guards';
 import {SharedModule} from "./components/shared";
+import { PipesModule } from './components/pipes/pipes/pipes.module';
+import { AutenticacionService } from './components/services/autenticacion.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,9 +48,10 @@ import {SharedModule} from "./components/shared";
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    PipesModule
   ],
-  providers: [UserServiceService, AuthGuard],
+  providers: [AutenticacionService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,7 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { PipesModule } from '../pipes/pipes/pipes.module';
 
 //Servicios
-import { UserServiceService } from '../user/service/user.service';
+import { AutenticacionService } from '../services/autenticacion.service';
 
 @NgModule({
     imports: [
@@ -25,7 +25,7 @@ import { UserServiceService } from '../user/service/user.service';
         SidebarComponent,
         FooterComponent
     ],
-  providers: [UserServiceService]
+  providers: [AutenticacionService]
 })
 
 export class SharedModule{}

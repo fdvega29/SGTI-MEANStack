@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 //Service
-import { UserServiceService } from '../../service/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { usersModule } from '../../../models/user.module';
+import { AutenticacionService } from 'src/app/components/services/autenticacion.service';
+import { UsuarioService } from 'src/app/components/services/usuario.service';
 
 declare const gapi: any;
 
@@ -19,6 +21,8 @@ export class SigninComponent implements OnInit {
   recuerdame: boolean = false;
   email: string;
   auth2: any;
+  
+  usuario: usersModule;
 
   createFormGroupUser() {
     return new FormGroup({
@@ -28,7 +32,7 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  constructor(private usersService: UserServiceService, private router: Router, private toastr: ToastrService) {
+  constructor(private authService: AutenticacionService, private userService: UsuarioService, private router: Router, private toastr: ToastrService) {
     this.signinFormUser = this.createFormGroupUser();
   }
 
@@ -45,9 +49,11 @@ export class SigninComponent implements OnInit {
 
   onSignin(FormGroup): void {
     console.log(this.signinFormUser.value);
-    this.usersService.signin(FormGroup.value)
+    this.authService.signin(FormGroup.value)
       .subscribe(
-        res => {
+        data => {
+          console.log(data.dataUser.usuario);
+          this.userService.setUser(data.dataUser.usuario);
           window.location.href = '/dashboard/principal';
           //this.router.navigate(['/dashboard/principal']);
         },
@@ -72,14 +78,14 @@ export class SigninComponent implements OnInit {
 
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {}, (googleUser) => {
-
       const profile = googleUser.getBasicProfile();
       const token = googleUser.getAuthResponse().id_token;
-      this.usersService.signinGoogle(token)
-        .subscribe(resp => {
+      this.authService.signinGoogle(token)
+        .subscribe(data => {
+          this.userService.setUser(data.dataUser.usuario)
           window.location.href = 'dashboard/principal';
           //this.router.navigate(['dashboard/principal']);
-          console.log(resp);
+          //console.log(data);
         },
         err => console.log(err));
       console.log(profile);

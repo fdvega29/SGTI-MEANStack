@@ -1,84 +1,57 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
-	<section class="content-header">
-	  <div class="container-fluid">
-	    <div class="row mb-2">
-	      <div class="col-sm-6">
-	      </div>
-	      <!-- Breadcrumb -->
-	      <div class="col-sm-6">
-	        <ol class="breadcrumb float-sm-right">
-	          <li class="breadcrumb-item"><a href="#">Perfil de Usuario</a></li>
-	          <li class="breadcrumb-item active">Ver perfil</li>
-	        </ol>
-	      </div>
-	    </div>
-	  </div><!-- /.container-fluid -->
+	<section class="content-header" style="background: #3282b8 !important;">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1 class="m-0 text-white">Perfil de usuario</h1>
+				</div>
+				<!-- Breadcrumb -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item text-white">Perfil de usuario</li>
+						<li class="breadcrumb-item active text-white">Ver Perfil</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
 	</section>
-	<section class="content">
-	      <div class="row">
-          <div class="col-md-2"></div>
-	      	<div class="col-md-8">
-	            <div class="card card-secondary card-outline">
-	              <div class="card-body box-profile">
-	                <div class="text-center">
-	                  <img class="profile-user-img img-fluid img-circle" src="assets/dist/img/avatar.png" alt="User profile picture">
-	                </div>
-					<h3 class="card-title text-center">Imagen de usuario</h3>
-	              </div>
-	              <!-- /.card-body -->
-	            </div>
-	            <!-- /.card -->
-	      	</div>
-          <div class="col-md-2"></div>
-          <div class="col-md-2"></div>
-	      	<div class="col-md-8">
-	            <!-- About Me Box -->
-	            <div class="card card-secondary">
-	              <div class="card-header">
-	                <h3 class="card-title text-center"> Mis datos</h3>
-	              </div>
-	              <!-- /.card-header -->
-	              <div class="card-body">
-	                <strong><i class="fa fa-address-card" aria-hidden="true"></i> Apellido</strong>
 
-	                <p class="text-muted">
-	                  Arroyo
-	                </p>
-
-	                <hr>
-	                <strong><i class="fa fa-address-card-o" aria-hidden="true"></i> Nombre</strong>
-
-	                <p class="text-muted">
-	                  Walter
-	                </p>
-
-	                <hr>
-
-
-	                <strong><i class="fa fa-phone-square" aria-hidden="true"></i> Teléfono</strong>
-
-	                <p class="text-muted">3804 443867</p>
-
-	                <hr>
-
-	                <strong><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo electrónico</strong>
-
-	                <p class="text-muted">hualterio@gmail.com</p>
-
-	                <hr>
-
-	              </div>
-	              <!-- /.card-body -->
-	              <div class="card-footer">
-  		                <button type="button" class="btn btn-block btn-outline-secondary" routerLinkActive="router-link-active" routerLink="/dashboard/editar-perfil">
-	                	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
-	                </button>
-	              </div>
-	            </div>
-	        </div>
-          <div class="col-md-2"></div>
+	<section class="content mt-2">
+		<div class="row animated fadeIn">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="card card-widget widget-user">
+					<div class="widget-user-header bg-primary text-center">
+						<!--<h3 class="widget-user-desc text-white">Perfil de usuario</h3>-->
+					</div>
+					<br>
+					<div class="widget-user-image">
+						<img class="img-circle elevation-1" [src]="usuario.img">
+					</div>
+					<div class="card-body box-profile">
+						<ul class="list-group list-group-unbordered mt-3">
+							<li class="list-group-item">
+								<h3 class="float-lefth">{{usuario.nombre}} <i class="fa fa-circle" id="estado"></i></h3>
+							</li>
+							<li class="list-group-item">
+								<label class="text-muted">Correo</label>
+								<h5 class="float-lefth">{{usuario.email}}</h5>
+							</li>
+							<li class="list-group-item">
+								<label class="text-muted">Telefono</label>
+								<h5 class="float-lefth">{{usuario.telefono}}</h5>
+							</li>
+						</ul>
+					</div>
+					<div class="card-footer text-muted">
+						<button type="button" class="btn btn-info btn-lg btn-block" (click)="getDataUser(usuario)" [routerLink]="['/dashboard/update/profile/', usuario._id]" routerLinkActive="router-link-active">
+							Actualizar informacion
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 </div>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersModule } from '../../model/user/user.module';
-import { UserServiceService } from '../../service/user.service';
+import { usersModule } from '../../../models/user.module';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AutenticacionService } from 'src/app/components/services/autenticacion.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  providers: [UsersModule]
+  providers: [usersModule]
 })
 export class SignupComponent implements OnInit {
 
@@ -17,7 +17,6 @@ export class SignupComponent implements OnInit {
 
   createFormGroupUser() {
     return new FormGroup({
-      apellido: new FormControl('', [Validators.required]),
       nombre: new FormControl('', Validators.required),
       telefono: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -27,7 +26,7 @@ export class SignupComponent implements OnInit {
   }
 
 
-  constructor(private usersService: UserServiceService, private router: Router, private toastr: ToastrService) {
+  constructor(private authService: AutenticacionService, private router: Router, private toastr: ToastrService) {
       this.signupFormUser = this.createFormGroupUser();
    }
 
@@ -45,9 +44,9 @@ export class SignupComponent implements OnInit {
 
   onSignup(FormGroup): void{
     //console.log(this.signupFormUser.value);
-    this.usersService.signup(FormGroup.value)
-    .subscribe(
-      res =>{
+    this.authService.signup(FormGroup.value)
+    .subscribe( res => {
+      //this.usersService.setUser(res);
       this.router.navigate(['user/signin']);
     },
     err => console.log(err)
