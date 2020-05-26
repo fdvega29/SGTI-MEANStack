@@ -11,8 +11,7 @@ export class SidebarService {
             titulo: 'Perfil de Usuario',
             icono: 'fa fa-user-circle-o',
             submenu: [
-              {titulo: 'Perfil', url: '/dashboard/ver-perfil'},
-              {titulo: 'Editar perfil', url: '/dashboard/editar-perfil'},
+              {titulo: 'Perfil', url: '/dashboard/perfil'},
               {titulo: 'Cambiar contraseña', url: '/dashboard/cambiar-password'},
             ]
           },
