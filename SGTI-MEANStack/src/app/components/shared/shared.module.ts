@@ -8,11 +8,14 @@ import { PipesModule } from '../pipes/pipes/pipes.module';
 
 //Servicios
 import { UserServiceService } from '../user/service/user.service';
+import {SidebarService} from "./sidebar/sidebar.service";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     imports: [
         RouterModule,
-        PipesModule    
+        PipesModule,
+        CommonModule
     ],
     declarations: [
         NavbarComponent,
@@ -25,7 +28,7 @@ import { UserServiceService } from '../user/service/user.service';
         SidebarComponent,
         FooterComponent
     ],
-  providers: [UserServiceService]
+  providers: [UserServiceService, SidebarService]
 })
 
 export class SharedModule{}
