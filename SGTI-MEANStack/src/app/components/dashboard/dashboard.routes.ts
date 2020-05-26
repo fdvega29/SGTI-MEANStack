@@ -7,7 +7,6 @@ import {PrincipalComponent } from "./principal/principal.component";
   //Perfil de Usuario
   import { PerfilComponent } from './PerfildeUsuario/perfil/perfil.component';
   import { CambiarPasswordComponent } from './PerfildeUsuario/cambiar-password/cambiar-password.component';
-  import { EditarPerfilComponent } from './PerfildeUsuario/editar-perfil/editar-perfil.component';
   //Tramites
   import {GuiaTramiteComponent} from "./Tramites/guia-tramite/guia-tramite.component";
   import {MisTramitesComponent} from "./Tramites/mis-tramites/mis-tramites.component";
@@ -19,6 +18,7 @@ import {PrincipalComponent } from "./principal/principal.component";
 
 //Servicies
 import { AuthGuard} from '../../components/core/guards/guards';
+import { UpdateProfileComponent } from './PerfildeUsuario/update-profile/update-profile.component';
 
 const dashboardRoutes: Routes = [
 	{
@@ -26,9 +26,9 @@ const dashboardRoutes: Routes = [
 		component: DashboardComponent,
 		children: [
 		  //Perfil de Usuario
-			{ path: 'ver-perfil', component: PerfilComponent},
-			{ path: 'editar-perfil', component: EditarPerfilComponent},
-			{ path: 'cambiar-password', component: CambiarPasswordComponent},
+			{ path: 'perfil', component: PerfilComponent},
+      { path: 'cambiar-password', component: CambiarPasswordComponent},
+      { path: 'update/profile/:id', component: UpdateProfileComponent, data: {titulo: 'Editar perfil usuario'}},
       //Tramites
       { path: 'nuevo-tramite', component: NuevoTramiteComponent},
       { path: 'guia-tramite', component: GuiaTramiteComponent},
@@ -39,7 +39,7 @@ const dashboardRoutes: Routes = [
 
       //Principal
       { path: 'principal', component: PrincipalComponent
-      //,canActivate: [AuthGuard]
+      ,canActivate: [AuthGuard]
       }
 
   //      ,{ path: 'dashboard', component:PrincipalComponent, pathMatch: 'full'}

@@ -7,7 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { PipesModule } from '../pipes/pipes/pipes.module';
 
 //Servicios
-import { UserServiceService } from '../user/service/user.service';
+import { AutenticacionService } from '../services/autenticacion.service';
 import {SidebarService} from "./sidebar/sidebar.service";
 import {CommonModule} from "@angular/common";
 
@@ -28,7 +28,7 @@ import {CommonModule} from "@angular/common";
         SidebarComponent,
         FooterComponent
     ],
-  providers: [UserServiceService, SidebarService]
+  providers: [AutenticacionService,SidebarService]
 })
 
 export class SharedModule{}

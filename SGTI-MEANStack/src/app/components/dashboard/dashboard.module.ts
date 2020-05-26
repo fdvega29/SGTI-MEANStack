@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 //Components
 import { DashboardComponent } from './dashboard.component';
@@ -7,7 +11,6 @@ import { PrincipalComponent } from './principal/principal.component';
   //Perfil de Usuario
   import { PerfilComponent } from './PerfildeUsuario/perfil/perfil.component';
   import { CambiarPasswordComponent } from './PerfildeUsuario/cambiar-password/cambiar-password.component';
-  import { EditarPerfilComponent } from './PerfildeUsuario/editar-perfil/editar-perfil.component';
   //Mis Tramites
   import { NuevoTramiteComponent } from './Tramites/nuevo-tramite/nuevo-tramite.component';
   import { GuiaTramiteComponent } from './Tramites/guia-tramite/guia-tramite.component';
@@ -20,36 +23,39 @@ import { PrincipalComponent } from './principal/principal.component';
 import { SharedModule } from '../shared/shared.module';
 
 //Servicios
-import { UserServiceService } from '../user/service/user.service';
 import { AuthGuard} from '../../components/core/guards/guards';
+import { AutenticacionService } from '../services/autenticacion.service';
+
 //Rutas
 import { Dashboard_ROUTES } from './dashboard.routes';
-
-
+import { CommonModule } from '@angular/common';
+import { UpdateProfileComponent } from './PerfildeUsuario/update-profile/update-profile.component';
 
 @NgModule({
 	declarations: [
 		DashboardComponent,
 		PerfilComponent,
 		CambiarPasswordComponent,
-		EditarPerfilComponent,
 		NuevoTramiteComponent,
 		GuiaTramiteComponent,
 		MisTramitesComponent,
 		InformacionComponent,
 		PreguntasComponent,
-		PrincipalComponent
+		PrincipalComponent,
+		UpdateProfileComponent,
 	],
 	exports: [
 		PerfilComponent,
 		CambiarPasswordComponent,
-		EditarPerfilComponent
 	],
 	imports:[
 		SharedModule,
-		Dashboard_ROUTES
+		Dashboard_ROUTES,
+		CommonModule,
+		FormsModule,
+		HttpClientModule
 	],
-	providers: [UserServiceService, AuthGuard]
+	providers: [AutenticacionService, AuthGuard]
 })
 
 export class DashboardModule { }

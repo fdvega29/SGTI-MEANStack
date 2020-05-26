@@ -7,8 +7,6 @@ mongoose.set('useCreateIndex', true);
 
 const usersSchema = new Schema({
 
-    apellido: { type: String, required: false , min: 5, trim: true},
-
     nombre: { type: String, required: [true, 'El nombre es requerido'], min: 5, trim: true},
 
     email: { type: String, required: [true, 'El correo es requerido'], unique: true, trim: true,},
@@ -17,7 +15,7 @@ const usersSchema = new Schema({
 
     password: { type: String, required: [true, 'La contraseña es requerida'], trim: true},
 
-    img : { type: String, required: false},        
+    img : { type: String, required: false, default: "assets/dist/img/avatar.png"},        
 
     roles: { type: String, required: false, default: "USER_ROLE"},
 

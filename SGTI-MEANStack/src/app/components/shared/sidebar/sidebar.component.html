@@ -1,25 +1,23 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="#" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4">
-    <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png"
-         alt="AdminLTE Logo"
-         class="brand-image img-circle elevation-3"
-         style="opacity: .8">
-    <span class="brand-text">{{title}}</span>
+  <a href="#" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
+    <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
+    <span class="brand-text text-white">SGTI</span>
   </a>
 
-<!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="assets/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image widget-user-image text-center">
+          <img [src]="usuario.img"class="img-circle elevation-2" alt="User Image">
         </div>
-        <div class="info">
-          <a href="#" routerLink="/dashboard/ver-perfil" class="d-block" routerLinkActive="router-link-active">{{'Arroyo Walter' | imagen}}</a>
-        </div>
-      </div>
+          <div class="info m-auto">
+            <h5 class="text-white d-block" style="font-size: 19px !important;">{{usuario.nombre}}</h5>
+            <span class="text-white d-block" style="font-size: 15px !important;">{{usuario.email}}</span>
+          </div>
+    </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -124,7 +122,14 @@
             </ul>
           </li>
 
-
+          <li class="nav-item">
+            <ul class="nav">
+              <a href="#" (click)="usuarioService.logout()" routerLinkActive="router-link-active" class="nav-link">
+                <i class="fa fa-sign-out"> </i>
+                <p>Cerrar sessión</p>
+              </a>
+            </ul>
+          </li>
 
         </ul>
       </nav>
