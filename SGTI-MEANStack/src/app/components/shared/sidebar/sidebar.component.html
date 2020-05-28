@@ -22,109 +22,56 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav flex-column nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
-<!--          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-              <p>
-                 Perfil
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/editar-perfil" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Editar Perfil</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/cambiar-password" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Cambiar contraseña</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="fa fa-file-text-o" aria-hidden="true"></i>
-              <p>
-                 Trámites
-                <span class="right fa fa-angle-left"></span>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/guia-tramite" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle nav-icon"></i>
-                  <p>Guía de uso</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/nuevo-tramite" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle nav-icon"></i>
-                  <p>Nuevo trámite</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/mis-tramites" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle nav-icon"></i>
-                  <p>Mis trámites</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
-              <p>
-                 Acerca de
-                <span class="right fa fa-angle-left"></span>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/informacion" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Información</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" routerLink="/dashboard/preguntas" routerLinkActive="router-link-active">
-                  <i class="nav-icon fa fa-circle-o text-info"></i>
-                  <p>Preguntas Frecuentes</p>
-                </a>
-              </li>
-            </ul>
-          </li>-->
-
-
 
           <!-- MenuSidebar dinamico -->
 
-          <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i [class]="menuSidebar.icono"></i>
-              <p>
-                {{menuSidebar.titulo}}
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item">
-                <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>{{subMenus.titulo}}</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          <div *ngIf="roleUsuario=='USER_ROLE'; else MenuAdm">
+            <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
+              <a href="" class="nav-link">
+                <i [class]="menuSidebar.icono"></i>
+                <p>
+                  {{menuSidebar.titulo}}
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item">
+                  <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>{{subMenus.titulo}}</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </div>
 
+
+          <ng-template #MenuAdm>
+            <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item has-treeview">
+              <a href="" class="nav-link">
+                <i [class]="menuSidebar.icono"></i>
+                <p>
+                  {{menuSidebar.titulo}}
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item">
+                  <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>{{subMenus.titulo}}</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ng-template>
+
+
+
+        <!--Boton cerrar sesión-->
           <li class="nav-item">
             <ul class="nav">
-              <a href="#" (click)="usuarioService.logout()" routerLinkActive="router-link-active" class="nav-link">
+              <a href="#" (click)="_autenticacion.logout()" routerLinkActive="router-link-active" class="nav-link">
                 <i class="fa fa-sign-out"> </i>
                 <p>Cerrar sessión</p>
               </a>
