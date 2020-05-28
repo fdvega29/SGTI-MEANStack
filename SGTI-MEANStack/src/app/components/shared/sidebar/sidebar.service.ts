@@ -36,6 +36,32 @@ export class SidebarService {
       }
 ;
 
+  menuAdmin: any = {
+    elementos: [
+      {
+        titulo: 'Perfil del Administrador',
+        icono: 'fa fa-user-circle-o',
+        submenu: [
+          {titulo: 'Perfil', url: '/dashboard/perfil'},
+        ]
+      },
+      {
+        titulo: 'Trámites',
+        icono: 'fa fa-file-text-o',
+        submenu: [
+          { titulo: 'Gestionar trámites', url:'/dashboard/mis-tramites'},
+        ]
+      },
+      {
+        titulo: 'Acerca de',
+        icono: 'fa fa-info-circle',
+        submenu: [
+          { titulo: 'Información del Sistema', url:'/dashboard/informacion'},
+        ]
+      }
+    ]
+  }
+  ;
 
 
 
