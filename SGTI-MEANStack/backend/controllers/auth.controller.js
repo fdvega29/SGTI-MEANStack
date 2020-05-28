@@ -88,7 +88,8 @@ usersCtrl.loginUserGoogle = async (req, res) => {
         } else {
             const googleUser = new User();
 
-            googleUser.nombre = payload.name;
+            googleUser.apellido = payload.family_name;
+            googleUser.nombre = payload.given_name;
             googleUser.email = payload.email;
             googleUser.password = ':)';
             googleUser.img = payload.picture;

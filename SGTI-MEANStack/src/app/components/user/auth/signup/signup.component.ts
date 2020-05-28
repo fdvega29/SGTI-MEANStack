@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit {
 
   createFormGroupUser() {
     return new FormGroup({
+      apellido: new FormControl('', Validators.required),
       nombre: new FormControl('', Validators.required),
       telefono: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),

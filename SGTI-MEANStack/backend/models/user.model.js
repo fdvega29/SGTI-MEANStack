@@ -7,6 +7,8 @@ mongoose.set('useCreateIndex', true);
 
 const usersSchema = new Schema({
 
+    apellido: { type: String, required: [true, 'El apellido es requerido'], min: 5, trim: true},
+
     nombre: { type: String, required: [true, 'El nombre es requerido'], min: 5, trim: true},
 
     email: { type: String, required: [true, 'El correo es requerido'], unique: true, trim: true,},
