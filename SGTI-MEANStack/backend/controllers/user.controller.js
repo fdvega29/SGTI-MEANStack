@@ -35,6 +35,7 @@ usersCtrl.getAllUser = async (req, res) => {
 
 usersCtrl.editUser = async (req, res) => {
     const dataUser = {
+        apellido: req.body.apellido,
         nombre: req.body.nombre,
         telefono: req.body.telefono,
         email: req.body.email,
