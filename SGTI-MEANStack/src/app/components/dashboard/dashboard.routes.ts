@@ -26,19 +26,19 @@ const dashboardRoutes: Routes = [
 		component: DashboardComponent,
 		children: [
 		  //Perfil de Usuario
-			{ path: 'perfil', component: PerfilComponent},
-      { path: 'cambiar-password', component: CambiarPasswordComponent},
-      { path: 'update/profile/:id', component: UpdateProfileComponent, data: {titulo: 'Editar perfil usuario'}},
+			{ path: 'perfil', component: PerfilComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Perfil'}},
+      { path: 'cambiar-password', component: CambiarPasswordComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Cambiar contraseña'}},
+      { path: 'update/profile/:id', component: UpdateProfileComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Editar perfil usuario'}},
       //Tramites
-      { path: 'nuevo-tramite', component: NuevoTramiteComponent},
-      { path: 'guia-tramite', component: GuiaTramiteComponent},
-      { path: 'mis-tramites', component: MisTramitesComponent},
+      { path: 'nuevo-tramite', component: NuevoTramiteComponent, data: {seccion: 'Trámites', titulo: 'Nuevo trámite'}},
+      { path: 'guia-tramite', component: GuiaTramiteComponent, data: {seccion: 'Trámites', titulo: 'Guía de trámite'}},
+      { path: 'mis-tramites', component: MisTramitesComponent, data: {seccion: 'Trámites', titulo: 'Mis trámites'}},
       //AcercaDe
-      { path: 'informacion', component: InformacionComponent},
-      { path: 'preguntas', component: PreguntasComponent},
+      { path: 'informacion', component: InformacionComponent, data: {seccion: 'Acerca de', titulo: 'Información'}},
+      { path: 'preguntas', component: PreguntasComponent, data: {seccion: 'Acerca de',titulo: 'Preguntas Frecuentes'}},
 
       //Principal
-      { path: 'principal', component: PrincipalComponent
+      { path: 'principal', component: PrincipalComponent, data: {seccion: 'Inicio', titulo: 'Principal'}
       ,canActivate: [AuthGuard]
       }
 
