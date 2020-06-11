@@ -24,6 +24,7 @@ export class BreadcrumbsComponent implements OnInit {
         this.titulo = data.titulo;
         console.log(this.titulo);
         console.log(this.seccion);
+         //Titulo de la Pagina
         this.title.setTitle(this.titulo);
       })
   }

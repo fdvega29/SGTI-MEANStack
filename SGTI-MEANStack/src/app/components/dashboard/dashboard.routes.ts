@@ -31,7 +31,7 @@ const dashboardRoutes: Routes = [
       { path: 'update/profile/:id', component: UpdateProfileComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Editar perfil usuario'}},
       //Tramites
       { path: 'nuevo-tramite', component: NuevoTramiteComponent, data: {seccion: 'Trámites', titulo: 'Nuevo trámite'}},
-      { path: 'guia-tramite', component: GuiaTramiteComponent, data: {seccion: 'Trámites', titulo: 'Guía de trámite'}},
+      { path: 'guia-tramite', component: GuiaTramiteComponent, data: {seccion: 'Trámites', titulo: 'Guía de uso'}},
       { path: 'mis-tramites', component: MisTramitesComponent, data: {seccion: 'Trámites', titulo: 'Mis trámites'}},
       //AcercaDe
       { path: 'informacion', component: InformacionComponent, data: {seccion: 'Acerca de', titulo: 'Información'}},
