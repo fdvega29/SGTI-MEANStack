@@ -17,6 +17,7 @@
     </div><!-- /.container-fluid -->
   </section>
   <section class="content">
+    {{listadoTram | json}}
     <div class="row">
 
       <div class="col-12">
@@ -46,11 +47,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>01/02/2020</td>
-                  <td>Búsqueda de titulares dominiales</td>
-                  <td><span class="badge bg-warning">Iniciado</span></td>
+                <tr *ngFor="let dataMinH of listadoTram; index as i">
+                  <th scope="row">{{i+1}}</th>
+                  <td class="text-center">{{dataMinH.createdAt | date: "dd/MM/yyyy"}}</td>
+                  <td class="text-center">{{dataMinH.tipoTram}}</td>
+                  <td><span class="badge bg-warning">{{dataMinH.estadoTram}}</span></td>
                   <td>
                     <a href="" target="_blank" class="btn btn-outline-primary"><i class="fa fa-print"></i></a>
                     &nbsp;

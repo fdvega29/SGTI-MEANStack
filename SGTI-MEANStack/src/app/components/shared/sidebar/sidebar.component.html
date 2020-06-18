@@ -9,14 +9,22 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image widget-user-image text-center">
-          <img [src]="usuario.img"class="img-circle elevation-2" alt="User Image">
+    <div class="user-panel d-flex">
+       <div class="p-4">
+         <div class="row">
+           <div class="col-md-12 text-center">
+            <div class="image widget-user-image">
+              <img [src]="usuario.img"class="img-circle elevation-2" alt="User Image">
+            </div>
+           </div>
+           <div class="col-md-12 text-center">
+            <div class="info">
+              <h5 class="text-white" style="font-size: 19px !important;">{{usuario.apellido}} {{usuario.nombre}}</h5>
+              <span class="text-white" style="font-size: 15px !important;">{{usuario.email}}</span>
+            </div>
+           </div>
+         </div>
         </div>
-          <div class="info m-auto">
-            <h5 class="text-white d-block" style="font-size: 19px !important;">{{usuario.apellido}} {{usuario.nombre}}</h5>
-            <span class="text-white d-block" style="font-size: 15px !important;">{{usuario.email}}</span>
-          </div>
     </div>
 
       <!-- Sidebar Menu -->
@@ -29,7 +37,7 @@
             <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
               <a href="" class="nav-link">
                 <i [class]="menuSidebar.icono"></i>
-                <p>
+                <p class="pl-1">
                   {{menuSidebar.titulo}}
                   <i class="right fa fa-angle-left"></i>
                 </p>
@@ -50,7 +58,7 @@
             <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item has-treeview">
               <a href="" class="nav-link">
                 <i [class]="menuSidebar.icono"></i>
-                <p>
+                <p class="pl-1">
                   {{menuSidebar.titulo}}
                   <i class="right fa fa-angle-left"></i>
                 </p>
@@ -72,8 +80,8 @@
           <li class="nav-item">
             <ul class="nav">
               <a href="javascript:void(0)" (click)="_autenticacion.logout()" routerLinkActive="router-link-active" class="nav-link">
-                <i class="fa fa-sign-out"> </i>
-                <p>Cerrar sessión</p>
+                <i class="fa fa-power-off" aria-hidden="true"></i>
+                <p class="pl-1">Cerrar sessión</p>
               </a>
             </ul>
           </li>

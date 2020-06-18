@@ -21,10 +21,10 @@
       <div class="col-md-12">
         <div id="stepwizard">
           <ul>
-            <li><a href="#step1"><span><i class="fa fa-list-alt"></i></span><br><small>1 - Elegí el trámite.</small></a></li>
-            <li><a href="#step2"><span><i class="fa fa-pencil"></i></span><br><small>2 - Completa el formulario.</small></a></li>
-            <li><a href="#step3"><span><i class="fa fa-check-square-o"></i></span><br><small>3 - Confirmá los datos ingresados</small></a></li>
-            <li><a href="#step4"><span><i class="fa fa-money"></i></span><br><small>4 -  Realizá el pago</small></a></li>
+            <li id="li1"><a href="#step1"><span><i class="fa fa-list-alt"></i></span><br><small>1 - Elegí el trámite.</small></a></li>
+            <li id="li2"><a href="#step2"><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span><br><small>2 - Completa el formulario.</small></a></li>
+            <li id="li3"><a href="#step3"><span><i class="fa fa-check-square-o"></i></span><br><small>3 - Confirmá los datos ingresados</small></a></li>
+            <li id="li4"><a href="#step4"><span><i class="fa fa-money"></i></span><br><small>4 -  Realizá el pago</small></a></li>
           </ul>
 
           <!-- DIV -->
@@ -46,7 +46,7 @@
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" />
 
-                        <div class="card card-input text-center">
+                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de titulares dominiales', 'Minuta H');">
                           <div class="small-box bg-info-gradient">
                             <div class="inner">
                               <h4 class="card-header">Búsqueda de titulares dominiales</h4>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-4">
                       <label>
-                        <input type="radio" name="tramite" class="card-input-element" />
+                        <input type="radio" name="tramite" class="card-input-element"  (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', 'Minuta G');"/>
 
                         <div class="card card-input text-center">
                           <div class="small-box bg-info-gradient">
@@ -79,7 +79,12 @@
                       </label>
                     </div>
                     <div class="col-md-2"></div>
-
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                      <button id="btn-siguiente-1" class="btn btn-primary" (click)="irPaso(2);">Siguiente</button>
+                    </div>
                   </div>
 
                 </section>
@@ -91,65 +96,75 @@
                   <div class="row">
                     <div class="col-xs-12">
                       <h3 class="page-header">
-                        Datos de identidad de la persona
+                        Datos de identidad de la persona <i class="fa fa-address-card" aria-hidden="true"></i>
                       </h3>
                     </div>
                     <!-- /.col -->
+
                   </div>
-                  <form>
+                  <form ngNativeValidate>
                     <div class="form-row">
                       <div class="form-group col-md-4">
-                        <label for="inputApellido">Apellido:</label>
-                        <input type="text" class="form-control" id="inputApellido" placeholder="">
+                        <label for="inputApellido">Apellido/s:</label>
+                        <input type="text" class="form-control" id="inputApellido" placeholder=""  (focusout)="guardar_apellido(apel.value);" #apel>
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="inputNombres">Nombres:</label>
-                        <input type="text" class="form-control" id="inputNombres" placeholder="">
+                        <label for="inputNombres">Nombre completo:</label>
+                        <input type="text" class="form-control" id="inputNombres" placeholder="" value="{{this.nombre}}" (focusout)="guardar_nombre(nomb.value);" #nomb>
                       </div>
                       <div class="form-group col-md-4">
                         <label for="inputEstadoCivil">Estado Civil</label>
-                        <select id="inputEstadoCivil" class="form-control">
-                          <option selected>Soltero/a</option>
-                          <option>Casado/a.</option>
-                          <option>Divorciado/a</option>
-                          <option>Viudo/a</option>
+                        <select id="inputEstadoCivil" class="form-control" (focusout)="guardar_estadocivil(ecivi.value);" #ecivi>
+                          <option selected value="">Seleccione..</option>
+                          <option value="Soltero/a">Soltero/a</option>
+                          <option value="Casado/a">Casado/a.</option>
+                          <option value="Divorciado/a">Divorciado/a</option>
+                          <option value="Viudo/a">Viudo/a</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-4">
                         <label for="inputTipoDoc">Tipo de documento:</label>
-                        <select id="inputTipoDoc" class="form-control">
-                          <option selected>Documento Nacional de Identidad (DNI)</option>
-                          <option>Cédula de Identidad (CI)</option>
-                          <option>Libreta de Enrolamiento (LE)</option>
-                          <option>Libreta Cívica (LC)</option>
+                        <select id="inputTipoDoc" class="form-control"  (focusout)="guardar_tdoc(tdoc.value);" #tdoc>
+                          <option selected value="">Seleccione..</option>
+                          <option value="Documento Nacional de Identidad (DNI)">Documento Nacional de Identidad (DNI)</option>
+                          <option value="Cédula de Identidad (CI)">Cédula de Identidad (CI)</option>
+                          <option value="Libreta de Enrolamiento (LE)">Libreta de Enrolamiento (LE)</option>
+                          <option value="Libreta Cívica (LC)">Libreta Cívica (LC)</option>
                         </select>
                       </div>
                       <div class="form-group col-md-2">
                         <label for="inputNumeroDocumento">Número:</label>
-                        <input type="text" class="form-control" id="inputNumeroDocumento">
+                        <input type="text" class="form-control" id="inputNumeroDocumento" (focusout)="guardar_ndoc(ndoc.value);" #ndoc>
                       </div>
                       <div class="form-group col-md-3">
                         <label for="inputNacionalidad">Nacionalidad</label>
-                        <input type="text" class="form-control" id="inputNacionalidad">
+                        <input type="text" class="form-control" id="inputNacionalidad"  (focusout)="guardar_nacion(nacion.value);" #nacion>
                       </div>
                       <div class="form-group col-md-3">
                         <label for="inputFecha">Fecha de nacimiento:</label>
-                        <input class="form-control" type="date" id="inputFecha">
+                        <input class="form-control" type="date" id="inputFecha" (focusout)="guardar_fechanac(fnac.value);" #fnac>
                       </div>
                     </div>
                     <br>
                     <label>Datos del cónyugue</label>
                     <div class="form-row">
                       <div class="form-group col-md-6">
-                        <label for="inputApellidoConyugue">Apellido</label><input type="text" class="form-control" id="inputApellidoConyugue">
+                        <label for="inputApellidoConyugue">Apellido/s</label><input type="text" class="form-control" id="inputApellidoConyugue" (focusout)="guardar_con_ape(conApe.value);" #conApe>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="inputNombresConyugue">Nombres</label><input type="text" class="form-control" id="inputNombresConyugue">
+                        <label for="inputNombresConyugue">Nombre completo</label><input type="text" class="form-control" id="inputNombresConyugue" (focusout)="guardar_con_nomb(conNomb.value);" #conNomb>
                       </div>
                     </div>
                   </form>
+                  <hr>
+                  <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                      <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(1);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                      <button id="btn-siguiente-2" class="btn btn-primary" (click)="irPaso(3); validateFormMinH(apel.value, nomb.value, ecivi.value, tdoc.value, ndoc.value, nacion.value, fnac.value);">Siguiente</button>
+                    </div>
+                  </div>
                 </section>
               </div>
             <!-- DIV Confirma los datos -->
@@ -158,7 +173,7 @@
                 <!-- titulo row -->
                 <div class="col-xs-12">
                   <h2 class="page-header">
-                    Confirmá los datos ingresados
+                    Confirmá los datos ingresados <i class="fa fa-check-square-o" aria-hidden="true"></i>
                   </h2>
                 </div>
                 <form>
@@ -170,7 +185,7 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-12">
-                        <input type="text" id="disabledInputTramite" class="form-control" placeholder="Busqueda de titulares dominiales">
+                        <input type="text" id="disabledInputTramite" name = "tipoTramite" class="form-control" value="{{this.tipoTramite}}">
                       </div>
                     </div>
                     <div class="form-row">
@@ -180,30 +195,34 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-4">
-                        <label for="disabledInputApellido">Apellido</label>
-                        <input type="text" id="disabledInputApellido" class="form-control" placeholder="Perez">
+                        <label for="disabledInputApellido">Apellido/s:</label>
+                        <input type="text" id="disabledInputApellido" name = "apellido"  class="form-control" value="{{this.apellido}}">
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="disabledInputNombre">Nombre</label>
-                        <input type="text" id="disabledInputNombre" class="form-control" placeholder="Juan">
+                        <label for="disabledInputNombre">Nombre completo:</label>
+                        <input type="text" id="disabledInputNombre" name = "nombre" class="form-control" value="{{this.nombre}}">
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="disabledInputEstado">Estado Civil</label>
-                        <input type="text" id="disabledInputEstado" class="form-control" placeholder="Soltero">
+                        <label for="disabledInputEstado">Estado Civil:</label>
+                        <input type="text" id="disabledInputEstado" name = "estadoCivil" class="form-control" value="{{this.estadocivil}}">
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-4">
-                        <label for="disabledInputNumero">Numero de documento</label>
-                        <input type="text" id="disabledInputNumero" class="form-control" placeholder="25999222">
+                        <label for="disabledInputTipoDoc">Tipo de documento:</label>
+                        <input type="text" id="disabledInputTipoDoc" name = "tdocumento" class="form-control" value="{{this.tdocumento}}">
                       </div>
-                      <div class="form-group col-md-4">
-                        <label for="disabledInputNacionalidad">Nacionalidad</label>
-                        <input type="text" id="disabledInputNacionalidad" class="form-control" placeholder="Argentino">
+                      <div class="form-group col-md-2">
+                        <label for="disabledInputNumero">N° de documento:</label>
+                        <input type="text" id="disabledInputNumero" name = "ndocumento" class="form-control" value="{{this.ndocumento}}">
                       </div>
-                      <div class="form-group col-md-4">
-                        <label for="disabledInputFecha">Fecha de nacimiento</label>
-                        <input type="text" id="disabledInputFecha" class="form-control" placeholder="02/10/1995">
+                      <div class="form-group col-md-3">
+                        <label for="disabledInputNacionalidad">Nacionalidad:</label>
+                        <input type="text" id="disabledInputNacionalidad" name = "nacionalidad" class="form-control" value="{{this.nacionalidad}}">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="disabledInputFecha">Fecha de nacimiento:</label>
+                        <input type="date" id="disabledInputFecha" name = "fechanac" class="form-control" value="{{this.fechanac}}">
                       </div>
                     </div>
                     <br>
@@ -214,17 +233,24 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
-                        <label for="disabledInputApellidoConyugue">Apellido</label>
-                        <input type="text" class="form-control" id="disabledInputApellidoConyugue" placeholder="Diaz">
+                        <label for="disabledInputApellidoConyugue">Apellido/s</label>
+                        <input type="text" name = "ConyuApellido" class="form-control" id="disabledInputApellidoConyugue" value="{{this.ConyuApellido}}"> 
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="disabledInputNombresConyugue">Nombres</label>
-                        <input type="text" class="form-control" id="disabledInputNombresConyugue" placeholder="María">
+                        <label for="disabledInputNombresConyugue">Nombre completo:</label>
+                        <input type="text" name = "ConyuNombre" class="form-control" id="disabledInputNombresConyugue" value="{{this.ConyuNombre}}">
                       </div>
                     </div>
 
                   </fieldset>
                 </form>
+                <hr>
+                <div class="row">
+                  <div class="col-12" style="text-align: right;">
+                    <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(2);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                    <button id="btn-siguiente-3" class="btn btn-primary" (click)="irPaso(4);">Siguiente</button>
+                  </div>
+                </div>
 
               </section>
             </div>
@@ -254,9 +280,9 @@
                     <div class="col-sm-4 invoice-col">
                       Para
                       <address>
-                        <strong>Arroyo Walter</strong><br>
-                        Teléfono: (3804) 443867<br>
-                        Email: walterarroyo@gmail.com
+                        <strong>{{usuario.apellido}} {{usuario.nombre}}</strong><br>
+                        Teléfono: {{usuario.telefono}}<br>
+                        Email: {{usuario.email}}
                       </address>
                     </div>
                     <!-- /.col -->
@@ -264,7 +290,7 @@
                       <strong>Factura #00001</strong><br>
                       <br>
                       <strong>Numero de orden:</strong> A0001<br>
-                      <strong>Fecha:</strong> 2/12/2020<br>
+                      <strong>Fecha:</strong> {{currenDate | date:'dd/MM/yyyy'}}<br>
                     </div>
                     <!-- /.col -->
                   </div>
@@ -284,8 +310,8 @@
                         <tbody>
                         <tr>
 
-                          <td>Minuta H</td>
-                          <td>Búsqueda de titulares dominiales</td>
+                          <td>{{tipoFormulario}}</td>
+                          <td>{{tipoTramite}}</td>
                           <td>$250.00</td>
                         </tr>
                         </tbody>
@@ -326,10 +352,17 @@
 
                   <!-- este row no deberia aparacer cuando se imprime la pagina -->
                   <div class="row no-print pull-right">
-                    <div class="col-xs-12">
-                      <a href="" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
-                      <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Pagar
+                    <div class="col-12">
+                      <button type="button" class="btn btn-success btn-block"><i class="fa fa-credit-card"></i> Pagar
                       </button>
+                    </div>
+                  </div>
+                  <br>
+                  <hr>
+                  <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                      <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                      <button id="btn-siguiente-4" (click)="createFormGroupUser(this.apellido, this.nombre, this.estadocivil, this.tdocumento, this.ndocumento, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>
                 </section>

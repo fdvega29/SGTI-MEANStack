@@ -22,6 +22,8 @@ const usersSchema = new Schema({
     roles: { type: String, required: false, default: "USER_ROLE"},
 
     google: { type: Boolean, required: false, default: false}
+
+    //minutaH: {type: Schema.Types.ObjectId, ref: 'MinutaH'},
 },
     {
         timestamps: true // Registra fecha de creacion y actualizacion de datos.

@@ -49,15 +49,9 @@ export class SignupComponent implements OnInit {
     .subscribe( res => {
       //this.usersService.setUser(res);
       this.router.navigate(['user/signin']);
+      this.msgSuccess();
     },
     err => console.log(err)
     )
   }
 }
-
-/*
-import swal from 'SweetAlert';
-
-      swal("Good job!", "You clicked the button!", "success");
-
-*/

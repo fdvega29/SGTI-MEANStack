@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MinutaHService } from 'src/app/components/services/minuta-h.service';
+import { minutaH } from 'src/app/components/models/minutaH.module';
 
 @Component({
   selector: 'app-mis-tramites',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MisTramitesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataTramites: MinutaHService) { }
+  listadoTram: minutaH[];
 
   ngOnInit() {
+    this.getDataTramite();
+  }
+
+  public getDataTramite(): void {
+    this.dataTramites
+      .getAllTramites()
+      .subscribe(data => {console.log(data)})
   }
 
 }

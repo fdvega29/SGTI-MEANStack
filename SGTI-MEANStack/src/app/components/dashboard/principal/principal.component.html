@@ -24,7 +24,7 @@
         <h5>"Informacion recuperada desde Api-Rest"</h5>
       </div>
     </div>
-
+    
     <!--#Tabla usuarios-->
     <div class="col-md-12 p-4">
       <div class="card card-warning card-outline">
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="card-body table-responsive p-0" style="height: 300px;">
-          <table class="table table-striped">
+          <table class="table table-hover text-nowrap">
             <thead>
               <tr>
                 <th>ID</th>
@@ -72,7 +72,7 @@
                 </td>-->
                 <td class="text-center">
                   <a class="btn btn-success"
-                    href="https://api.whatsapp.com/send?phone={{user.telefono}}&text=Hola,%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
+                    href="https://api.whatsapp.com/send?phone=54{{user.telefono}}&text=Hola%20{{user.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
                       class="fa fa-whatsapp" aria-hidden="true"></i></a>
                 </td>
                 <td class="text-center">

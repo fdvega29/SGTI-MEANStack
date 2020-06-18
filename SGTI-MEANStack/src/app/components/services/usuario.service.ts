@@ -22,7 +22,7 @@ export class UsuarioService {
 
   /*Metodos HTTP*/
 
-  getAllUser(){
+  public getAllUser(){
     const url_api = this.AUTH_SERVER + '/user/all';
     return this.http.get(url_api);
   };
