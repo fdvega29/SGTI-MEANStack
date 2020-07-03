@@ -13,7 +13,9 @@
 					</div>
 					<br>
 					<div class="widget-user-image">
-						<img class="img-circle elevation-1" [src]="usuario.img">
+						<img class="img-circle elevation-1" [src]="usuario.img | imagen">
+						<!--<img *ngIf="!imagenTemp" class="img-circle elevation-1" [src]="usuario.img">
+						<img *ngIf="imagenTemp" class="img-circle elevation-1" [src]="imagenTemp">-->
 					</div>
 					<div class="card-body box-profile">
 						<ul class="list-group list-group-unbordered mt-3">

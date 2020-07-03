@@ -23,6 +23,16 @@ export class MinutaHService {
     return this.http.get(url_api);
   };
 
+  public getAllTramitesById(id: string) {
+    const url_api = this.AUTH_SERVER + `/forms/dataMinutaH/all/${id}`;
+    return this.http.get(url_api);
+  };
+
+  public getDataById(id: string){
+    const url_api = this.AUTH_SERVER + `/forms/dataMinutaH/${id}`;
+    return this.http.get(url_api);
+  };
+
   public postDataTram(minH: minutaH) {
     const url_api = this.AUTH_SERVER + '/forms/dataMinutaH/add';
     return this.http.post(url_api, minH);

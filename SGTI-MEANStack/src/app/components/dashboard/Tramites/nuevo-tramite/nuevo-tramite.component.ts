@@ -107,6 +107,7 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
       $('#stepwizard #li4').removeClass('active');
+
       $('#stepwizard #step4').hide();
     }
     if(paso==4){
@@ -197,7 +198,7 @@ export class NuevoTramiteComponent implements OnInit {
 
   //Toastr
   public msgError(){
-    this.toastr.error('¡Debe completar todos los campos!', '',{
+    this.toastr.error('¡Completar campos!', '',{
       timeOut: 2000,
       progressBar: true,
       progressAnimation: 'increasing'

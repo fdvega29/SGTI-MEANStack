@@ -1,81 +1,60 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-<app-breadcrumbs></app-breadcrumbs>
+  <app-breadcrumbs></app-breadcrumbs>
 
   <section class="content">
-    {{listadoTram | json}}
     <div class="row">
 
       <div class="col-12">
 
-        <div class="invoice p-3 mb-3">
-          <!-- title row -->
-          <div class="row">
-            <div class="col-12">
-              <h4>
-                <i class="fa fa-wpforms" aria-hidden="true"></i> Mis trámites
-                <small class="float-right">2/10/2020</small>
-              </h4>
+        <!--#Tabla tramites-->
+        <div class="col-md-12 p-4">
+          <div class="card card-warning card-outline">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fa fa-wpforms" aria-hidden="true"></i> Mis tramites</h3>
+              <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control float-rigth" placeholder="Buscar">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <!-- /.col -->
-          </div>
-          <!-- Table row -->
-          <div class="row">
-            <div class="col-12 table-responsive">
-              <table class="table table-striped">
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+              <table class="table table-hover text-nowrap">
                 <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Fecha</th>
-                  <th>Descripción</th>
-                  <th>Estado</th>
-                  <th>Comprobante</th>
-                </tr>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col" class="text-center">Generado</th>
+                    <th scope="col" class="text-center">Persona</th>
+                    <th scope="col" class="text-center">Producto</th>
+                    <th scope="col" class="text-center">Descripción</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Comprobante</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let dataMinH of listadoTram; index as i">
-                  <th scope="row">{{i+1}}</th>
-                  <td class="text-center">{{dataMinH.createdAt | date: "dd/MM/yyyy"}}</td>
-                  <td class="text-center">{{dataMinH.tipoTram}}</td>
-                  <td><span class="badge bg-warning">{{dataMinH.estadoTram}}</span></td>
-                  <td>
-                    <a href="" target="_blank" class="btn btn-outline-primary"><i class="fa fa-print"></i></a>
-                    &nbsp;
-                    <a href="" target="_blank" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>09/03/2020</td>
-                  <td>Búsqueda de gravámenes</td>
-                  <td><span class="badge bg-primary">En proceso</span></td>
-                  <td>
-                    <a href="" target="_blank" class="btn btn-outline-primary"><i class="fa fa-print"></i></a>
-                    &nbsp;
-                    <a href="" target="_blank" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>15/03/2020</td>
-                  <td>Búsqueda de titulares dominiales</td>
-                  <td><span class="badge bg-success">Finalizado</span></td>
-                  <td>
-                    <a href="" target="_blank" class="btn btn-outline-primary"><i class="fa fa-print"></i></a>
-                    &nbsp;
-                    <a href="" target="_blank" class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i></a>
-                  </td>
-
-
-                </tr>
+                  <tr *ngFor="let minH of tramites; index as i">
+                    <th scope="row">{{i+1}}</th>
+                    <td class="text-center">{{minH.createdAt | date: "dd/MM/yyyy"}}</td>
+                    <td class="text-center">{{minH.apellido}} {{minH.nombre}}</td>
+                    <td class="text-center">{{minH.producto}}</td>
+                    <td class="text-center">{{minH.tipoTram}}</td>
+                    <td><span class="badge bg-primary">{{minH.estadoTram}}</span></td>
+                    <td>
+                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir" target="_blank" (click)="imprimirPdf()"
+                        class="btn btn-outline-primary"><i class="fa fa-print"></i></a>
+                      &nbsp;
+                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar" target="_blank" (click)="descargarPdf()"
+                        class="btn btn-outline-success"><i class="fa fa-download" aria-hidden="true"></i></a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
-            <!-- /.col -->
           </div>
-          <!-- /.row -->
-
         </div>
 
       </div>
@@ -83,4 +62,3 @@
     </div>
   </section>
 </div>
-

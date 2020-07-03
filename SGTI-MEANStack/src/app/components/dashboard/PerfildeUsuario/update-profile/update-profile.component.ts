@@ -13,14 +13,21 @@ import { sessionUser } from 'src/app/components/models/session.module';
 })
 export class UpdateProfileComponent implements OnInit {
 
+  usuario: sessionUser;
+
+  user: any;
+
+  imagenSubir: File;
+  imagenTemp: any;
+
   constructor(
     private userService: UsuarioService,
     private router: Router) { }
 
-  usuario: sessionUser;
-
   ngOnInit() {
     this.usuario = this.userService.getCurrentUser();
+    this.user = this.userService.getCurrentUser();
+    console.log(this.usuario);
   }
 
   updateDataUser(user: usersModule){
@@ -31,6 +38,33 @@ export class UpdateProfileComponent implements OnInit {
           this.router.navigate(['/dashboard/perfil']);
           localStorage.setItem("currentUser", JSON.stringify(user));
         });
+
+  }
+
+  seleccionImage( archivo: File ) {
+
+    if ( !archivo ) {
+      this.imagenSubir = null;
+      return;
+    }
+
+    if ( archivo.type.indexOf('image') < 0 ) {
+      this.imagenSubir = null;
+      return;
+    }
+
+    this.imagenSubir = archivo;
+
+    let reader = new FileReader();
+    let urlImagenTemp = reader.readAsDataURL( archivo );
+
+    reader.onloadend = () => this.imagenTemp = reader.result;
+
+  }
+
+  cambiarImagen() {
+    console.log(this.usuario);
+    this.userService.cambiarImagen( this.imagenSubir, this.user._id );
 
   }
 

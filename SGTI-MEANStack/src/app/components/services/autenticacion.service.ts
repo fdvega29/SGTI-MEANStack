@@ -34,6 +34,7 @@ export class AutenticacionService {
               res.dataUser.expiresIn
             );
           }
+          localStorage.setItem("EMAIL", res.dataUser.usuario.email);
           console.log(res);
         })
       );
@@ -41,7 +42,12 @@ export class AutenticacionService {
   /*===================================
     Login de usuario normal
   ====================================*/
-  public signin(user: usersModule): Observable<sessionUser> {
+  public signin(user: usersModule, recordar: boolean = false): Observable<sessionUser> {
+    if(recordar){
+      localStorage.setItem("EMAIL", user.email);
+    }else {
+      localStorage.removeItem("EMAIL");
+    }
     return this.http.post<sessionUser>(`${this.AUTH_SERVER}/signin`,
       user).pipe(tap(
         (res: sessionUser) => {
@@ -77,7 +83,8 @@ export class AutenticacionService {
     localStorage.removeItem("TOKEN");
     localStorage.removeItem("EXPIRES_IN");
     localStorage.removeItem("currentUser");
-    window.location.href = '#/home'
+    //window.location.href = '#/home'
+    window.location.href = 'http://localhost:4200/user/signin';
   };
 
   getToken() {

@@ -19,6 +19,9 @@ import {PrincipalComponent } from "./principal/principal.component";
 //Servicies
 import { AuthGuard} from '../../components/core/guards/guards';
 import { UpdateProfileComponent } from './PerfildeUsuario/update-profile/update-profile.component';
+import { sessionUser } from 'src/app/components/models/session.module';
+
+
 
 const dashboardRoutes: Routes = [
 	{

@@ -11,7 +11,7 @@
         <h5>"Informacion recuperada desde Api-Rest"</h5>
       </div>
     </div>
-    
+
     <!--#Tabla usuarios-->
     <div class="col-md-12 p-4">
       <div class="card card-warning card-outline">
@@ -31,51 +31,42 @@
             <thead>
               <tr>
                 <th>ID</th>
+                <th scope="col" class="text-center">Imagen</th>
                 <th scope="col" class="text-center">Apellido</th>
                 <th scope="col" class="text-center">Nombre</th>
                 <th scope="col" class="text-center">Email</th>
                 <th scope="col" class="text-center">Teléfono</th>
                 <th scope="col" class="text-center">Roles</th>
-                <!--<th scope="col" class="text-center">Imagen</th>-->
                 <th scope="col" class="text-center">Autenticación</th>
-                <th scope="col" class="text-center">Notificar</th>
-                <th scope="col" class="text-center">Imprimir</th>
-                <th scope="col" class="text-center">Editar</th>
-                <th scope="col" class="text-center">Eliminar</th>
+                <th scope="col" class="text-center">Acciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let user of usuarios; index as i">
                 <th scope="row">{{i+1}}</th>
+                <td class="text-center">
+                  <img [src]="user.img | imagen" style="width: 30px;">
+                </td>
                 <td class="text-center">{{user.apellido}}</td>
                 <td class="text-center">{{user.nombre}}</td>
                 <td class="text-center">{{user.email}}</td>
                 <td class="text-center">{{user.telefono}}</td>
                 <td class="text-center">{{user.roles}}</td>
-                <!--<td class="text-center"><img [src]="user.img" alt=""></td>-->
                 <td class="text-center">{{user.google == true ? 'Google' : 'Normal'}}</td>
-                <!--<td class="text-center w-30">
-                  <img [src]="user.img">
-                </td>-->
                 <td class="text-center">
-                  <a class="btn btn-success"
+                  <a class="btn btn-outline-success"
                     href="https://api.whatsapp.com/send?phone=54{{user.telefono}}&text=Hola%20{{user.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
                       class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                </td>
-                <td class="text-center">
-                  <button class="btn btn-danger" (click)="obtenerPdf()"><i class="fa fa-file-pdf-o"
-                    aria-hidden="true"></i></button>
-                </td>
-                <td class="text-center">
-                  <div class="card">
-                    <button type="button" class="btn btn-info" (click)="editUser(user)" data-toggle="modal"
-                      data-target="#exampleModal">
-                      <i class="fa fa-edit"></i>
-                    </button>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <button class="btn btn-danger" (click)="deleteUser(user)"><i class="fa fa-times"></i></button>
+                  &nbsp;
+                  <button class="btn btn-outline-danger" (click)="obtenerPdf()"><i class="fa fa-file-pdf-o"
+                      aria-hidden="true"></i></button>
+                  &nbsp;
+                  <button type="button" class="btn btn-outline-info" (click)="editUser(user)" data-toggle="modal"
+                    data-target="#exampleModal">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  &nbsp;
+                  <button class="btn btn-outline-danger" (click)="deleteUser(user)"><i class="fa fa-times"></i></button>
                 </td>
               </tr>
             </tbody>

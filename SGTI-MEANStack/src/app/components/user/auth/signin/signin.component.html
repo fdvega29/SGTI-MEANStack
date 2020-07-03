@@ -73,7 +73,7 @@
     <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
       <div class="box-body">
         <div class="form-group input-group mb-3">
-          <input type="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
+          <input type="email" [ngModel]="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fa fa-envelope"></span>
@@ -92,7 +92,7 @@
           <div class="col-md-12">
               <div class="checkbox checkbox-primary pull-left p-t-0">
                   <input formControlName="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
-                  <label for="checkbox-signup"> Recuérdame </label>
+                  <label for="checkbox-signup" class="pl-1">Recuérdame</label>
               </div>
               <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a> </div>
         </div>
