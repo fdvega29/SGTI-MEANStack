@@ -13,8 +13,8 @@ const dataMinutaH = new Schema({
     nomConyu: { type: String, min: 5 },
     tipoTram: {type: String},
     producto: {type: String},
-    estadoTram: {type: String, default: 'Iniciado'}
-    //usuario: { type: Schema.Types.ObjectId, ref: 'Users'}
+    estadoTram: {type: String, default: 'Iniciado'},
+    usuario: { type: Schema.Types.ObjectId, ref: 'Users'}
 
 },
 {

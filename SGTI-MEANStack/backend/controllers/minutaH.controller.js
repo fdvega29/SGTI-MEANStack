@@ -3,7 +3,8 @@ const minutaH = require('../models/minutaH.model');
 const dataCtrl = {};
 
 dataCtrl.getAllData = async (req, res) => {
-     const dataAll = await minutaH.find();
+     const dataAll = await minutaH.find()
+                                  .populate('usuario', 'apellido nombre telefono');
      if(!dataAll){
          return res.status(400).json({
              ok: false,
