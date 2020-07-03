@@ -26,23 +26,26 @@ const dashboardRoutes: Routes = [
 		component: DashboardComponent,
 		children: [
 		  //Perfil de Usuario
-			{ path: 'perfil', component: PerfilComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Perfil'}},
-      { path: 'cambiar-password', component: CambiarPasswordComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Cambiar contraseña'}},
-      { path: 'update/profile/:id', component: UpdateProfileComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Editar perfil usuario'}},
+			{ path: 'perfil', component: PerfilComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Perfil'},canActivate: [AuthGuard]},
+      { path: 'cambiar-password', component: CambiarPasswordComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Cambiar contraseña'},canActivate: [AuthGuard]},
+      { path: 'update/profile/:id', component: UpdateProfileComponent, data: {seccion: 'Perfil de Usuario',titulo: 'Editar perfil usuario'},canActivate: [AuthGuard]},
       //Tramites
-      { path: 'nuevo-tramite', component: NuevoTramiteComponent, data: {seccion: 'Trámites', titulo: 'Nuevo trámite'}},
-      { path: 'guia-tramite', component: GuiaTramiteComponent, data: {seccion: 'Trámites', titulo: 'Guía de uso'}},
-      { path: 'mis-tramites', component: MisTramitesComponent, data: {seccion: 'Trámites', titulo: 'Mis trámites'}},
+      { path: 'nuevo-tramite', component: NuevoTramiteComponent, data: {seccion: 'Trámites', titulo: 'Nuevo trámite'},canActivate: [AuthGuard]},
+      { path: 'guia-tramite', component: GuiaTramiteComponent, data: {seccion: 'Trámites', titulo: 'Guía de uso'},canActivate: [AuthGuard]},
+      { path: 'mis-tramites', component: MisTramitesComponent, data: {seccion: 'Trámites', titulo: 'Mis trámites'},canActivate: [AuthGuard]},
       //AcercaDe
-      { path: 'informacion', component: InformacionComponent, data: {seccion: 'Acerca de', titulo: 'Información'}},
-      { path: 'preguntas', component: PreguntasComponent, data: {seccion: 'Acerca de',titulo: 'Preguntas Frecuentes'}},
+      { path: 'informacion', component: InformacionComponent, data: {seccion: 'Acerca de', titulo: 'Información'},canActivate: [AuthGuard]},
+      { path: 'preguntas', component: PreguntasComponent, data: {seccion: 'Acerca de',titulo: 'Preguntas Frecuentes'},canActivate: [AuthGuard]},
 
+      //ADMIN
+      //gestionar tramites
+      { path: 'guia-tramite', component: GuiaTramiteComponent, data: {seccion: 'Trámites', titulo: 'Guía de uso'},canActivate: [AuthGuard] },
       //Principal
-      { path: 'principal', component: PrincipalComponent, data: {seccion: 'Inicio', titulo: 'Principal'}
-      ,canActivate: [AuthGuard]
+      { path: 'principal', component: PrincipalComponent, data: {seccion: 'Inicio', titulo: 'Principal'},canActivate: [AuthGuard]
+
       }
 
-  //      ,{ path: 'dashboard', component:PrincipalComponent, pathMatch: 'full'}
+        ,{ path: 'dashboard', component:PrincipalComponent, pathMatch: 'full',canActivate: [AuthGuard]}
 		]
 	}
 ];
