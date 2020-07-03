@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 //Toastr
 import { ToastrService } from 'ngx-toastr';
 import { MinutaHService } from 'src/app/components/services/minuta-h.service';
+import {MinutaGService} from "../../../services/minuta-g.service";
 import { Router } from '@angular/router';
 
 
@@ -40,8 +41,19 @@ export class NuevoTramiteComponent implements OnInit {
 
   currenDate = new Date();
 
-  constructor(private userService: UsuarioService, private serviceMinH: MinutaHService ,private toastr: ToastrService, private router: Router) {
-    this.usuario = userService.getCurrentUser();
+  minutaG: any = {};
+
+  domicilio: string;
+  objetoPedido: string;
+  ubicacionInmueble: string;
+
+
+  constructor(private userService: UsuarioService,
+              private serviceMinH: MinutaHService,
+              private serviceMinG: MinutaGService,
+              private toastr: ToastrService,
+              private router: Router) {
+                  this.usuario = userService.getCurrentUser();
    }
 
   ngOnInit() {
@@ -53,7 +65,7 @@ export class NuevoTramiteComponent implements OnInit {
         selected: 0,
         lang: { next: 'Siguiente', previous: 'Anterior'},
         toolbarSettings: {
-          showNextButton: false, 
+          showNextButton: false,
           showPreviousButton: false
         }
       });
@@ -73,7 +85,21 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
       $('#stepwizard #li3').removeClass('active');
-
+      if (this.tipoFormulario == 'Minuta H') {
+        $('#formH').show();
+        $('#formG').hide();
+        $('#confirmH').show();
+        $('#confirmG').hide();
+        $('#finalizarH').show();
+        $('#finalizarG').hide();
+      }else {
+        $('#formG').show();
+        $('#formH').hide();
+        $('#confirmG').show();
+        $('#confirmH').hide();
+        $('#finalizarG').show();
+        $('#finalizarH').hide();
+      }
       $('#stepwizard #step3').hide();
     }
     if(paso==3){
@@ -81,7 +107,6 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
       $('#stepwizard #li4').removeClass('active');
-      
       $('#stepwizard #step4').hide();
     }
     if(paso==4){
@@ -128,13 +153,13 @@ export class NuevoTramiteComponent implements OnInit {
   }
   public guardar_estadocivil(ecivi:string){
     this.estadocivil = ecivi;
-  }  
+  }
   public guardar_tdoc(tdoc:string){
     this.tdocumento = tdoc;
   }
   public guardar_ndoc(ndoc:string){
     this.ndocumento = ndoc;
-  }  
+  }
   public guardar_nacion(nacion:string){
     this.nacionalidad = nacion;
   }
@@ -154,6 +179,20 @@ export class NuevoTramiteComponent implements OnInit {
     } else{
       $('#stepwizard #btn-siguiente-1').hide();
     }
+  }
+
+
+  guardar_domicilio(domicilio: string) {
+    this.domicilio = domicilio;
+  }
+
+
+  guardar_objetoPedido(objetoPedido: string) {
+    this.objetoPedido = objetoPedido;
+  }
+
+  guardar_ubicacionInmueble(ubicacionInmueble: string) {
+    this.ubicacionInmueble = ubicacionInmueble;
   }
 
   //Toastr
@@ -181,8 +220,16 @@ export class NuevoTramiteComponent implements OnInit {
     }
   }
 
-  public createFormGroupUser(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string){
-    
+
+  validateFormMinG(nombreG:string, apellidoG:string,estadocivilG:string, ndocumentoG:string, domicilio:string, objetoPedido:string, ubicacionInm:string) {
+    if(nombreG == '' || apellidoG == '' || estadocivilG == '' || ndocumentoG == '' || domicilio == '' || objetoPedido == '' || ubicacionInm == ''){
+      this.msgError();
+      return this.irPaso(2);
+    }
+  }
+
+  public createFormGroupUser(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string, usuario: string){
+
     if(!ConyuApellido){
       ConyuApellido = '';
     }
@@ -202,11 +249,12 @@ export class NuevoTramiteComponent implements OnInit {
         apeConyu: ConyuApellido,
         nomConyu: ConyuNombre,
         tipoTram: tipoTramite,
-        producto: producto
+        producto: producto,
+        usuario: this.usuario
       };
       this.postDataTramMinH(this.persona);
   };
-  
+
   public postDataTramMinH(createFormGroupUser){
     console.log("Data-form", createFormGroupUser);
     this.serviceMinH.postDataTram(createFormGroupUser)
@@ -215,5 +263,32 @@ export class NuevoTramiteComponent implements OnInit {
                                   this.alertSuccess();
                                   this.router.navigate(['/dashboard/mis-tramites']);
                                 });
-  }; 
+  };
+
+  public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string) {
+    this.minutaG = {
+      apellido: apellido,
+      nombre: nombre,
+      estadoCivil: estadocivil,
+      ndocumento: ndocumento,
+      domicilio: domicilio,
+      objetoPedido: objetoPedido,
+      ubicacionInmueble: ubicacionInmueble,
+      tipoTram: tipoTramite,
+      producto: producto,
+      usuario: this.usuario
+    };
+      this.postDataTramG(this.minutaG);
+  };
+
+  public postDataTramG(createFormG) {
+    console.log('Datos de minuta G', createFormG);
+    this.serviceMinG.postDataTramG(createFormG)
+                                .subscribe(data => {
+                                  console.log('Res-Api', data);
+                                  this.alertSuccess();
+                                  this.router.navigate(['/dashboard/mis-tramites']);
+                                });
+  }
+
 }

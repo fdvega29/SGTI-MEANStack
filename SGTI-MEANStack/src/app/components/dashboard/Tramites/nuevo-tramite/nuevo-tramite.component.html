@@ -79,7 +79,9 @@
               </div>
             <!-- DIV Completa formulario -->
             <div id="step2">
-                <section class="invoice">
+
+              <!-- Formulario H -->
+                <section class="invoice" id="formH">
                   <!-- titulo row -->
                   <div class="row">
                     <div class="col-xs-12">
@@ -154,10 +156,98 @@
                     </div>
                   </div>
                 </section>
-              </div>
+
+
+              <!-- Formulario G -->
+                <section class="invoice" id="formG">
+                <!-- titulo row -->
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h2 class="page-header">
+                      Datos de identidad de la persona <i class="fa fa-address-card" aria-hidden="true"></i>
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+
+                </div>
+                <form ngNativeValidate>
+                  <div class="form-row">
+
+                    <div class="col-md-12">
+                      <h5 class="page-header">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Identidad del Titular del Dominio:
+                      </h5>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="inputApellido">Apellido/s:</label>
+                      <input type="text" class="form-control" id="inputApellidoMinG" placeholder="" (focusout)="guardar_apellido(apelG.value);" #apelG>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="inputNombres">Nombre completo:</label>
+                      <input type="text" class="form-control" id="inputNombresMinG" placeholder="" (focusout)="guardar_nombre(nombG.value);" #nombG>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="inputEstadoCivilMinG">Estado Civil</label>
+                      <select id="inputEstadoCivilMinG" class="form-control" (focusout)="guardar_estadocivil(eciviG.value);" #eciviG>
+                        <option selected value="">Seleccione..</option>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a">Casado/a.</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-4">
+                      <label for="inputNumeroDocumentoMinG">Número de Documento:</label>
+                      <input type="text" class="form-control" id="inputNumeroDocumentoMinG" (focusout)="guardar_ndoc(ndocG.value);" #ndocG>
+                    </div>
+                    <div class="col-md-8">
+                      <label for="inputDomicilioMinG">Domicilio:</label>
+                      <input type="text" class="form-control" id="inputDomicilioMinG" (focusout)="guardar_domicilio(domiG.value);" #domiG>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12">
+                    <h5 class="page-header">
+                      <i class="fa fa-map-pin" aria-hidden="true"></i> Objetivo del pedido y datos del Inmueble:
+                    </h5>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputObjetoPedidoMinG">Objeto del Pedido:</label>
+                    <select id="inputObjetoPedidoMinG" class="form-control" (focusout)="guardar_objetoPedido(objPedido.value);" #objPedido>
+                      <option selected value="">Seleccione..</option>
+                      <option value="Dominio">Dominio</option>
+                      <option value="Hipoteca">Hipoteca</option>
+                      <option value="Promesa de Venta">Promesa de Venta</option>
+                      <option value="Bien de Familia">Bien de Familia</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputUbicacionMinG">Ubicación del inmueble:</label>
+                    <textarea name="UbicacionInmueble" id="inputUbicacionMinG" style="width: 100%" (focusout)="guardar_ubicacionInmueble(ubiInm.value);" #ubiInm>
+
+                    </textarea>
+                  </div>
+
+                </form>
+                <hr>
+
+                <div class="row">
+                  <div class="col-12" style="text-align: right;">
+                    <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(1);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                    <button class="btn btn-primary" (click)="irPaso(3); validateFormMinG(apelG.value, nombG.value, eciviG.value, ndocG.value, domiG.value, objPedido.value, domiG.value);">Siguiente</button>
+                  </div>
+                </div>
+              </section>
+
+            </div>
             <!-- DIV Confirma los datos -->
             <div id="step3">
-              <section class="invoice">
+
+              <!-- Confirma Formulario H -->
+              <section class="invoice" id="confirmH">
                 <!-- titulo row -->
                 <div class="col-xs-12">
                   <h2 class="page-header">
@@ -222,7 +312,7 @@
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label for="disabledInputApellidoConyugue">Apellido/s</label>
-                        <input type="text" name = "ConyuApellido" class="form-control" id="disabledInputApellidoConyugue" value="{{this.ConyuApellido}}"> 
+                        <input type="text" name = "ConyuApellido" class="form-control" id="disabledInputApellidoConyugue" value="{{this.ConyuApellido}}">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="disabledInputNombresConyugue">Nombre completo:</label>
@@ -237,6 +327,77 @@
                   <div class="col-12" style="text-align: right;">
                     <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(2);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
                     <button id="btn-siguiente-3" class="btn btn-primary" (click)="irPaso(4);">Siguiente</button>
+                  </div>
+                </div>
+
+              </section>
+
+              <!-- Confirma Formulario G -->
+              <section class="invoice" id="confirmG">
+                <!-- titulo row -->
+                <div class="col-xs-12">
+                  <h2 class="page-header">
+                    Confirmá los datos ingresados <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  </h2>
+                </div>
+                <form>
+                  <fieldset disabled>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Tipo de trámite</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <input type="text" id="disabledInputTramiteG" name = "tipoTramite" class="form-control" value="{{this.tipoTramite}}">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Datos de identidad de la persona</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputApellidoG">Apellido/s:</label>
+                        <input type="text" id="disabledInputApellidoG" name = "apellido"  class="form-control" value="{{this.apellido}}">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="disabledInputNombreG">Nombre completo:</label>
+                        <input type="text" id="disabledInputNombreG" name = "nombre" class="form-control" value="{{this.nombre}}">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="disabledInputEstadoG">Estado Civil:</label>
+                        <input type="text" id="disabledInputEstadoG" name = "estadoCivil" class="form-control" value="{{this.estadocivil}}">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="disabledInputNumero">N° de documento:</label>
+                        <input type="text" id="disabledInputNumeroG" name = "ndocumento" class="form-control" value="{{this.ndocumento}}">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12 text-center">
+                        <label class="lead">Datos del Inmueble</label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="disabledInputObjetoPedido">Objeto del Pedido:</label>
+                        <input type="text" name = "objetoPedido" class="form-control" id="disabledInputObjetoPedido" value="{{this.objetoPedido}}">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="disabledInputUbicacionInmueble">Ubicacion del Inmueble:</label>
+                        <input type="text" name = "ubicacionInmueble" class="form-control" id="disabledInputUbicacionInmueble" value="{{this.ubicacionInmueble}}">
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+                <hr>
+                <div class="row">
+                  <div class="col-12" style="text-align: right;">
+                    <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(2);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                    <button class="btn btn-primary" (click)="irPaso(4);">Siguiente</button>
                   </div>
                 </div>
 
@@ -338,7 +499,6 @@
                   </div>
                   <!-- /.row -->
 
-                  <!-- este row no deberia aparacer cuando se imprime la pagina -->
                   <div class="row no-print pull-right">
                     <div class="col-12">
                       <button type="button" class="btn btn-success btn-block"><i class="fa fa-credit-card"></i> Pagar
@@ -347,15 +507,28 @@
                   </div>
                   <br>
                   <hr>
-                  <div class="row">
+
+                  <!-- Finalizar Minuta H -->
+
+                  <div class="row" id="finalizarH">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
                       <button id="btn-siguiente-4" (click)="createFormGroupUser(this.apellido, this.nombre, this.estadocivil, this.tdocumento, this.ndocumento, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>
+
+
+                  <!-- Finalizar Minuta G -->
+
+                  <div class="row" id="finalizarG">
+                    <div class="col-12" style="text-align: right;">
+                      <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                      <button (click)="createFormG(this.apellido, this.nombre, this.estadocivil, this.ndocumento, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+
                 </section>
                </div>
-
             <!--/ Fin Div -->
           </div>
 
