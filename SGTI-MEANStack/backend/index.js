@@ -20,6 +20,7 @@ app.use('/api/user',require('./routes/user.route'));
 app.use('/api/admin', require('./routes/admin.route'));
 app.use('/api/forms',require('./routes/form.route'));
 app.use('/api/forms/dataMinutaH', require('./routes/minutaH.route'));
+app.use('/api/forms/dataMinutaG', require('./routes/minutaG.route'));
 app.use('/api/upload', require('./routes/upload.route'));
 
 //Starting the server
