@@ -21,6 +21,8 @@ app.use('/api/admin', require('./routes/admin.route'));
 app.use('/api/forms',require('./routes/form.route'));
 app.use('/api/forms/dataMinutaH', require('./routes/minutaH.route'));
 app.use('/api/upload', require('./routes/upload.route'));
+app.use('/api/img', require('./routes/imagenes.route'));
+
 
 //Starting the server
 app.listen(app.get('port'),() => {

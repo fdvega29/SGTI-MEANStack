@@ -3,28 +3,46 @@ const minutaH = require('../models/minutaH.model');
 const dataCtrl = {};
 
 dataCtrl.getAllData = async (req, res) => {
-     const dataAll = await minutaH.find();
-     if(!dataAll){
-         return res.status(400).json({
-             ok: false,
-             message: 'Error al obtener listado de tramites'
-         })
-     }
-     return res.status(200).json({
-         ok: true,
-         allDataMinH: dataAll
-     });
+    const dataAll = await minutaH.find()
+        .populate('usuario', 'apellido nombre telefono')
+
+    if (!dataAll) {
+        return res.status(400).json({
+            ok: false,
+            message: 'Error al obtener listado de tramites'
+        })
+    }
+    return res.status(200).json({
+        ok: true,
+        allDataMinH: dataAll
+    });
+};
+
+dataCtrl.getAllDataById = async (req, res) => {
+    const _id = req.params.id;
+    const dataAll = await minutaH.find({'usuario': _id});
+    if (!dataAll) {
+        return res.status(400).json({
+            ok: false,
+            message: 'Error al obtener listado de tramites'
+        })
+    }
+    return res.status(200).json({
+        ok: true,
+        allDataMinH: dataAll
+    });
 };
 
 dataCtrl.getData = async (req, res) => {
     const id = req.params.id;
-    if(!id){
+    if (!id) {
         return res.status(400).json({
             ok: false,
             message: 'Error al obtener datos del tramite'
         })
     }
-    const dataMinH = await minutaH.findById(id);
+    const dataMinH = await minutaH.findById(id)
+            .populate('usuario', 'id');
     return res.status(200).json({
         ok: true,
         dataMinH: dataMinH
@@ -34,7 +52,7 @@ dataCtrl.getData = async (req, res) => {
 
 dataCtrl.createTram = async (req, res) => {
     const formData = new minutaH(req.body);
-    if(!formData){
+    if (!formData) {
         return res.status(400).json({
             ok: false,
             message: 'Error al grabar informacion minuta H'

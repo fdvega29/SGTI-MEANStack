@@ -1,6 +1,7 @@
 const express = require('express');
 const fileupload = require('express-fileupload');
 const app = express();
+
 const fs = require('fs');
 
 const user = require('../models/user.model');
@@ -20,14 +21,14 @@ app.put('/usuario/img/:id', (req, res) => {
 
     //Obtengo nombre del archivo
     const archivo = req.files.img;
-    const nombreCortado = archivo.name.split('.');
+    const nombreCortado = archivo.name.split('.');//archivo.name.split('.');
     const extencion = nombreCortado[nombreCortado.length - 1];
 
     //Parametrizo extenciones aceptadas
     const extencionValida = ['jpg', 'png', 'jpge', 'gif'];
 
     //Renombrar archivo - unico
-    const nombArchivo = `${id} - ${new Date().getMilliseconds()}.${extencion}`;
+    const nombArchivo = `${id}-${new Date().getMilliseconds()}.${extencion}`;
     //Mover archivo temporal a un path especifico
     const path = `./uploads/usuarios/${nombArchivo}`;
 
@@ -60,7 +61,7 @@ function subirImg(id, nombArchivo, res) {
         user.findById(id, (err, usuario) => {
 
             if(!usuario){
-                return res.status(200).json({
+                return res.status(400).json({
                     ok: false,
                     message: 'No existe el usuario',
                     errors: err

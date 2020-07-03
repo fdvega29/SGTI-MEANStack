@@ -17,13 +17,11 @@ const usersSchema = new Schema({
 
     password: { type: String, required: [true, 'La contraseña es requerida'], trim: true},
 
-    img : { type: String, required: false, default: "assets/dist/img/avatar.png"},        
+    img : { type: String, required: false},        
 
     roles: { type: String, required: false, default: "USER_ROLE"},
 
-    google: { type: Boolean, required: false, default: false}
-
-    //minutaH: {type: Schema.Types.ObjectId, ref: 'MinutaH'},
+    google: { type: Boolean, required: false, default: false},
 },
     {
         timestamps: true // Registra fecha de creacion y actualizacion de datos.
