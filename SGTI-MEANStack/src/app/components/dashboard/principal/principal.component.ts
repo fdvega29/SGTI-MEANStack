@@ -30,13 +30,6 @@ export class PrincipalComponent implements OnInit {
       .subscribe((data: any) => (this.usuarios = data.usuarios))
   }
 
-  /*getUserData(usuario: UsersModule){
-    this.usuarioService
-      .getUser(usuario._id)
-      .subscribe((data: any) => (this.usuario = data.usuario))
-  }*/
-  
-
   deleteUser(usuario: usersModule) {
 
     console.log(usuario);

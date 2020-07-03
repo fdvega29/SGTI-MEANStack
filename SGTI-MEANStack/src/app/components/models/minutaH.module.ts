@@ -12,10 +12,10 @@ export class minutaH {
     public estadoTram: string;
     public producto: string;
     public tipoTram: string;
-    //public usuario: string;
+    public usuario: string;
 
     constructor(id = '', apellido = '', nombre = '', estadoCivil = '', tipoDoc = '', numDoc = '', nacionalidad = '', fechNac = '',
-                apeConyu = '', nombConyu = '', estadoTram = '', producto = '', tipoTram = '',){
+                apeConyu = '', nombConyu = '', estadoTram = '', producto = '', tipoTram = '', usuario = ''){
         this.id = id;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -29,6 +29,6 @@ export class minutaH {
         this.estadoTram = estadoTram;
         this.tipoTram = tipoTram;
         this.producto = producto;
-        //this.usuario = usuario;
+        this.usuario = usuario;
     }
 };

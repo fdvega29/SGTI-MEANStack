@@ -21,6 +21,7 @@ import { PrincipalComponent } from './principal/principal.component';
 
 //Modulos
 import { SharedModule } from '../shared/shared.module';
+import { PipesModule } from '../pipes/pipes/pipes.module';
 
 //Servicios
 import { AuthGuard} from '../../components/core/guards/guards';
@@ -53,7 +54,8 @@ import { UpdateProfileComponent } from './PerfildeUsuario/update-profile/update-
 		Dashboard_ROUTES,
 		CommonModule,
 		FormsModule,
-		HttpClientModule
+		HttpClientModule,
+		PipesModule
 	],
 	providers: [AutenticacionService, AuthGuard]
 })

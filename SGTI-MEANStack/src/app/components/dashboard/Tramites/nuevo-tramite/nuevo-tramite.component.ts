@@ -158,7 +158,7 @@ export class NuevoTramiteComponent implements OnInit {
 
   //Toastr
   public msgError(){
-    this.toastr.error('¡Debe completar todos los campos!', '',{
+    this.toastr.error('¡Completar campos!', '',{
       timeOut: 2000,
       progressBar: true,
       progressAnimation: 'increasing'
@@ -181,7 +181,7 @@ export class NuevoTramiteComponent implements OnInit {
     }
   }
 
-  public createFormGroupUser(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string){
+  public createFormGroupUser(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string, usuario: string){
     
     if(!ConyuApellido){
       ConyuApellido = '';
@@ -202,7 +202,8 @@ export class NuevoTramiteComponent implements OnInit {
         apeConyu: ConyuApellido,
         nomConyu: ConyuNombre,
         tipoTram: tipoTramite,
-        producto: producto
+        producto: producto,
+        usuario: this.usuario
       };
       this.postDataTramMinH(this.persona);
   };

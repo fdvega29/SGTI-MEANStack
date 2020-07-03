@@ -32,9 +32,6 @@ export class SidebarComponent implements OnInit {
     this.roleUsuario = JSON.stringify(this.usuario['roles']);
     //Elimina "" del JSON p/ hacer comparacion
     this.roleUsuario = this.roleUsuario.replace(/['"]+/g, '');
-
-
-
-  }
+}
 
 }
