@@ -1,40 +1,39 @@
 import { Injectable } from '@angular/core';
-import { minutaH } from '../models/minutaH.module';
-import { tap, map } from 'rxjs/operators';
+import { dataTramites } from '../models/tramites.module';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MinutaHService {
+export class TramitesService {
 
-  selectedTram: minutaH;
-  tramites: minutaH[];
+  selectedTram: dataTramites;
+  tramites: dataTramites[];
   AUTH_SERVER: string = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient) {
-    this.selectedTram = new minutaH();
+  constructor(private http: HttpClient) { 
+    this.selectedTram = new dataTramites();
   }
 
   /*Metodos HTTP*/
 
   public getAllTramites() {
-    const url_api = this.AUTH_SERVER + '/forms/dataMinutaH/all';
+    const url_api = this.AUTH_SERVER + '/forms/dataTramites/all';
     return this.http.get(url_api);
   };
 
   public getAllTramitesById(id: string) {
-    const url_api = this.AUTH_SERVER + `/forms/dataMinutaH/all/${id}`;
+    const url_api = this.AUTH_SERVER + `/forms/dataTramites/all/${id}`;
     return this.http.get(url_api);
   };
 
   public getDataById(id: string){
-    const url_api = this.AUTH_SERVER + `/forms/dataMinutaH/${id}`;
+    const url_api = this.AUTH_SERVER + `/forms/dataTramites/${id}`;
     return this.http.get(url_api);
   };
 
-  public postDataTram(minH: minutaH) {
-    const url_api = this.AUTH_SERVER + '/forms/dataMinutaH/add';
+  public postDataTram(minH: dataTramites) {
+    const url_api = this.AUTH_SERVER + '/forms/dataTramites/add';
     return this.http.post(url_api, minH);
   };
 

@@ -1,9 +1,10 @@
-const minutaH = require('../models/minutaH.model');
+const dataTramite = require('../models/dataTramite');
+
 
 const dataCtrl = {};
 
 dataCtrl.getAllData = async (req, res) => {
-    const dataAll = await minutaH.find()
+    const dataAll = await dataTramite.find()
         .populate('usuario', 'apellido nombre telefono')
 
     if (!dataAll) {
@@ -20,7 +21,7 @@ dataCtrl.getAllData = async (req, res) => {
 
 dataCtrl.getAllDataById = async (req, res) => {
     const _id = req.params.id;
-    const dataAll = await minutaH.find({'usuario': _id});
+    const dataAll = await dataTramite.find({'usuario': _id}).sort({_id:-1});
     if (!dataAll) {
         return res.status(400).json({
             ok: false,
@@ -41,7 +42,7 @@ dataCtrl.getData = async (req, res) => {
             message: 'Error al obtener datos del tramite'
         })
     }
-    const dataMinH = await minutaH.findById(id)
+    const dataMinH = await dataTramite.findById(id)
             .populate('usuario', 'id');
     return res.status(200).json({
         ok: true,
@@ -51,11 +52,11 @@ dataCtrl.getData = async (req, res) => {
 };
 
 dataCtrl.createTram = async (req, res) => {
-    const formData = new minutaH(req.body);
+    const formData = new dataTramite(req.body);
     if(!formData){
         return res.status(400).json({
             ok: false,
-            message: 'Error al grabar informacion minuta H'
+            message: 'Error al grabar informacion'
         })
     }
     await formData.save();
@@ -74,7 +75,7 @@ dataCtrl.editData = async (req, res) => {
             mensaje: 'Error al obtener datos del tramite'
         });
     }
-    await minutaH.findByIdAndUpdate(req.params.id, { $set: dataMinH }, { new: true });
+    await dataTramite.findByIdAndUpdate(req.params.id, { $set: dataMinH }, { new: true });
     return res.status(200).json({
         ok: true,
         minutaH: dataMinH,
@@ -84,7 +85,7 @@ dataCtrl.editData = async (req, res) => {
 };
 
 dataCtrl.deleteData = async (req, res) => {
-    await minutaH.findByIdAndRemove(req.params.id);
+    await dataTramite.findByIdAndRemove(req.params.id);
     return res.status(200).json({
         ok: true,
         message: 'Tramite eliminado'

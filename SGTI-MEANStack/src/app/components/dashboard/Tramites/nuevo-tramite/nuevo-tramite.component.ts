@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
+import { TramitesService } from 'src/app/components/services/tramites.service';
 import { sessionUser } from 'src/app/components/models/session.module';
 
 //sweetalert2
@@ -8,8 +8,6 @@ import Swal from 'sweetalert2'
 
 //Toastr
 import { ToastrService } from 'ngx-toastr';
-import { MinutaHService } from 'src/app/components/services/minuta-h.service';
-import {MinutaGService} from "../../../services/minuta-g.service";
 import { Router } from '@angular/router';
 
 
@@ -33,14 +31,13 @@ export class NuevoTramiteComponent implements OnInit {
   tipoTramite:string = '';
   tipoFormulario:string = '';
 
-  persona: any = {};
-
   formulario:number = 1;
 
   usuario: sessionUser;
 
   currenDate = new Date();
 
+  minutaH: any = {};
   minutaG: any = {};
 
   domicilio: string;
@@ -49,8 +46,7 @@ export class NuevoTramiteComponent implements OnInit {
 
 
   constructor(private userService: UsuarioService,
-              private serviceMinH: MinutaHService,
-              private serviceMinG: MinutaGService,
+              private dataTramite: TramitesService,
               private toastr: ToastrService,
               private router: Router) {
                   this.usuario = userService.getCurrentUser();
@@ -229,7 +225,7 @@ export class NuevoTramiteComponent implements OnInit {
     }
   }
 
-  public createFormGroupUser(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string, usuario: string){
+  public createFormH(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string, usuario: string){
 
     if(!ConyuApellido){
       ConyuApellido = '';
@@ -239,7 +235,7 @@ export class NuevoTramiteComponent implements OnInit {
       ConyuNombre = '';
     }
 
-      this.persona = {
+      this.minutaH = {
         apellido: apellido,
         nombre: nombre,
         estadoCivil: estadocivil,
@@ -249,24 +245,17 @@ export class NuevoTramiteComponent implements OnInit {
         fechNac: fechanac,
         apeConyu: ConyuApellido,
         nomConyu: ConyuNombre,
+        domicilio: '',
+        objetoPedido: '',
+        ubicacionInmueble: '',
         tipoTram: tipoTramite,
         producto: producto,
         usuario: this.usuario
       };
-      this.postDataTramMinH(this.persona);
+      this.postDataTramMinH(this.minutaH);
   };
 
-  public postDataTramMinH(createFormGroupUser){
-    console.log("Data-form", createFormGroupUser);
-    this.serviceMinH.postDataTram(createFormGroupUser)
-                                  .subscribe(data => {
-                                  console.log("Res-Api", data);
-                                  this.alertSuccess();
-                                  this.router.navigate(['/dashboard/mis-tramites']);
-                                });
-  };
-
-  public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string) {
+  public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string, usuario: string) {
     this.minutaG = {
       apellido: apellido,
       nombre: nombre,
@@ -275,21 +264,25 @@ export class NuevoTramiteComponent implements OnInit {
       domicilio: domicilio,
       objetoPedido: objetoPedido,
       ubicacionInmueble: ubicacionInmueble,
+      tipoDoc: '',
+      nacionalidad: '',
+      fechNac: '',
+      apeConyu: '',
+      nomConyu: '',
       tipoTram: tipoTramite,
       producto: producto,
       usuario: this.usuario
     };
-      this.postDataTramG(this.minutaG);
+      this.postDataTramMinH(this.minutaG);
   };
 
-  public postDataTramG(createFormG) {
-    console.log('Datos de minuta G', createFormG);
-    this.serviceMinG.postDataTramG(createFormG)
-                                .subscribe(data => {
-                                  console.log('Res-Api', data);
+  public postDataTramMinH(createFormGroupUser){
+    console.log("Data-form", createFormGroupUser);
+    this.dataTramite.postDataTram(createFormGroupUser)
+                                  .subscribe(data => {
+                                  console.log("Res-Api", data);
                                   this.alertSuccess();
                                   this.router.navigate(['/dashboard/mis-tramites']);
                                 });
-  }
-
+  };
 }

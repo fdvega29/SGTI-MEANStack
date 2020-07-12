@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MinutaHService } from 'src/app/components/services/minuta-h.service';
-import { minutaH } from 'src/app/components/models/minutaH.module';
+import { TramitesService } from 'src/app/components/services/tramites.service';
+import { dataTramites } from 'src/app/components/models/tramites.module';
 
 //PDFMake
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { sessionUser } from 'src/app/components/models/session.module';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
-import { usersModule } from 'src/app/components/models/user.module';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -18,19 +16,16 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class MisTramitesComponent implements OnInit {
 
-  constructor(public dataTramites: MinutaHService, public userService: UsuarioService) { }
+  constructor(public dataTramites: TramitesService, public userService: UsuarioService) { }
 
-  tramites: minutaH[] = [];
+  tramites: dataTramites[] = [];
 
   usuario: any = {};
 
   ngOnInit() {
-    //this.getDataTramite();
     this.usuario = this.userService.getCurrentUser();  
     this.getDataTramiteById();
   }
-
-
 
   public getDataTramite(): void {
     this.dataTramites
