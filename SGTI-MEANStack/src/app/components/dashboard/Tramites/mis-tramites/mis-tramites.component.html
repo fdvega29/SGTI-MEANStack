@@ -68,14 +68,14 @@
       <div class="info-box">
         <span class="info-box-icon"><i class="fa fa-check-square-o fa-2x" style="color:green;" aria-hidden="true"></i></span>
         <div class="info-box-content">
-          <h4 class="info-box-text">Listado de tramites generados</h4>
+          <h4 class="col-md-12 col-sm-12 col-12">Listado de tramites generados</h4>
           <h5 class="info-box-text text-muted">Total: <span style="color: black;">{{tramites.length}}</span></h5>
         </div>
       </div>
     </div>
     <div class="col-md-12 p-4">
-      <div *ngFor="let data of tramites; index as i" class="callout callout-warning">
-        <div class="row">
+      <div *ngFor="let data of tramites; index as i">
+        <div *ngIf="data.estadoTram == 'Iniciado'" class="row callout callout-info">
           <div class="col-md-4">
             <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
             <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
@@ -85,7 +85,59 @@
             <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="text-muted">Estado tramite: <span class="badge bg-primary ml-1">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <div>
+              <p class="text-muted">Comprobante: 
+                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+              &nbsp;
+              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+                  aria-hidden="true"></i></a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="data.estadoTram == 'En proceso'" class="row callout callout-warning">
+          <div class="col-md-4">
+            <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+            <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+          </div>
+          <div class="col-md-5">
+            <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
+            <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+          </div>
+          <div class="col-md-3">
+            <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <div>
+              <p class="text-muted">Comprobante: 
+                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+              &nbsp;
+              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+                  aria-hidden="true"></i></a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="data.estadoTram == 'Finalizado'" class="row callout callout-success">
+          <div class="col-md-4">
+            <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+            <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+          </div>
+          <div class="col-md-5">
+            <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
+            <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+          </div>
+          <div class="col-md-3">
+            <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+            <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
             <div>
               <p class="text-muted">Comprobante: 
                 <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"

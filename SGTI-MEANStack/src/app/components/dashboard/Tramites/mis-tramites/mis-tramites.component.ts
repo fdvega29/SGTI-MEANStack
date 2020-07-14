@@ -8,6 +8,8 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+declare var $;
+
 @Component({
   selector: 'app-mis-tramites',
   templateUrl: './mis-tramites.component.html',
@@ -19,6 +21,8 @@ export class MisTramitesComponent implements OnInit {
   constructor(public dataTramites: TramitesService, public userService: UsuarioService) { }
 
   tramites: dataTramites[] = [];
+
+  estado: any;
 
   usuario: any = {};
 
