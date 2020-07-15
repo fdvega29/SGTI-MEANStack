@@ -32,7 +32,7 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-4">
                       <label>
-                        <input type="radio" name="tramite" class="card-input-element" />
+                        <input type="radio" name="tramite" class="card-input-element" id="card-h" />
 
                         <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de titulares dominiales', 'Minuta H');">
                           <div class="small-box bg-info-gradient">
@@ -50,9 +50,9 @@
                     </div>
                     <div class="col-md-4">
                       <label>
-                        <input type="radio" name="tramite" class="card-input-element"  (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', 'Minuta G');"/>
+                        <input type="radio" name="tramite" class="card-input-element" id="card-g"/>
 
-                        <div class="card card-input text-center">
+                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', 'Minuta G');">
                           <div class="small-box bg-info-gradient">
                             <div class="inner">
                               <h4 class="card-header">Búsqueda de estado jurídico de inmueble</h4>

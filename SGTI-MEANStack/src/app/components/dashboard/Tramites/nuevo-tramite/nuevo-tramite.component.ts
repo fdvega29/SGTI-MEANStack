@@ -67,10 +67,41 @@ export class NuevoTramiteComponent implements OnInit {
       });
 
       $('#stepwizard #btn-siguiente-1').hide();
+
+    let localForm = localStorage.getItem('FormularioPedido');
+
+    //Mostrar botón siguiente
+    if (this.tipoFormulario != '') {
+      $('#stepwizard #btn-siguiente-1').show();
+    }
+
+    //Utilizar formulario pedido desde componente Informacion
+
+    if (localForm == 'Minuta H') {
+      this.guardar_tipotramite('Búsqueda de titulares dominiales', localForm);
+
+      $('#card-h').prop("checked", true);
+      $('#formH').show();
+      $('#formG').hide();
+      $('#confirmH').show();
+      $('#confirmG').hide();
+      $('#finalizarH').show();
+      $('#finalizarG').hide();
+    }else if (localForm == 'Minuta G') {
+
+      this.guardar_tipotramite('Búsqueda de estado jurídico de inmueble', localForm);
+
+      $('#card-g').prop("checked", true);
+      $('#formG').show();
+      $('#formH').hide();
+      $('#confirmG').show();
+      $('#confirmH').hide();
+      $('#finalizarG').show();
+      $('#finalizarH').hide();
+    }
   }
 
   public irPaso(paso:number){
-
     if(paso==1){
       $('#stepwizard #step1').show();
       $('#stepwizard #step2').hide();
