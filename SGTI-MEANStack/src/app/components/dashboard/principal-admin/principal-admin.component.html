@@ -1,0 +1,172 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <app-breadcrumbs></app-breadcrumbs>
+
+  <!--#Titulo-->
+  <div class="row">
+    <div class="col-lg-3 col-6 p-4">
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h3>65</h3>
+          <p>Usuarios</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-users"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-6 p-4">
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>65%</h3>
+          <p>Tramites</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-bar-chart"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-6 p-4">
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3>$65</h3>
+          <p>Total</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-pie-chart"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-6 p-4">
+      <div class="small-box bg-danger">
+        <div class="inner">
+          <h3>65</h3>
+          <p>Incidentes</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-exclamation-triangle"></i>
+        </div>
+      </div>
+    </div>
+
+    <!--#Tabla usuarios-->
+  <div class="col-md-12 p-4">
+      <div class="card card-warning card-outline">
+        <div class="card-header">
+          <h3 class="card-title">Listado de usuarios registrados</h3>
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control float-rigth" placeholder="Buscar">
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0" style="height: 300px;">
+          <table class="table table-hover text-nowrap">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th scope="col" class="text-center">Imagen</th>
+              <th scope="col" class="text-center">Apellido</th>
+              <th scope="col" class="text-center">Nombre</th>
+              <th scope="col" class="text-center">Email</th>
+              <th scope="col" class="text-center">Teléfono</th>
+              <th scope="col" class="text-center">Roles</th>
+              <th scope="col" class="text-center">Autenticación</th>
+              <th scope="col" class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of usuarios; index as i">
+              <th scope="row">{{i+1}}</th>
+              <td class="text-center">
+                <img [src]="user.img | imagen" style="width: 30px;">
+              </td>
+              <td class="text-center">{{user.apellido}}</td>
+              <td class="text-center">{{user.nombre}}</td>
+              <td class="text-center">{{user.email}}</td>
+              <td class="text-center">{{user.telefono}}</td>
+              <td class="text-center">{{user.roles}}</td>
+              <td class="text-center">{{user.google == true ? 'Google' : 'Normal'}}</td>
+              <td class="text-center">
+                <a class="btn btn-outline-success"
+                   href="https://api.whatsapp.com/send?phone=54{{user.telefono}}&text=Hola%20{{user.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
+                  class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                &nbsp;
+                <button class="btn btn-outline-danger" (click)="obtenerPdf()"><i class="fa fa-file-pdf-o"
+                                                                                 aria-hidden="true"></i></button>
+                &nbsp;
+                <button type="button" class="btn btn-outline-info" (click)="editUser(user)" data-toggle="modal"
+                        data-target="#exampleModal">
+                  <i class="fa fa-edit"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-outline-danger" (click)="deleteUser(user)"><i class="fa fa-times"></i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar información de usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="text-muted">Nombre completo</label>
+                  <input type="text" class="form-control" name="nombre">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="text-muted">Email</label>
+                  <input type="email" class="form-control" name="email">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="text-muted">Teléfono</label>
+                  <input type="text" class="form-control" name="telefono">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="text-muted">Roles</label>
+                  <select class="form-control" name="role">
+                    <option></option>
+                    <option>ADMIN_ROLE</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
