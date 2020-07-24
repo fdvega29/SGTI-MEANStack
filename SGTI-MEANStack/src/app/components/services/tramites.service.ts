@@ -37,17 +37,10 @@ export class TramitesService {
     return this.http.post(url_api, minH);
   };
 
-  public setTramite() {
-
-  };
-
-  public getDataTramite() {
-
-  };
-
-  public editDataTram() {
-
-  };
+  public editDataTram(tramite: dataTramites) {
+    const url_api = this.AUTH_SERVER + `/forms/dataTramites/edit/${tramite._id}`;
+    return this.http.put(url_api, tramite);
+  }
 
   public deleteDataTram() {
 

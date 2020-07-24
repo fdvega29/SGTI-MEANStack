@@ -1,7 +1,11 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="#" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
+  <a *ngIf="usuario.roles == 'USER_ROLE'" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
+    <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
+    <span class="brand-text text-white">SGTI</span>
+  </a>
+  <a *ngIf="usuario.roles == 'ADMIN_ROLE'" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
     <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
     <span class="brand-text text-white">SGTI</span>
   </a>
@@ -38,15 +42,15 @@
               <a href="" class="nav-link">
                 <i [class]="menuSidebar.icono"></i>
                 <p class="pl-1">
-                  {{menuSidebar.titulo}}
-                  <i class="right fa fa-angle-left"></i>
+                   {{menuSidebar.titulo}}
+                  <i class="right fa fa-angle-left"> </i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item">
                   <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>{{subMenus.titulo}}</p>
+                    <i class="fa fa-circle-o nav-icon"> </i>
+                    <p> {{subMenus.titulo}} </p>
                   </a>
                 </li>
               </ul>
@@ -55,22 +59,11 @@
 
 
           <ng-template #MenuAdm>
-            <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item has-treeview">
-              <a href="" class="nav-link">
-                <i [class]="menuSidebar.icono"></i>
-                <p class="pl-1">
-                  {{menuSidebar.titulo}}
-                  <i class="right fa fa-angle-left"></i>
-                </p>
+            <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item">
+              <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[menuSidebar.url]" routerLinkActive="router-link-active">
+                <i [class]="menuSidebar.icono"> </i>
+                <p>&nbsp;	{{menuSidebar.titulo}}</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item">
-                  <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>{{subMenus.titulo}}</p>
-                  </a>
-                </li>
-              </ul>
             </li>
           </ng-template>
 
@@ -81,7 +74,7 @@
             <ul class="nav">
               <a href="javascript:void(0)" (click)="_autenticacion.logout()" routerLinkActive="router-link-active" class="nav-link">
                 <i class="fa fa-power-off" aria-hidden="true"></i>
-                <p class="pl-1">Cerrar sessión</p>
+                <p class="pl-1">&nbsp;Cerrar sesión</p>
               </a>
             </ul>
           </li>

@@ -12,7 +12,6 @@ export class SidebarService {
             icono: 'fa fa-user-circle-o',
             submenu: [
               {titulo: 'Perfil', url: '/dashboard/perfil'},
-              {titulo: 'Cambiar contraseña', url: '/dashboard/cambiar-password'},
             ]
           },
           {
@@ -41,24 +40,19 @@ export class SidebarService {
       {
         titulo: 'Perfil del Administrador',
         icono: 'fa fa-user-circle-o',
-        submenu: [
-          {titulo: 'Perfil', url: '/dashboard/perfil'},
-        ]
+        url: '/dashboard/perfil'
       },
       {
-        titulo: 'Trámites',
+        titulo: 'Gestión de trámites',
         icono: 'fa fa-file-text-o',
-        submenu: [
-          { titulo: 'Gestionar trámites', url:'/dashboard/mis-tramites'},
-        ]
+        url:'/dashboard/gestion-tramites'
       },
       {
-        titulo: 'Acerca de',
+        titulo: 'Manual de Sistema',
         icono: 'fa fa-info-circle',
-        submenu: [
-          { titulo: 'Información del Sistema', url:'/dashboard/informacion'},
-        ]
+        url:'/dashboard/guia-administrador'
       }
+
     ]
   }
   ;

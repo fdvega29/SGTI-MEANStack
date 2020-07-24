@@ -3,66 +3,6 @@
   <!-- Content Header (Page header) -->
   <app-breadcrumbs></app-breadcrumbs>
 
-  <!--<section class="content">
-    <div class="row">
-
-      <div class="col-12">
-
-        #Tabla tramites
-        <div class="col-md-12 p-4">
-          <div class="card card-warning card-outline">
-            <div class="card-header">
-              <h3 class="card-title"><i class="fa fa-wpforms" aria-hidden="true"></i> Mis tramites</h3>
-              <div class="card-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control float-rigth" placeholder="Buscar">
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-body table-responsive p-0" style="height: 300px;">
-              <table class="table table-hover text-nowrap">
-                <thead>
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col" class="text-center">Generado</th>
-                    <th scope="col" class="text-center">Persona</th>
-                    <th scope="col" class="text-center">Producto</th>
-                    <th scope="col" class="text-center">Descripción</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Comprobante</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let minH of tramites; index as i">
-                    <th scope="row">{{i+1}}</th>
-                    <td class="text-center">{{minH.createdAt | date: "dd/MM/yyyy"}}</td>
-                    <td class="text-center">{{minH.apellido}} {{minH.nombre}}</td>
-                    <td class="text-center">{{minH.producto}}</td>
-                    <td class="text-center">{{minH.tipoTram}}</td>
-                    <td><span class="badge bg-primary">{{minH.estadoTram}}</span></td>
-                    <td>
-                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                        target="_blank" (click)="imprimirPdf()" class="btn btn-outline-primary"><i
-                          class="fa fa-print"></i></a>
-                      &nbsp;
-                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                        target="_blank" (click)="descargarPdf()" class="btn btn-outline-success"><i
-                          class="fa fa-download" aria-hidden="true"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>-->
   <section>
     <div class="col-md-12 col-sm-12 col-12 pt-2 pl-3 pr-3">
       <div class="info-box">
@@ -76,11 +16,11 @@
     <div class="col-md-12 p-4">
       <div *ngFor="let data of tramites; index as i">
         <div *ngIf="data.estadoTram == 'Iniciado'" class="row callout callout-info">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
             <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
             <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
           </div>
@@ -89,23 +29,26 @@
             <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
             <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
             <div>
-              <p class="text-muted">Comprobante: 
-                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+              <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <p class="text-muted">Comprobante:<br>
+              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+              target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
               &nbsp;
               <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
                 target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
-                  aria-hidden="true"></i></a>
-              </p>
-            </div>
+                  aria-hidden="true"></i></a>     
+            </p>
           </div>
         </div>
         <div *ngIf="data.estadoTram == 'En proceso'" class="row callout callout-warning">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
             <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
             <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
           </div>
@@ -114,23 +57,26 @@
             <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
             <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
             <div>
-              <p class="text-muted">Comprobante: 
-                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
-              &nbsp;
-              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
-                  aria-hidden="true"></i></a>
-              </p>
+              <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
             </div>
+          </div>
+          <div class="col-md-2">
+            <p class="text-muted">Comprobante:<br>
+              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+              target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+            &nbsp;
+            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+              target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+                aria-hidden="true"></i></a>
+            </p>
           </div>
         </div>
         <div *ngIf="data.estadoTram == 'Finalizado'" class="row callout callout-success">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
             <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
             <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
           </div>
@@ -139,15 +85,18 @@
             <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
             <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
             <div>
-              <p class="text-muted">Comprobante: 
-                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
-              &nbsp;
-              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
-                  aria-hidden="true"></i></a>
-              </p>
+              <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
             </div>
+          </div>
+          <div class="col-md-2">
+            <p class="text-muted">Comprobante:<br>
+              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+              target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+            &nbsp;
+            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+              target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+                aria-hidden="true"></i></a>
+            </p>
           </div>
         </div>
       </div>

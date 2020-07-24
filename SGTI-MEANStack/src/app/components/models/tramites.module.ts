@@ -1,5 +1,5 @@
 export class dataTramites {
-    public id: string;
+    public _id: string;
     public apellido: string;
     public nombre: string;
     public estadoCivil: string;
@@ -13,13 +13,14 @@ export class dataTramites {
     public objetoPedido: string;
     public ubicacionInmueble: string;
     public estadoTram: string;
+    public area: string;
     public producto: string;
     public tipoTram: string;
     public usuario: string;
 
-    constructor(id = '', apellido = '', nombre = '', estadoCivil = '', tipoDoc = '', numDoc = '', nacionalidad = '', fechNac = '',
-                apeConyu = '', nombConyu = '', domicilio = '', objetoPedido = '', ubicacionInmueble = '', estadoTram = '', producto = '', tipoTram = '', usuario = ''){
-        this.id = id;
+    constructor(_id = '', apellido = '', nombre = '', estadoCivil = '', tipoDoc = '', numDoc = '', nacionalidad = '', fechNac = '',
+                apeConyu = '', nombConyu = '', domicilio = '', objetoPedido = '', ubicacionInmueble = '', estadoTram = '', area = '', producto = '', tipoTram = '', usuario = ''){
+        this._id = _id;
         this.apellido = apellido;
         this.nombre = nombre;
         this.tipoDoc = tipoDoc;
@@ -33,6 +34,7 @@ export class dataTramites {
         this.objetoPedido = objetoPedido;
         this.ubicacionInmueble = ubicacionInmueble;
         this.estadoTram = estadoTram;
+        this.area = area;
         this.tipoTram = tipoTram;
         this.producto = producto;
         this.usuario = usuario;
