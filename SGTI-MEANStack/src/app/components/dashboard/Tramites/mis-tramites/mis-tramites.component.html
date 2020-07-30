@@ -35,11 +35,11 @@
           <div class="col-md-2">
             <p class="text-muted">Comprobante:<br>
               <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-              target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+                 (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
               &nbsp;
               <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
-                  aria-hidden="true"></i></a>     
+                 (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
+                  aria-hidden="true"></i></a>
             </p>
           </div>
         </div>
@@ -63,10 +63,9 @@
           <div class="col-md-2">
             <p class="text-muted">Comprobante:<br>
               <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-              target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
-            &nbsp;
+               (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>            &nbsp;
             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-              target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+               (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
                 aria-hidden="true"></i></a>
             </p>
           </div>
@@ -91,10 +90,10 @@
           <div class="col-md-2">
             <p class="text-muted">Comprobante:<br>
               <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-              target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+                 (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
             &nbsp;
             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-              target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+               (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
                 aria-hidden="true"></i></a>
             </p>
           </div>

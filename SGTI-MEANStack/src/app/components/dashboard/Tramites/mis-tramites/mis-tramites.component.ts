@@ -25,7 +25,7 @@ export class MisTramitesComponent implements OnInit {
   usuario: any = {};
 
   ngOnInit() {
-    this.usuario = this.userService.getCurrentUser();  
+    this.usuario = this.userService.getCurrentUser();
     this.getDataTramiteById();
   }
 
@@ -38,14 +38,86 @@ export class MisTramitesComponent implements OnInit {
       })
   }
 
-  public imprimirPdf(){
-    const documentDefinition = { content: 'This is an sample PDF printed with pdfMake' };
-    pdfMake.createPdf(documentDefinition).open();
+  public descargarComprobante(apellido, nombre, product, tipoTramite, fechagenerado, estadotramite, areadestino ){
+    const comprobante  = {
+      content: [
+        {
+          text: 'Comprobante de trámite: ',
+          style: 'header',
+          alignment: 'center'
+        },
+        {
+          text: [
+            'Fecha: ' + fechagenerado.substr(0,10)  + '\n \n',
+            'Cliente solicitante: ' + apellido + ' ' + nombre + '\n \n',
+            'Tipo de trámite: ' + tipoTramite +  '\n \n',
+            'Formulario: ' + product + '\n \n',
+            'Área: ' + areadestino + '\n \n',
+            'Estado del trámite: ' + estadotramite + '\n'
+          ],
+          style: 'body',
+        },
+
+        { qr: '\n' + fechagenerado.substr(0, 10) + ' \n ' + apellido + ' '+ nombre + ' \n ' + tipoTramite + ' \n ' + product , alignment: 'center'},
+
+      ],
+      styles: {
+        header: {
+          fontSize: 20,
+          bold: true,
+          alignment: 'center'
+        },
+        body: {
+          fontSize: 14,
+          alignment: 'center',
+          bold: false,
+          margin: [10, 5, 0, 10]
+        },
+      }
+    };
+
+    pdfMake.createPdf(comprobante).download('comprobanteDeTramite.pdf');
   }
 
-  public descargarPdf(){
-    const documentDefinition = { content: 'This is an sample PDF printed with pdfMake' };
-    pdfMake.createPdf(documentDefinition).download();
-  }
+  public imprimirComprobante(apellido, nombre, product, tipoTramite, fechagenerado, estadotramite, areadestino ) {
 
+    const comprobante  = {
+      content: [
+        {
+          text: 'Comprobante de trámite: ',
+          style: 'header',
+          alignment: 'center'
+        },
+        {
+          text: [
+            'Fecha: ' + fechagenerado.substr(0,10)  + '\n \n',
+            'Cliente solicitante: ' + apellido + ' ' + nombre + '\n \n',
+            'Tipo de trámite: ' + tipoTramite +  '\n \n',
+            'Formulario: ' + product + '\n \n',
+            'Área: ' + areadestino + '\n \n',
+            'Estado del trámite: ' + estadotramite + '\n'
+          ],
+          style: 'body',
+        },
+
+        { qr: '\n' + fechagenerado.substr(0, 10) + ' \n ' + apellido + ' '+ nombre + ' \n ' + tipoTramite + ' \n ' + product , alignment: 'center'},
+
+      ],
+      styles: {
+        header: {
+          fontSize: 20,
+          bold: true,
+          alignment: 'center'
+        },
+        body: {
+          fontSize: 14,
+          alignment: 'center',
+          bold: false,
+          margin: [10, 5, 0, 10]
+        },
+      }
+    };
+
+    pdfMake.createPdf(comprobante).open();
+  }
 }
