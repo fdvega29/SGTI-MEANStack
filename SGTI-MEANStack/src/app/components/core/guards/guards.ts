@@ -20,6 +20,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(public authService: AutenticacionService, public router: Router, public usuarioService : UsuarioService) {
     this.usuario = this.usuarioService.getCurrentUser();
+    console.log('guards', this.usuario);
     this.roleUsuario = JSON.stringify(this.usuario['roles']);
     //Elimina "" del JSON p/ hacer comparacion
     this.roleUsuario = this.roleUsuario.replace(/['"]+/g, '');

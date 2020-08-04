@@ -57,8 +57,8 @@ export class SigninComponent implements OnInit {
         data => {
           console.log(data.dataUser.usuario);
           this.userService.setUser(data.dataUser.usuario);
-          console.log(data.dataUser.usuario);
-          if (this.roleUsuario = "ADMIN_ROLE"){
+          this.roleUsuario = data.dataUser.usuario.roles;
+          if (this.roleUsuario == "ADMIN_ROLE"){
             window.location.href = '/dashboard/principal-admin';
           }else {
             window.location.href = '/dashboard/principal';

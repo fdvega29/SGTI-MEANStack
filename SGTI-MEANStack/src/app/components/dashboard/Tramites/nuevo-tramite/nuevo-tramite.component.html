@@ -2,8 +2,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <app-breadcrumbs></app-breadcrumbs>
-
-
+  <hr>
   <section class="content">
     <div class="row" >
       <div class="col-md-12">
@@ -71,7 +70,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-12" style="text-align: right;">
-                      <button id="btn-siguiente-1" class="btn btn-primary" (click)="irPaso(2);">Siguiente</button>
+                      <button id="btn-siguiente-1" class="btn btn-primary" (click)="[irPaso(2), remove()]">Siguiente</button>
                     </div>
                   </div>
 
@@ -214,6 +213,7 @@
                       <i class="fa fa-map-pin" aria-hidden="true"></i> Objetivo del pedido y datos del Inmueble:
                     </h5>
                   </div>
+                  <div class="row">
                   <div class="col-md-6">
                     <label for="inputObjetoPedidoMinG">Objeto del Pedido:</label>
                     <select id="inputObjetoPedidoMinG" class="form-control" (focusout)="guardar_objetoPedido(objPedido.value);" #objPedido>
@@ -230,7 +230,7 @@
 
                     </textarea>
                   </div>
-
+                </div>
                 </form>
                 <hr>
 
@@ -282,7 +282,7 @@
                       </div>
                       <div class="form-group col-md-4">
                         <label for="disabledInputEstado">Estado Civil:</label>
-                        <input type="text" id="disabledInputEstado" name = "estadoCivil" class="form-control" value="{{this.estadocivil}}">
+                        <input type="text" id="disabledInputEstado" name = "estCivil" class="form-control" value="{{this.estCivil}}">
                       </div>
                     </div>
                     <div class="form-row">
@@ -368,7 +368,7 @@
                       </div>
                       <div class="form-group col-md-2">
                         <label for="disabledInputEstadoG">Estado Civil:</label>
-                        <input type="text" id="disabledInputEstadoG" name = "estadoCivil" class="form-control" value="{{this.estadocivil}}">
+                        <input type="text" id="disabledInputEstadoG" name = "estCivil" class="form-control" value="{{this.estCivil}}">
                       </div>
                       <div class="form-group col-md-2">
                         <label for="disabledInputNumero">N° de documento:</label>
@@ -413,36 +413,33 @@
                   <!-- titulo row -->
                   <div class="row">
                     <div class="col-xs-12">
-                      <h3>
-                        Método de pago
-                      </h3>
+                        <h5>Método de pago</h5>
                     </div>
                     <!-- /.col -->
                   </div>
                   <!-- info row -->
                   <div class="row invoice-info">
-                    <div class="col-sm-4 invoice-col">
-                      De
+                    <div class="col-sm-5 invoice-col">
+                        <h5>De</h5>
                       <address>
                         <strong>Secretaría de Tierras y Hábitat Social.</strong><br>
-                        Teléfono: (3804) 426-352<br>
-                        Email: info@secretariadetierras.com.ar
+                        <h5 class="text-muted">Teléfono: <span style="color: black;">(3804) 426-352</span></h5>
+                        <h5 class="text-muted">Email: <span style="color: black;">info@secretariadetierras.com.ar</span></h5>  
                       </address>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-4 invoice-col">
-                      Para
+                      <h5>Para</h5>
                       <address>
                         <strong>{{usuario.apellido}} {{usuario.nombre}}</strong><br>
-                        Teléfono: {{usuario.telefono}}<br>
-                        Email: {{usuario.email}}
+                        <h5 class="text-muted">Teléfono: <span style="color: black;">{{usuario.telefono}}</span></h5>
+                        <h5 class="text-muted">Email: <span style="color: black;">{{usuario.email}}</span></h5>
                       </address>
                     </div>
                     <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
-                      <strong>Fecha:</strong> {{currenDate | date:'dd/MM/yyyy'}}
-                      <br>
-                      <strong>Numero de orden:</strong> A0001<br>
+                    <div class="col-sm-3 invoice-col">
+                       <h5 class="text-muted">Fecha: <span style="color: black;">{{currenDate | date:'dd/MM/yyyy'}}</span></h5>
+                       <h5 class="text-muted">Numero de orden: <span style="color: black;">{{maxcodigo}}</span></h5>
                     </div>
                     <!-- /.col -->
                   </div>

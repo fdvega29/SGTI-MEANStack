@@ -22,7 +22,7 @@ export class NuevoTramiteComponent implements OnInit {
   nombre:string;
   apellido:string;
   fechanac:any;
-  estadocivil:string;
+  estCivil:string;
   tdocumento:string;
   ndocumento:string;
   nacionalidad:string;
@@ -43,6 +43,8 @@ export class NuevoTramiteComponent implements OnInit {
   domicilio: string;
   objetoPedido: string;
   ubicacionInmueble: string;
+
+  maxcodigo: number = 0;
 
 
   constructor(private userService: UsuarioService,
@@ -99,6 +101,8 @@ export class NuevoTramiteComponent implements OnInit {
       $('#finalizarG').show();
       $('#finalizarH').hide();
     }
+
+    this.maxCodi();
   }
 
   public irPaso(paso:number){
@@ -180,7 +184,7 @@ export class NuevoTramiteComponent implements OnInit {
     this.fechanac = fnac;
   }
   public guardar_estadocivil(ecivi:string){
-    this.estadocivil = ecivi;
+    this.estCivil = ecivi;
   }
   public guardar_tdoc(tdoc:string){
     this.tdocumento = tdoc;
@@ -267,9 +271,10 @@ export class NuevoTramiteComponent implements OnInit {
     }
 
       this.minutaH = {
+        codigo: this.maxcodigo,
         apellido: apellido,
         nombre: nombre,
-        estadoCivil: estadocivil,
+        estCivil: estadocivil,
         tipoDoc: tdocumento,
         numDoc: ndocumento,
         nacionalidad: nacionalidad,
@@ -288,9 +293,10 @@ export class NuevoTramiteComponent implements OnInit {
 
   public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string, usuario: string) {
     this.minutaG = {
+      codigo: this.maxcodigo,
       apellido: apellido,
       nombre: nombre,
-      estadoCivil: estadocivil,
+      estCivil: estadocivil,
       ndocumento: ndocumento,
       domicilio: domicilio,
       objetoPedido: objetoPedido,
@@ -307,13 +313,23 @@ export class NuevoTramiteComponent implements OnInit {
       this.postDataTramMinH(this.minutaG);
   };
 
-  public postDataTramMinH(createFormGroupUser){
-    console.log("Data-form", createFormGroupUser);
-    this.dataTramite.postDataTram(createFormGroupUser)
+  public postDataTramMinH(createFormH){
+    console.log("Data-form", createFormH);
+    this.dataTramite.postDataTram(createFormH)
                                   .subscribe(data => {
                                   console.log("Res-Api", data);
                                   this.alertSuccess();
                                   this.router.navigate(['/dashboard/mis-tramites']);
                                 });
   };
+
+  public maxCodi(){
+    this.dataTramite.getAllMaxCodi().subscribe((data: any) => { 
+      this.maxcodigo = data.tramite[0].codigo+1;
+    });
+  }
+
+  public remove(){
+    localStorage.removeItem('FormularioPedido');
+  }
 }

@@ -2,7 +2,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <app-breadcrumbs></app-breadcrumbs>
-
+  <hr>
   <!--#Titulo-->
   <div class="row">
     <div class="col-lg-3 col-6 p-4">
@@ -20,8 +20,8 @@
     <div class="col-lg-3 col-6 p-4">
       <div class="small-box bg-warning">
         <div class="inner">
-          <h3>65%</h3>
-          <p>Tramites</p>
+          <h3>{{cIniciados}}</h3>
+          <p>Tramites iniciados</p>
         </div>
         <div class="icon">
           <i class="fa fa-bar-chart"></i>
@@ -32,8 +32,8 @@
     <div class="col-lg-3 col-6 p-4">
       <div class="small-box bg-success">
         <div class="inner">
-          <h3>$65</h3>
-          <p>Total</p>
+          <h3>{{cProceso}}</h3>
+          <p>Tramites en proceso</p>
         </div>
         <div class="icon">
           <i class="fa fa-pie-chart"></i>
@@ -44,8 +44,8 @@
     <div class="col-lg-3 col-6 p-4">
       <div class="small-box bg-danger">
         <div class="inner">
-          <h3>65</h3>
-          <p>Incidentes</p>
+          <h3>{{cFinalizados}}</h3>
+          <p>Tramites finalizados</p>
         </div>
         <div class="icon">
           <i class="fa fa-exclamation-triangle"></i>
@@ -64,7 +64,7 @@
           <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
-              <th>ID</th>
+              <th>N°</th>
                   <th>Imagen</th>
                   <th>Apellido</th>
                   <th>Nombre</th>
@@ -72,7 +72,7 @@
                   <th>Teléfono</th>
                   <th>Roles</th>
                   <th>Autenticación</th>
-                  <th>Acciones</th>
+                  <th>Accion</th>
   
             </tr>
             </thead>
@@ -89,9 +89,9 @@
                   <td class="text-center">{{user.roles}}</td>
                   <td class="text-center">{{user.google == true ? 'Google' : 'Normal'}}</td>
                   <td class="text-center">
-                    <a class="btn btn-outline-success"
+                    <!--<a class="btn btn-outline-success"
                       href="https://api.whatsapp.com/send?phone=54{{user.telefono}}&text=Hola%20{{user.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
-                        class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                        class="fa fa-whatsapp" aria-hidden="true"></i></a>-->
                     <button class="btn btn-outline-danger" (click)="deleteUser(user)"><i class="fa fa-times"></i></button>
                   </td>
             </tr>

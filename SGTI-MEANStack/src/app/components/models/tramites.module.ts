@@ -1,8 +1,9 @@
 export class dataTramites {
     public _id: string;
+    public codigo: number;
     public apellido: string;
     public nombre: string;
-    public estadoCivil: string;
+    public estCivil: string;
     public tipoDoc: string;
     public numDoc: string;
     public nacionalidad: string;
@@ -18,14 +19,15 @@ export class dataTramites {
     public tipoTram: string;
     public usuario: string;
 
-    constructor(_id = '', apellido = '', nombre = '', estadoCivil = '', tipoDoc = '', numDoc = '', nacionalidad = '', fechNac = '',
+    constructor(_id = '', codigo = 0, apellido = '', nombre = '', estCivil = '', tipoDoc = '', numDoc = '', nacionalidad = '', fechNac = '',
                 apeConyu = '', nombConyu = '', domicilio = '', objetoPedido = '', ubicacionInmueble = '', estadoTram = '', area = '', producto = '', tipoTram = '', usuario = ''){
         this._id = _id;
+        this.codigo = codigo;
         this.apellido = apellido;
         this.nombre = nombre;
+        this.estCivil = estCivil;
         this.tipoDoc = tipoDoc;
         this.numDoc = numDoc;
-        this.estadoCivil = estadoCivil;
         this.nacionalidad = nacionalidad;
         this.fechNac = fechNac;
         this.apeConyu = apeConyu;

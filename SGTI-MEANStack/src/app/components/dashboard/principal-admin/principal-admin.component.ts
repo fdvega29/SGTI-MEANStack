@@ -8,6 +8,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {UsuarioService} from "../../services/usuario.service";
 import {usersModule} from "../../models/user.module";
+import { TramitesService } from '../../services/tramites.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var $;
@@ -19,18 +20,24 @@ declare var $;
 })
 export class PrincipalAdminComponent implements OnInit {
 
-  constructor(private usuarioService: UsuarioService, private chRef: ChangeDetectorRef) { }
+  constructor(private usuarioService: UsuarioService, private tramiteService: TramitesService ,private chRef: ChangeDetectorRef) { }
   usuarios: usersModule[];
   usuario: usersModule;
 
   total: number;
   dataTable: any;
 
+  tramites: any = [];
+  cIniciados: number = 0;
+  cProceso: number = 0;
+  cFinalizados: number = 0;
+
   ngOnInit() {
     this.getUsers();
+    this.getAllDataTramites();
   }
 
-  getUsers(): void {
+  public getUsers(): void {
     this.usuarioService
       .getAllUser()
       .subscribe((data: any) => {
@@ -43,7 +50,19 @@ export class PrincipalAdminComponent implements OnInit {
       })
   }
 
-  deleteUser(usuario: usersModule) {
+  public getAllDataTramites(){
+    this.tramiteService
+        .getAllTramites()
+        .subscribe((data: any) => {
+          this.tramites = data.allDataMinH;
+          this.cIniciados = data.iniciados;
+          this.cProceso = data.proceso;
+          this.cFinalizados = data.finalizados;
+          console.log(this.cIniciados, this.cProceso, this.cFinalizados, this.tramites.length);
+        });
+  }
+
+  public deleteUser(usuario: usersModule) {
 
     console.log(usuario);
 
@@ -72,11 +91,11 @@ export class PrincipalAdminComponent implements OnInit {
     })
   }
 
-  editUser(usuario: usersModule){
+  public editUser(usuario: usersModule){
     //console.log(usuario);
   }
 
-  obtenerPdf(){
+  public obtenerPdf(){
     const documentDefinition = { content: 'This is an sample PDF printed with pdfMake' };
     pdfMake.createPdf(documentDefinition).open();
   }

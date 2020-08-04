@@ -2,7 +2,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <app-breadcrumbs></app-breadcrumbs>
-
+  <hr>
   <section class="content">
     <div class="row">
 
@@ -19,7 +19,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th scope="col" class="text-center">ID</th>
+                    <th scope="col" class="text-center">N°</th>
                     <th scope="col" class="text-center">Usuario</th>
                     <th scope="col" class="text-center">Generado</th>
                     <!--<th scope="col" class="text-center">Solicitante</th>-->
@@ -50,16 +50,17 @@
                         id="estado">{{minH.estadoTram}}</span>
                     </td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                        data-target="#exampleModal">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </button>
+                      <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
+                          data-target="#exampleModal">
+                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                      </button>
                     </td>
                     <td class="text-center">
-                      <a class="btn btn-outline-success"
-                        href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
-                        class="fa fa-whatsapp" aria-hidden="true"></i>
-                      </a>
+                      <a class="btn btn-outline-success" *ngIf="minH.estadoTram == 'Finalizado'"
+                      href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite%20{{minH.producto}}."><i
+                      class="fa fa-whatsapp" aria-hidden="true"></i>
+                      </a>&nbsp;
+                      <p>{{minH.usuario.telefono}}</p>
                     </td>
                     <td class="text-center">
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
