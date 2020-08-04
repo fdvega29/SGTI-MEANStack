@@ -56,19 +56,78 @@
                         </button>
                     </td>
                     <td class="text-center">
-                      <a class="btn btn-outline-success"
+                      <a class="btn btn-outline-success disabled" id="btn-whatsapp"
                         href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite."><i
                         class="fa fa-whatsapp" aria-hidden="true"></i>
                       </a>
                     </td>
-                    <td class="text-center">
+                    <td *ngIf="minH.producto == 'Minuta G' else imprimeMinH"  class="text-center">
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                        target="_blank" (click)="imprimirPdf()" class="btn btn-outline-info"><i
+                         (click)="imprimirFormularioMinG(minH.tipoTram,
+                                                         minH.objetoPedido,
+                                                         minH.ubicacionInmueble,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.numDoc,
+                                                         minH.estadoCivil,
+                                                         minH.domicilio,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-outline-info"><i
                           class="fa fa-print"></i></a>&nbsp;
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                        target="_blank" (click)="descargarPdf()" class="btn btn-outline-danger"><i
+                         (click)="descargarFormularioMinG(minH.tipoTram,
+                                                         minH.objetoPedido,
+                                                         minH.ubicacionInmueble,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.numDoc,
+                                                         minH.estadoCivil,
+                                                         minH.domicilio,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-outline-danger"><i
                           class="fa fa-download" aria-hidden="true"></i></a>
                     </td>
+
+                    <ng-template #imprimeMinH>
+                      <td class="text-center">
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                           (click)="imprimirFormularioMinH(minH.tipoTram,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.nacionalidad,
+                                                         minH.estadoCivil,
+                                                         minH.nomConyu,
+                                                         minH.apeConyu,
+                                                         minH.tipoDoc,
+                                                         minH.numDoc,
+                                                         minH.fechNac,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-outline-info"><i
+                          class="fa fa-print"></i></a>&nbsp;
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                           (click)="descargarFormularioMinH(minH.tipoTram,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.nacionalidad,
+                                                         minH.estadoCivil,
+                                                         minH.nomConyu,
+                                                         minH.apeConyu,
+                                                         minH.tipoDoc,
+                                                         minH.numDoc,
+                                                         minH.fechNac,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-outline-danger"><i
+                          class="fa fa-download" aria-hidden="true"></i></a>
+                      </td>
+                    </ng-template>
+
+
+
+
                   </tr>
                 </tbody>
               </table>
