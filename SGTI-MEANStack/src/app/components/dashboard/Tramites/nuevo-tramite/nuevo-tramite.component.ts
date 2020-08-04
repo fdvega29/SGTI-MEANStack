@@ -24,7 +24,7 @@ export class NuevoTramiteComponent implements OnInit {
   fechanac:any;
   estCivil:string;
   tdocumento:string;
-  ndocumento:string;
+  numDocu:string;
   nacionalidad:string;
   ConyuApellido:string;
   ConyuNombre:string;
@@ -190,7 +190,7 @@ export class NuevoTramiteComponent implements OnInit {
     this.tdocumento = tdoc;
   }
   public guardar_ndoc(ndoc:string){
-    this.ndocumento = ndoc;
+    this.numDocu = ndoc;
   }
   public guardar_nacion(nacion:string){
     this.nacionalidad = nacion;
@@ -288,6 +288,7 @@ export class NuevoTramiteComponent implements OnInit {
         producto: producto,
         usuario: this.usuario
       };
+      //console.log(this.minutaH);
       this.postDataTramMinH(this.minutaH);
   };
 
@@ -297,25 +298,26 @@ export class NuevoTramiteComponent implements OnInit {
       apellido: apellido,
       nombre: nombre,
       estCivil: estadocivil,
-      ndocumento: ndocumento,
-      domicilio: domicilio,
-      objetoPedido: objetoPedido,
-      ubicacionInmueble: ubicacionInmueble,
       tipoDoc: '',
+      numDoc: ndocumento,
       nacionalidad: '',
       fechNac: '',
       apeConyu: '',
       nomConyu: '',
+      domicilio: domicilio,
+      objetoPedido: objetoPedido,
+      ubicacionInmueble: ubicacionInmueble,
       tipoTram: tipoTramite,
       producto: producto,
       usuario: this.usuario
     };
-      this.postDataTramMinH(this.minutaG);
+     //console.log(this.minutaG);
+    this.postDataTramMinH(this.minutaG);
   };
 
-  public postDataTramMinH(createFormH){
-    console.log("Data-form", createFormH);
-    this.dataTramite.postDataTram(createFormH)
+  public postDataTramMinH(create){
+    console.log("Data-form", create);
+    this.dataTramite.postDataTram(create)
                                   .subscribe(data => {
                                   console.log("Res-Api", data);
                                   this.alertSuccess();

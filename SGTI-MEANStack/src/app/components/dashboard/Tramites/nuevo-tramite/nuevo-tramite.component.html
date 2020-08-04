@@ -292,7 +292,7 @@
                       </div>
                       <div class="form-group col-md-2">
                         <label for="disabledInputNumero">N° de documento:</label>
-                        <input type="text" id="disabledInputNumero" name = "ndocumento" class="form-control" value="{{this.ndocumento}}">
+                        <input type="text" id="disabledInputNumero" name = "ndocumento" class="form-control" value="{{this.numDocu}}">
                       </div>
                       <div class="form-group col-md-3">
                         <label for="disabledInputNacionalidad">Nacionalidad:</label>
@@ -372,7 +372,7 @@
                       </div>
                       <div class="form-group col-md-2">
                         <label for="disabledInputNumero">N° de documento:</label>
-                        <input type="text" id="disabledInputNumeroG" name = "ndocumento" class="form-control" value="{{this.ndocumento}}">
+                        <input type="text" id="disabledInputNumeroG" name = "ndocumento" class="form-control" value="{{this.numDocu}}">
                       </div>
                       <div class="form-group col-md-12">
                         <label for="disabledInputNumero">Domicilio:</label>
@@ -511,14 +511,14 @@
                   <div class="row" id="finalizarH">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
-                      <button id="btn-siguiente-4" (click)="createFormH(this.apellido, this.nombre, this.estadocivil, this.tdocumento, this.ndocumento, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                      <button id="btn-siguiente-4" (click)="createFormH(this.apellido, this.nombre, this.estCivil, this.tdocumento, this.numDocu, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>
                   <!-- Finalizar Minuta G -->
                   <div class="row" id="finalizarG">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
-                      <button (click)="createFormG(this.apellido, this.nombre, this.estadocivil, this.ndocumento, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                      <button (click)="createFormG(this.apellido, this.nombre, this.estCivil, this.numDocu, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>
 
