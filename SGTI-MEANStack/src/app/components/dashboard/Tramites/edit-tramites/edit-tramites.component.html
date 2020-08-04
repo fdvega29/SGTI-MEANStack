@@ -21,7 +21,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Estado</label>
-                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.dataService.selectedTram.estadoTram" name="estadoTram">
+                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.dataService.selectedTram.estadoTram" name="estadoTram" disabled>
                   <option value="Iniciado">Iniciado</option>
                   <option value="En proceso">En proceso</option>
                   <option value="Finalizado">Finalizado</option>
@@ -33,9 +33,8 @@
                 <label for="exampleFormControlSelect1">Area</label>
                 <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.dataService.selectedTram.area" name="area">
                   <option>Mesa de entrada</option>
-                  <option>Recursos humanos</option>
-                  <option>Contable</option>
-                  <option>Logistica</option>
+                  <option>Coordinación de trámites oficiales</option>
+                  <option>Despacho - Mesa de entrada</option>
                 </select>
               </div>
             </div>

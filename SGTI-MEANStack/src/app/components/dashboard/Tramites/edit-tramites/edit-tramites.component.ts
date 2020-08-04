@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TramitesService } from 'src/app/components/services/tramites.service';
 import { dataTramites } from 'src/app/components/models/tramites.module';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-tramites',
@@ -16,6 +15,26 @@ export class EditTramitesComponent implements OnInit {
   }
 
   public updateTramite(tramite: dataTramites) {
+
+    let areaTramite : string = tramite.area;
+
+    switch (areaTramite) {
+      case "Mesa de entrada": {
+        tramite.estadoTram = 'Iniciado';
+        break;
+      }
+      case "Coordinación de trámites oficiales": {
+        tramite.estadoTram = 'En proceso';
+        break;
+      }
+      case "Despacho - Mesa de entrada": {
+        tramite.estadoTram = 'Finalizado';
+        break;
+      }
+    }
+
+
+
     this.dataService.editDataTram(tramite)
       .subscribe(data => {
         location.reload()
