@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TramitesService } from '../../services/tramites.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { usersModule } from '../../models/user.module';
-//sweetalert2
-import Swal from 'sweetalert2'
-//PDFMake
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { dataTramites } from '../../models/tramites.module';
+import Chart from 'chart.js';
 
 @Component({
   selector: 'app-principal',
@@ -16,67 +12,57 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class PrincipalComponent implements OnInit {
 
+  usuario: any = {};
+  tramites: dataTramites[] = [];
 
-  constructor(private usuarioService: UsuarioService) { }
-  usuarios: usersModule[];
-  usuario: usersModule;
+  cInic: number = 0;
+  cProc: number = 0;
+  cFina: number = 0;
+
+  constructor(private dataTramite: TramitesService, public userService: UsuarioService) { }
+
   ngOnInit() {
-    this.getUsers();
+    this.usuario = this.userService.getCurrentUser();
+    this.getDataTramiteById();
   }
 
-  getUsers(): void {
-    this.usuarioService
-      .getAllUser()
-      .subscribe((data: any) => (this.usuarios = data.usuarios))
-  }
+  public getDataTramiteById(): void {
+    this.dataTramite
+      .getAllTramitesById(this.usuario._id)
+      .subscribe((resp: any) => {
+        this.tramites = resp.allDataMinH;
+        this.cInic = resp.iniciados;
+        this.cProc = resp.proceso;
+        this.cFina = resp.finalizados;
 
-  /*getUserData(usuario: UsersModule){
-    this.usuarioService
-      .getUser(usuario._id)
-      .subscribe((data: any) => (this.usuario = data.usuario))
-  }*/
-  
-
-  deleteUser(usuario: usersModule) {
-
-    console.log(usuario);
-
-    if (usuario._id === this.usuarioService.selectedUser._id) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'No puedes eliminar tu propia cuenta'
+        var ctx = document.getElementById('myChart')
+        var myChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            datasets: [{
+              data: [this.cInic, this.cProc, this.cFina, this.tramites.length],
+              backgroundColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(51, 204, 51, 1)',
+                'rgba(255, 77, 77, 1)'
+              ],
+              borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(51, 204, 51, 1)',
+                'rgba(255, 77, 77, 1)'
+              ],
+              borderWidth: 1
+            }],
+            labels: [
+              'Iniciados',
+              'En proceso',
+              'Finalizados',
+              'Total'
+            ]
+          }
+        });
       })
-      return
-    }
-
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: "Estas a punto de eliminar a " + usuario.nombre,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar!'
-    }).then((borrar) => {
-      if (borrar.value) {
-        this.usuarioService.deleteUserById(usuario._id)
-            .subscribe(res => {
-              console.log(res);
-              //Swal.fire("Bien hecho", "Usuario eliminado correctamente", "success");
-              this.usuarioService.getAllUser();
-            });
-      }
-    })
   }
-
-  editUser(usuario: usersModule){
-    //console.log(usuario);
-  }
-
-  obtenerPdf(){
-    const documentDefinition = { content: 'This is an sample PDF printed with pdfMake' };
-    pdfMake.createPdf(documentDefinition).open();
-  }
-
 }

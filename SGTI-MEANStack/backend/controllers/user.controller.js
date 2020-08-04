@@ -19,7 +19,13 @@ usersCtrl.getUser = async (req, res) => {
 };
 
 usersCtrl.getAllUser = async (req, res) => {
-    const users = await User.find();
+
+    const [users, total] = await Promise.all([
+        User.find({}, 'apellido nombre email telefono img roles google'),
+        
+        User.countDocuments()
+    ]);
+
     if (!users) {
         return res.status(400).json({
             ok: false,
@@ -29,12 +35,14 @@ usersCtrl.getAllUser = async (req, res) => {
 
     return res.status(200).json({
         ok: true,
-        usuarios: users
+        usuarios: users,
+        total: JSON.stringify(total)
     });
 };
 
 usersCtrl.editUser = async (req, res) => {
     const dataUser = {
+        apellido: req.body.apellido,
         nombre: req.body.nombre,
         telefono: req.body.telefono,
         email: req.body.email,

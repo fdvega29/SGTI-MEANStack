@@ -1,45 +1,89 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-        </div>
-        <!-- Breadcrumb -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="">Acerca de</a></li>
-            <li class="breadcrumb-item active">Información</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <div class="row">
+  <app-breadcrumbs></app-breadcrumbs>
+  <hr>
+  <div class="row p-4">
     <div class="col-lg-12">
       <div class="card card-primary card-outline">
-
         <div class="card-body">
-          <h1 class="card-header">Sistema de Gestión de Trámite Inmueble</h1>
-
-          <p class="card-comments">
+          <h1 class="card-header text-uppercase">Sistema de Gestión de Trámite Inmueble</h1>
+          <h3 class="card-title p-3">
             Este sistema ha sido diseñado y programado para que constituya un medio virtual para el acceso de los usuarios a las prestaciones ofrecidas por la Secretaría de Tierras y Hábitat Social.
-          </p>
-
+          </h3>
         </div>
-        <div class="card-footer">
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu turpis sit amet elit semper volutpat in posuere dui. Nulla id posuere sapien. Nunc ut sagittis sapien. Quisque non faucibus arcu. Praesent facilisis libero libero, ut tincidunt turpis euismod sit amet. Donec semper accumsan diam eu consectetur. Sed lacus ex, molestie id tristique sed, egestas ut risus. Etiam ex sapien, sagittis eu maximus convallis, rutrum id eros.
-            <br>
-            Fusce dapibus lacus non leo interdum ullamcorper. Ut sed metus eget ipsum fermentum feugiat. Suspendisse viverra, odio a tristique placerat, erat nibh laoreet mi, eu rhoncus justo metus et turpis. Praesent pulvinar est sapien, id interdum libero finibus eget. Sed a bibendum arcu, et laoreet nisl. Curabitur varius nisl ante, ut euismod augue dignissim eget. Nulla at ipsum vel dolor imperdiet rhoncus.
-            <br>
-            Etiam semper a urna ac scelerisque. Suspendisse ullamcorper sollicitudin ornare. Sed posuere neque viverra, scelerisque tellus id, convallis urna. Donec sed sagittis lorem, quis fermentum diam. Nullam in mi elementum, finibus lorem eget, blandit nunc. Vivamus a ante eget diam mollis gravida id quis nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus rutrum, nisi et fringilla efficitur, diam sem pellentesque orci, sit amet aliquet elit sem quis magna.
-          </p>
+      </div>
+    </div>
+    <!-- /.col-lg-12- -->
+
+    <!-- /.col-md-6 -->
+      <div class="col-md-6">
+        <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h3 class="m-4 text-center">Búsqueda de titulares dominiales</h3>
+          </div>
+          <div class="m-2 card-body">
+            <h4 class="m-2 card-title">
+              <i class="fa fa-file-text-o" aria-hidden="true"></i> Formulario "Minuta H"
+
+            </h4>
+            <div class="card-text">
+              <ul>
+                Completar formulario (minuta) con los datos de la persona a la cual desea solicitar si presenta inmuebles a su nombre:
+                <ul>
+                  <li>Datos de identidad de la persona: Apellidos, Nombres, Nacionalidad, Estado Civil, Tipo y N° de Documento, Fecha de Nacimiento</li>
+                </ul>
+              </ul>
+              <ul>
+                Confirmar los datos ingresados, verificando que tanto el tipo de trámite como los datos de la persona sean correctos.
+              </ul>
+              <ul>Realizar el pago del formulario para comenzar a gestionar el mismo.</ul>
+              <ul>
+                Una vez confirmado el pago, se notificará al usuario cuando la minuta ya se encuentre en estado de retiro, podrá hacerlo de Lun. a Vie. en el horario de 8:00 a 13:00 hs.
+              </ul>
+            </div>
+          </div>
+          <div class="card-footer footer-comprar">
+            <button type="button" class="btn btn-primary btn-block" (click)="enviarFormulario('Minuta H')">Solicitar formulario</button>
+          </div>
         </div>
       </div>
 
+    <div class="col-md-6">
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="my-4 text-center">Búsqueda de estado jurídico de inmueble</h3>
+        </div>
+        <div class="m-2 card-body">
+          <h4 class="m-2 card-title">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i> Formulario "Minuta G"
+          </h4>
+
+          <div class="card-text">
+            <ul>
+              Completar formulario (minuta) con los datos de la persona a la cual desea solicitar si presenta inmuebles a su nombre:
+              <ul>
+                <li>Datos de identidad de la persona: Apellidos, Nombres, Nacionalidad, Estado Civil, Tipo y N° de Documento, Fecha de Nacimiento</li>
+              </ul>
+            </ul>
+            <ul>
+              Confirmar los datos ingresados, verificando que tanto el tipo de trámite como los datos de la persona sean correctos.
+            </ul>
+            <ul>Realizar el pago del formulario para comenzar a gestionar el mismo.</ul>
+            <ul>
+              Una vez confirmado el pago, se notificará al usuario cuando la minuta ya se encuentre en estado de retiro, podrá hacerlo de Lun. a Vie. en el horario de 8:00 a 13:00 hs.
+            </ul>
+          </div>
+
+        </div>
+        <div class="card-footer footer-comprar">
+          <button type="button" class="btn btn-primary btn-block" (click)="enviarFormulario('Minuta G')">Solicitar formulario</button>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-md-6 -->
+
+    <div class="col-md-12">
       <div class="card card-primary card-outline">
         <div class="card-body">
           <h4 class="card-title">TÉRMINOS Y CONDICIONES DE CONTRATACIÓN DE SGTI ®   </h4>
@@ -51,47 +95,7 @@
         </div>
       </div><!-- /.card -->
     </div>
-    <!-- /.col-lg-12- -->
 
-
-    <!-- /.col-md-6 -->
-    <div class="col-md-12">
-      <div class="col-md-6">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h5 class="m-0">Detalles Uno</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-title">Información Uno</h6>
-
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipiscing elit quisque. Ultricies vestibulum varius tempor posuere id dictumst mollis metus ac augue fusce, tellus tempus malesuada condimentum felis potenti risus bibendum conubia. Vivamus nostra luctus placerat aptent in quisque vulputate cum, leo bibendum maecenas proin fames etiam rutrum malesuada pulvinar, condimentum ullamcorper faucibus arcu mus parturient purus.
-              Felis varius praesent euismod cum in viverra nascetur non ac tempor vestibulum rutrum litora, platea risus neque ornare massa mi ligula class sodales vehicula nisl ultricies iaculis, tristique natoque taciti primis erat aptent curae elementum quam duis habitant suscipit. Hac cursus litora praesent urna lacinia neque nam sem, montes dapibus venenatis arcu laoreet tortor vulputate potenti lacus, platea sodales vitae semper bibendum netus pharetra. Donec convallis dapibus primis tempor curae nascetur phasellus montes consequat faucibus, torquent eu conubia porta tincidunt vestibulum urna neque cras cubilia, luctus accumsan cum purus vitae velit at nec nullam..
-            </p>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h5 class="m-0">Detalles Dos</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-title">Información Dos</h6>
-
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipiscing elit quisque. Ultricies vestibulum varius tempor posuere id dictumst mollis metus ac augue fusce, tellus tempus malesuada condimentum felis potenti risus bibendum conubia. Vivamus nostra luctus placerat aptent in quisque vulputate cum, leo bibendum maecenas proin fames etiam rutrum malesuada pulvinar, condimentum ullamcorper faucibus arcu mus parturient purus.
-              Felis varius praesent euismod cum in viverra nascetur non ac tempor vestibulum rutrum litora, platea risus neque ornare massa mi ligula class sodales vehicula nisl ultricies iaculis, tristique natoque taciti primis erat aptent curae elementum quam duis habitant suscipit. Hac cursus litora praesent urna lacinia neque nam sem, montes dapibus venenatis arcu laoreet tortor vulputate potenti lacus, platea sodales vitae semper bibendum netus pharetra. Donec convallis dapibus primis tempor curae nascetur phasellus montes consequat faucibus, torquent eu conubia porta tincidunt vestibulum urna neque cras cubilia, luctus accumsan cum purus vitae velit at nec nullam..
-            </p>
-
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-
-    <!-- /.col-md-6 -->
   </div>
 
 

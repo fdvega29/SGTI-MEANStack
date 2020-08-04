@@ -10,6 +10,7 @@ import { PipesModule } from '../pipes/pipes/pipes.module';
 import { AutenticacionService } from '../services/autenticacion.service';
 import {SidebarService} from "./sidebar/sidebar.service";
 import {CommonModule} from "@angular/common";
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 @NgModule({
     imports: [
@@ -21,12 +22,14 @@ import {CommonModule} from "@angular/common";
         NavbarComponent,
         SidebarComponent,
         FooterComponent,
-        AboutComponent
+        AboutComponent,
+        BreadcrumbsComponent
     ],
     exports: [
         NavbarComponent,
         SidebarComponent,
-        FooterComponent
+        FooterComponent,
+        BreadcrumbsComponent
     ],
   providers: [AutenticacionService,SidebarService]
 })

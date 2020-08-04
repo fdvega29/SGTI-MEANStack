@@ -7,6 +7,8 @@ mongoose.set('useCreateIndex', true);
 
 const usersSchema = new Schema({
 
+    apellido: { type: String, required: [true, 'El apellido es requerido'], min: 5, trim: true},
+
     nombre: { type: String, required: [true, 'El nombre es requerido'], min: 5, trim: true},
 
     email: { type: String, required: [true, 'El correo es requerido'], unique: true, trim: true,},
@@ -15,11 +17,11 @@ const usersSchema = new Schema({
 
     password: { type: String, required: [true, 'La contraseña es requerida'], trim: true},
 
-    img : { type: String, required: false, default: "assets/dist/img/avatar.png"},        
+    img : { type: String, required: false},        
 
     roles: { type: String, required: false, default: "USER_ROLE"},
 
-    google: { type: Boolean, required: false, default: false}
+    google: { type: Boolean, required: false, default: false},
 },
     {
         timestamps: true // Registra fecha de creacion y actualizacion de datos.

@@ -1,52 +1,77 @@
 <div class="content-wrapper">
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                </div>
-                <!-- Breadcrumb -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Ver Perfil</a></li>
-                        <li class="breadcrumb-item active">Editar Perfil</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <section class="content p-4">
+
+    <app-breadcrumbs></app-breadcrumbs>
+    <hr>
+    <section class="content p-2">
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title float-right">
                             Editar Perfil
                         </h3>
-                        <button type="button" class="btn btn-light" routerLink="/dashboard/perfil"
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline-light" routerLink="/dashboard/perfil"
                             routerLinkActive="router-link-active"><i class="fa fa-arrow-circle-left fa-2x"
                                 aria-hidden="true"></i></button>
-                        <!--<a href="/dashboard/perfil"><i class="fa fa-arrow-circle-left fa-2x" aria-hidden="true"
-                            routerLink="/dashboard/update/profile/id" routerLinkActive="router-link-active"></i></a>-->
+                        </div>
                     </div>
                     <div class="card-body">
                         <form action="">
-                            <div class="form-group">
-                                <label for="nombre" class="text-muted">Nombre completo</label>
-                                <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="apellido" class="text-muted">Apellido/s:</label>
+                                        <input type="text" class="form-control" name="apellido" #apellido="ngModel"
+                                            [(ngModel)]="usuario.apellido">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="nombre" class="text-muted">Nombre completo:</label>
+                                        <input type="text" class="form-control" name="nombre" #nombre="ngModel"
+                                            [(ngModel)]="usuario.nombre">
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="email" class="text-muted">Correo</label>
-                                <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="usuario.email">
+                                <label for="email" class="text-muted">Correo:</label>
+                                <input type="email" class="form-control" name="email" #email="ngModel"
+                                    [(ngModel)]="usuario.email" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="telefono" class="text-muted">Telefono</label>
-                                <input type="text" class="form-control" name="telefono" #telefono="ngModel" [(ngModel)]="usuario.telefono">
+                                <label for="telefono" class="text-muted">Teléfono:</label>
+                                <input type="text" class="form-control" name="telefono" #telefono="ngModel"
+                                    [(ngModel)]="usuario.telefono">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-lg btn-block" (click)="updateDataUser(usuario)">Guardar</button>
+                                <button type="submit" class="btn btn-success btn-lg btn-block"
+                                    (click)="updateDataUser(usuario)">Guardar</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">
+                            Actualiza imagen de perfil <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group text-center">
+                            <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="w150">
+                            <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150">
+                        </div>
+                        <div class="form-group">
+                            <input (change)="seleccionImage($event.target.files[0])" type="file"
+                                class="form-control-file">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-lg btn-block" (click)="cambiarImagen()"
+                                [disabled]="!imagenSubir">Cargar</button>
+                        </div>
                     </div>
                 </div>
             </div>

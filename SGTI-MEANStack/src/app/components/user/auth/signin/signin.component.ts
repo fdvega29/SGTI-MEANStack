@@ -21,7 +21,9 @@ export class SigninComponent implements OnInit {
   recuerdame: boolean = false;
   email: string;
   auth2: any;
-  
+
+  roleUsuario : string;
+
   usuario: usersModule;
 
   createFormGroupUser() {
@@ -49,13 +51,18 @@ export class SigninComponent implements OnInit {
 
   onSignin(FormGroup): void {
     console.log(this.signinFormUser.value);
-    this.authService.signin(FormGroup.value)
+
+    this.authService.signin(FormGroup.value, FormGroup.recuerdame)
       .subscribe(
         data => {
           console.log(data.dataUser.usuario);
           this.userService.setUser(data.dataUser.usuario);
-          window.location.href = '/dashboard/principal';
-          //this.router.navigate(['/dashboard/principal']);
+          this.roleUsuario = data.dataUser.usuario.roles;
+          if (this.roleUsuario == "ADMIN_ROLE"){
+            window.location.href = '/dashboard/principal-admin';
+          }else {
+            window.location.href = '/dashboard/principal';
+          }
         },
         err => console.log(err)
       )

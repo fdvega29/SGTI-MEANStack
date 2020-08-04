@@ -196,16 +196,22 @@
     <form ngNativeValidate form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
     <div class="box-body">
       <div class="input-group mb-12 form-group has-feedback">
+        <div class="input-group-prepend">
+          <span class="input-group-text form-control-feedback"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+        </div>
+        <input type="text" class="form-control" formControlName = "apellido" name="apellido" id="apellido" placeholder="Apellido" required>
+    </div>
+      <div class="input-group mb-12 form-group has-feedback">
           <div class="input-group-prepend">
             <span class="input-group-text form-control-feedback"><i class="fa fa-address-card" aria-hidden="true"></i></span>
           </div>
-          <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre completo" required>
+          <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Nombre" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
         <div class="input-group-prepend">
           <span class="input-group-text form-control-feedback"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
         </div>
-        <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono" required>
+        <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Telefono" required>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
         <div class="input-group-prepend">

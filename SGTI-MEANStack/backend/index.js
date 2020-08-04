@@ -19,7 +19,10 @@ app.use('/api', require('./routes/auth.route'));
 app.use('/api/user',require('./routes/user.route'));
 app.use('/api/admin', require('./routes/admin.route'));
 app.use('/api/forms',require('./routes/form.route'));
+app.use('/api/forms/dataTramites', require('./routes/dataTramites.route'));
 app.use('/api/upload', require('./routes/upload.route'));
+app.use('/api/img', require('./routes/imagenes.route'));
+
 
 //Starting the server
 app.listen(app.get('port'),() => {

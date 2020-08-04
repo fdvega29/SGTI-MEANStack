@@ -7,14 +7,13 @@ export class SidebarService {
 
   menuUsuario: any = {
     elementos: [
-          {
+          /*{
             titulo: 'Perfil de Usuario',
             icono: 'fa fa-user-circle-o',
             submenu: [
               {titulo: 'Perfil', url: '/dashboard/perfil'},
-              {titulo: 'Cambiar contraseña', url: '/dashboard/cambiar-password'},
             ]
-          },
+          },*/
           {
             titulo: 'Trámites',
             icono: 'fa fa-file-text-o',
@@ -36,6 +35,27 @@ export class SidebarService {
       }
 ;
 
+  menuAdmin: any = {
+    elementos: [
+      /*{
+        titulo: 'Perfil del Administrador',
+        icono: 'fa fa-user-circle-o',
+        url: '/dashboard/perfil'
+      },*/
+      {
+        titulo: 'Gestión de trámites',
+        icono: 'fa fa-file-text-o',
+        url:'/dashboard/gestion-tramites'
+      },
+      {
+        titulo: 'Instructivo de sistema',
+        icono: 'fa fa-info-circle',
+        url:'/dashboard/guia-administrador'
+      }
+
+    ]
+  }
+  ;
 
 
 
