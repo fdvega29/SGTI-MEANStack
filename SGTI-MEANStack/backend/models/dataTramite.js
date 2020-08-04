@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const data = new Schema({
+    codigo: {type: Number, default: 0},
     apellido: { type: String, required: ['El apellido es requerido', true]},
     nombre: { type: String, required: ['El nombre es requerido', true]},
     estCivil: { type: String},
@@ -9,8 +10,8 @@ const data = new Schema({
     numDoc: { type: String},
     nacionalidad: { type: String},
     fechNac: { type: String},
-    apeConyu: { type: String, min: 3 },
-    nomConyu: { type: String, min: 5 },
+    apeConyu: { type: String},
+    nomConyu: { type: String},
     domicilio: { type: String},
     objetoPedido: { type: String},
     ubicacionInmueble: { type: String},

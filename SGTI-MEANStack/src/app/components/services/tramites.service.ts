@@ -32,6 +32,11 @@ export class TramitesService {
     return this.http.get(url_api);
   };
 
+  public getAllMaxCodi(){
+    const url_api = this.AUTH_SERVER + `/forms/dataTramites/all/maxcodi`;
+    return this.http.get(url_api);
+  };
+
   public postDataTram(minH: dataTramites) {
     const url_api = this.AUTH_SERVER + '/forms/dataTramites/add';
     return this.http.post(url_api, minH);

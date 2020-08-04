@@ -1,4 +1,6 @@
 const dataTramite = require('../models/dataTramite');
+const { countDocuments } = require('../models/dataTramite');
+const { count } = require('console');
 
 
 const dataCtrl = {};
@@ -6,6 +8,8 @@ const dataCtrl = {};
 dataCtrl.getAllData = async (req, res) => {
     const dataAll = await dataTramite.find()
         .populate('usuario', 'apellido nombre telefono')
+        .sort({_id:-1});
+        
 
     if (!dataAll) {
         return res.status(400).json({
@@ -13,24 +17,62 @@ dataCtrl.getAllData = async (req, res) => {
             message: 'Error al obtener listado de tramites'
         })
     }
+    
+    var cIni = 0;
+    var cProc = 0;
+    var cFina = 0;
+    dataAll.forEach(e => {
+        if(e.estadoTram == 'Iniciado'){
+            cIni = cIni+1;
+        }
+        if(e.estadoTram == 'En proceso'){
+            cProc = cProc+1;
+        }
+        if(e.estadoTram == 'Finalizado'){
+            cFina = cFina+1;
+        }        
+    });
+
     return res.status(200).json({
         ok: true,
-        allDataMinH: dataAll
+        allDataMinH: dataAll,
+        iniciados: cIni,
+        proceso: cProc,
+        finalizados: cFina
     });
 };
 
 dataCtrl.getAllDataById = async (req, res) => {
     const _id = req.params.id;
-    const dataAll = await dataTramite.find({'usuario': _id}).sort({_id:-1});
+    const dataAll = await dataTramite.find({'usuario': _id})
+    .sort({_id:-1});
     if (!dataAll) {
         return res.status(400).json({
             ok: false,
             message: 'Error al obtener listado de tramites'
         })
     }
+    var cIni = 0;
+    var cProc = 0;
+    var cFina = 0;
+    dataAll.forEach(e => {
+        if(e.estadoTram == 'Iniciado'){
+            cIni = cIni+1;
+        }
+        if(e.estadoTram == 'En proceso'){
+            cProc = cProc+1;
+        }
+        if(e.estadoTram == 'Finalizado'){
+            cFina = cFina+1;
+        }
+    });
+
     return res.status(200).json({
         ok: true,
-        allDataMinH: dataAll
+        allDataMinH: dataAll,
+        iniciados: cIni,
+        proceso: cProc,
+        finalizados: cFina
     });
 };
 
@@ -49,6 +91,23 @@ dataCtrl.getData = async (req, res) => {
         dataMinH: dataMinH
     })
 
+};
+
+dataCtrl.getAllMaxCodi = async (req, res) => {
+    const dataAll = await dataTramite.find()
+        .sort({codigo:-1})
+        .limit(1);
+        
+    if (!dataAll) {
+        return res.status(400).json({
+            ok: false,
+            message: 'Error al obtener registro maximo codigo'
+        })
+    }
+    return res.status(200).json({
+            ok: true,
+        tramite: dataAll
+    });
 };
 
 dataCtrl.createTram = async (req, res) => {

@@ -26,3 +26,14 @@
 .elevation-4{
     box-shadow: none !important;
 }
+
+.home{
+    background: white;
+    border-radius: 5px;
+}
+.home p,
+.home i
+{
+    color: #141E30!important;
+}
+

@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   usuario: sessionUser;
   title = 'SGTI';
 
-  constructor(public authService: AutenticacionService,public userService : UsuarioService) { }
+  constructor(public authService: AutenticacionService, public userService : UsuarioService) { }
 
   ngOnInit() {
     this.usuario = this.userService.getCurrentUser();

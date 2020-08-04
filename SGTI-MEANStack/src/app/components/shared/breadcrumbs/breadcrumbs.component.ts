@@ -12,6 +12,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   seccion: string;
   titulo: string;
+  icono: string;
 
   constructor(
     private router: Router,
@@ -21,6 +22,7 @@ export class BreadcrumbsComponent implements OnInit {
       .subscribe( data => {
         this.seccion = data.seccion;
         this.titulo = data.titulo;
+        this.icono = data.icono;
          //Titulo de la Pagina
         this.title.setTitle(this.titulo);
       })

@@ -83,7 +83,6 @@ export class AutenticacionService {
     localStorage.removeItem("TOKEN");
     localStorage.removeItem("EXPIRES_IN");
     localStorage.removeItem("currentUser");
-    localStorage.removeItem('FormularioPedido');
     //window.location.href = '#/home'
     window.location.href = 'http://localhost:4200/user/signin';
   };

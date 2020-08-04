@@ -27,10 +27,12 @@
               <span class="text-white" style="font-size: 15px !important;">{{usuario.email}}</span>
             </div>
            </div>
+           <div class="col-md-12 text-center">
+             <button type="button" class="btn btn-info btn-block btn-sm" routerLink="/dashboard/perfil" routerLinkActive="router-link-active"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Mi perfil</button>
+           </div>
          </div>
         </div>
     </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav flex-column nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
@@ -38,6 +40,14 @@
           <!-- MenuSidebar dinamico -->
 
           <div *ngIf="roleUsuario=='USER_ROLE'; else MenuAdm">
+            <li class="nav-item home">
+              <ul class="nav">
+                <a href="javascript=void(0)" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="nav-link">
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                  <p class="pl-1">&nbsp;Home</p>
+                </a>
+              </ul>
+            </li>
             <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
               <a href="" class="nav-link">
                 <i [class]="menuSidebar.icono"></i>
@@ -59,6 +69,14 @@
 
 
           <ng-template #MenuAdm>
+            <li class="nav-item home">
+              <ul class="nav">
+                <a href="javascript=void(0)" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="nav-link">
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                  <p class="pl-1">&nbsp;Home</p>
+                </a>
+              </ul>
+            </li>
             <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item">
               <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[menuSidebar.url]" routerLinkActive="router-link-active">
                 <i [class]="menuSidebar.icono"> </i>
