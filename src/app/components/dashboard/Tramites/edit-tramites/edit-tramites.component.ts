@@ -9,7 +9,7 @@ import { dataTramites } from 'src/app/components/models/tramites.module';
 })
 export class EditTramitesComponent implements OnInit {
 
-  constructor(private dataService: TramitesService) { }
+  constructor(public dataService: TramitesService) { }
 
   ngOnInit() {
   }
