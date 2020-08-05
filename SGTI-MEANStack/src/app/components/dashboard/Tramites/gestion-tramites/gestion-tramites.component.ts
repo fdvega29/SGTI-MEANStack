@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { UsuarioService } from 'src/app/components/services/usuario.service';
 import { TramitesService } from 'src/app/components/services/tramites.service';
 import { dataTramites } from 'src/app/components/models/tramites.module';
+
 
 //PDFMake
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { UsuarioService } from 'src/app/components/services/usuario.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var $;
