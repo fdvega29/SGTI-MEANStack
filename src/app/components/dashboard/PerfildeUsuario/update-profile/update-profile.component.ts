@@ -21,7 +21,7 @@ export class UpdateProfileComponent implements OnInit {
   imagenTemp: any;
 
   constructor(
-    private userService: UsuarioService,
+    public userService: UsuarioService,
     private router: Router) { }
 
   ngOnInit() {
