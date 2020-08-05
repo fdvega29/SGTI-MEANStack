@@ -8,7 +8,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "lite": "lite-server",
     "postinstall": "ng build --prod"
   },
   "private": true,
@@ -36,7 +35,6 @@
     "sweetalert2": "^9.10.12",
     "tslib": "^1.11.1",
     "zone.js": "~0.9.1",
-    "lite-server": "^2.4.0",
     "typescript": "~3.5.3"
 
   },
@@ -59,7 +57,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "lite-server": "^2.4.0",
+
     "typescript": "~3.5.3"
   },
   "engines": {
