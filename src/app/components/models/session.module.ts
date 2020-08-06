@@ -5,5 +5,6 @@ export class sessionUser {
         token: string,
         expiresIn: string,
         usuario: usersModule
-    }
+    };
+  usuario: usersModule
 }
