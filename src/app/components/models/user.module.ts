@@ -5,9 +5,9 @@ export class usersModule {
     public telefono: string;
     public email: string;
     public password: string;
-    public img?: string;
-    public roles?: string;
-    public google?: string;
+    public img: string;
+    public roles: string;
+    public google: string;
 
     constructor(_id = '', apellido = '', nombre = '', telefono = '', email = '', password = '', img = '', roles = '', google = ''){
         this._id = _id;
@@ -21,4 +21,4 @@ export class usersModule {
         this.google = google;
     }
 
-}
+};
