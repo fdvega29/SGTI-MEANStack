@@ -140,7 +140,7 @@ export class GestionTramitesComponent implements OnInit {
             headerRows: 1,
             body: [
               [{text: 'Doc. N°: ', style: 'tableHeader'}, {text: 'Estado Civil: ', style: 'tableHeader'}],
-              ['numdoc', 'estadociv' ]
+              [numdoc, estadociv ]
             ]
           },
           layout: 'headerLineOnly'
@@ -313,7 +313,7 @@ export class GestionTramitesComponent implements OnInit {
             headerRows: 1,
             body: [
               [{text: 'Doc. N°: ', style: 'tableHeader'}, {text: 'Estado Civil: ', style: 'tableHeader'}],
-              ['numdoc', 'estadociv' ]
+              [numdoc, estadociv ]
             ]
           },
           layout: 'headerLineOnly'
