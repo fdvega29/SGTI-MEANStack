@@ -766,6 +766,9 @@ export class GestionTramitesComponent implements OnInit {
     const usuarioSolicitante = usuarioApe + ' ' + usuarioNomb;
 
     const FormularioMinG = {
+      pageSize: 'LEGAL',
+
+
       content: [
         {text: 'Secretaría de Tierras y Hábitat Social', style: 'header'},
         {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
@@ -819,9 +822,75 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
+            widths: [30, '*', 30 , '*'],
+            body: [
+              [{text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Antecedentes de Dominio: ', bold: true, alignment: 'left', fontSize: 13}, {text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'N° Matricula Registral: ', bold: true, alignment: 'left', fontSize: 13}]
+
+
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*','*'],
+            headerRows: 1,
+            body: [
+              [
+                {
+                  table: {
+                    widths: [40, 80, '*'],
+                    headerRows: 1,
+                    heights: [20, 20, 20],
+                    body: [
+                      [{text: 'Lote: ', style: 'tableHeader', alignment: 'center'},{text: 'Manzana: ', style: 'tableHeader', alignment: 'center'}, {text: 'Localidad: ', style: 'tableHeader', alignment: 'center'}],
+                      [ ' ', ' ', ' '],
+                    ]
+                  }
+                },
+                {text: ' ', style: 'tableHeader'},
+
+              ],
+              [
+                {
+                  table: {
+                    widths: ['*', '*', '*', '*'],
+                    heights: [20,20,20,20],
+                    headerRows: 1,
+                    body: [
+                      [{text: 'T°: ', style: 'tableHeader', alignment: 'left'},{text: 'F°: ', style: 'tableHeader', alignment: 'left'}, {text: 'N°: ', style: 'tableHeader', alignment: 'left'}, {text: 'Año°: ', style: 'tableHeader', alignment: 'left'}],
+                      [ ' ', ' ', ' ', ' '],
+                    ]
+                  }
+                },
+
+
+                {
+                  table: {
+                    widths: ['*','*','*','*'],
+                    heights: [40,40,40,40],
+                    headerRows: 1,
+                    body: [
+                      [{text: 'Plano: ', alignment: 'center'},
+                        {text: 'T°:',  alignment: 'left'},
+                        {text: 'F°:',  alignment: 'left'},
+                        {text: 'A°:',  alignment: 'left'}
+                      ]
+                    ]
+                  }
+                }
+
+              ],
+
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Identidad del Titular del Dominio: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Identidad del Titular del Dominio: ', bold: true, alignment: 'left', fontSize: 13}]
             ]
           }
         },
@@ -876,9 +945,9 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [50,'*'],
+            widths: ['*'],
             body: [
-              [{text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13}]
             ]
           }
         },
@@ -886,13 +955,467 @@ export class GestionTramitesComponent implements OnInit {
           style: 'tableExample',
           table: {
             widths: ['*'],
-            heights: [180],
+            heights: [80],
             body: [
               [{ text: ' ' , italics: true, alignment: 'center'}]
             ]
           }
         },
+        {text: 'Registro General de la Propiedad Inmueble', style: 'paddingBottom'},
         {text: 'La Rioja - Republica Argentina', style: 'subheader'},
+
+
+
+        ////////////////
+        ////////Pagina 2
+        ////////////////
+
+
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: ', bold: true, alignment: 'left', fontSize: 13}]
+            ]
+          },
+          pageBreak: 'before'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            heights: [50],
+            body: [
+              [{ text: ' ' , italics: true, alignment: 'center'}]
+            ]
+          }
+        },
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'El dominio consta a nombre de: ', bold: true, alignment: 'left', fontSize: 13}]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            heights: [70],
+            body: [
+              [{ text: ' ' , italics: true, alignment: 'center'}]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Prevenciones: ', bold: true, alignment: 'left', fontSize: 13}]
+            ]
+          }
+        },
+        {
+          style: 'tableDescripcion',
+          table: {
+            widths: ['*'],
+            body: [
+              [
+                {
+                  text: ' Articulo 25 Ley 17.801 - con Fecha:                       de                                         de             ',
+                  fontSize: 12,
+                  alignment: 'left',
+                  margin: [0, 12, 0, 0]
+                }
+              ],
+              [
+                {
+                  text:' Entró Certificado N°                                                       Operación                                 ',
+                  fontSize: 12,
+                  alignment: 'left',
+                  margin: [0, 12, 0, 0]
+                }
+              ],
+              [
+                {
+                  text:' Escribano registro N°                                                   de                                            ',
+                  fontSize: 12,
+                  alignment: 'left',
+                  margin: [0, 12, 0, 0]
+                }
+              ]
+            ]
+          },
+          layout: {
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 1 : 1;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'gray';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'gray';
+            },
+
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, 55, 100, "*", 80, 50],
+            body: [
+              [
+                {text: ' 8 ', fontSize: 14, bold: true, alignment: 'center'},
+                { text: 'Hipoteca: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Fecha de la escritura: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Escribano o Autoridad Administrativa: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Acreedor: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
+                { text: '', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Registro: ', bold: true, alignment: 'center', fontSize: 11},
+                { text: 'Lugar : ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*',120],
+            body: [
+              [
+                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12},
+
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+
+              ],
+              [
+                {text: '  ', style: 'tableHeader'},
+
+                {
+                  table: {
+                    widths: [30, 30, 30],
+                    headerRows: 1,
+                    alignment: 'center',
+                    body: [
+                      [
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                      ],
+                      [ ' ', ' ', ' '],
+                    ]
+                  }
+                },
+              ],
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*', 70, 70, 70, 70, 50],
+            body: [
+              [
+                {text: ' 9 ', fontSize: 14, bold: true, alignment: 'center'},
+                { text: 'Embargos y otras Anotaciones: ', bold: true, alignment: 'center', fontSize: 11},
+                { text: 'Fecha: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Autos: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Juzgado: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Secretaría: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' T° : ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' N° :', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
+                { text: '', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*',120],
+            body: [
+              [
+                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12},
+
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+
+              ],
+              [
+                {text: '  ', style: 'tableHeader'},
+
+                {
+                  table: {
+                    widths: [30, 30, 30],
+                    headerRows: 1,
+                    alignment: 'center',
+                    body: [
+                      [
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                      ],
+                      [ ' ', ' ', ' '],
+                    ]
+                  }
+                },
+              ],
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{text: ' 10 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Fecha: ', bold: true, alignment: 'left', fontSize: 13}]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, 50, 50,'*'],
+            heights: [50, 50 , 50, 50],
+            body: [
+              [
+                { text: ' Día ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' Mes ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' Año ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' Firma y Sello ', bold: true, alignment: 'center', fontSize: 12}
+              ]
+            ]
+          }
+        },
+
+
+
       ],
       styles: {
         header: {
@@ -908,13 +1431,22 @@ export class GestionTramitesComponent implements OnInit {
           alignment: 'center'
         },
         tableExample: {
-          margin: [0, 5, 0, 0],
+          margin: [0, 0, 0, 0],
           heights: [20]
         },
         tableHeader: {
           bold: true,
           fontSize: 13,
           color: 'black'
+        },
+        tableDescripcion:{
+          margin: [0, 0, 0, 0],
+          heights: [20],
+          padding: [50, 100, 50, 100]
+        },
+        paddingBottom: {
+          alignment: 'center',
+          margin: [0, 20, 0, 10]
         }
       }
     };
