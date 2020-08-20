@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="!this.serviceArea.selectedArea._id" class="modal-title" id="exampleModalLabel">Nueva area</h5>
+        <h5 *ngIf="this.serviceArea.selectedArea._id" class="modal-title" id="exampleModalLabel">Editar area</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-area" #areaForm="ngForm" (ngSubmit)="onSaveArea(areaForm)">
+          <div class="row">
+            <input type="text" id="IdArea" name="IdArea" class="form-control" [(ngModel)]="this.serviceArea.selectedArea._id" name="_id" disabled>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="area">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese Area" [(ngModel)]="this.serviceArea.selectedArea.nombre">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="encargado">Encargado</label>
+                <input type="text" name="encargado" id="encargado" class="form-control" placeholder="Ingrese Nombre" [(ngModel)]="this.serviceArea.selectedArea.encargado">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button *ngIf="!this.serviceArea.selectedArea._id" type="submit" class="btn btn-success" (click)="onSaveArea(areaForm)">Cargar</button>
+        <button *ngIf="this.serviceArea.selectedArea._id" type="submit" class="btn btn-success" (click)="onUpdateArea(this.serviceArea.selectedArea)">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>

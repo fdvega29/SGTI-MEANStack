@@ -37,11 +37,16 @@ export class SidebarService {
 
   menuAdmin: any = {
     elementos: [
-      /*{
-        titulo: 'Perfil del Administrador',
-        icono: 'fa fa-user-circle-o',
-        url: '/dashboard/perfil'
-      },*/
+      {
+        titulo: 'Areas',
+        icono: 'fa fa-building-o',
+        url: '/dashboard/areas'
+      },
+      {
+        titulo: 'Tipo tramite',
+        icono: 'fa fa-id-card-o',
+        url: '/dashboard/tipo-tramite'
+      },
       {
         titulo: 'Gestión de trámites',
         icono: 'fa fa-file-text-o',

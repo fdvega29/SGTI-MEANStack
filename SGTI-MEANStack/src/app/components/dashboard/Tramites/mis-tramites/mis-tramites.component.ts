@@ -33,8 +33,8 @@ export class MisTramitesComponent implements OnInit {
     this.dataTramites
       .getAllTramitesById(this.usuario._id)
       .subscribe( (resp: any) => {
-        console.log(resp.allDataMinH);
         this.tramites = resp.allDataMinH;
+        console.log(this.tramites);
       })
   }
 

@@ -34,6 +34,11 @@ import { UpdateProfileComponent } from './PerfildeUsuario/update-profile/update-
 import { GestionTramitesComponent } from './Tramites/gestion-tramites/gestion-tramites.component';
 import { GuiaAdministradorComponent } from './AcercaDe/guia-administrador/guia-administrador.component';
 import { EditTramitesComponent } from './Tramites/edit-tramites/edit-tramites.component';
+import { AreasComponent } from './ABM-Area/areas/areas.component';
+import { TipoTramiteComponent } from './ABM-Tipo-Tramite/tipo-tramite/tipo-tramite.component';
+import { HistorialComponent } from './historial/historial.component';
+import { NuevoAreaComponent } from './ABM-Area/nuevo-area/nuevo-area.component';
+import { NuevoTipoTramiteComponent } from './ABM-Tipo-Tramite/nuevo-tipo-tramite/nuevo-tipo-tramite.component';
 
 
 @NgModule({
@@ -51,6 +56,11 @@ import { EditTramitesComponent } from './Tramites/edit-tramites/edit-tramites.co
 		GestionTramitesComponent,
 		GuiaAdministradorComponent,
 		EditTramitesComponent,
+		AreasComponent,
+		TipoTramiteComponent,
+		HistorialComponent,
+		NuevoAreaComponent,
+		NuevoTipoTramiteComponent
 	],
 	exports: [
 		PerfilComponent,

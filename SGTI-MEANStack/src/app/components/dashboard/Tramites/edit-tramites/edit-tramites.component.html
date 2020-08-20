@@ -14,14 +14,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="tramite">ID Tramite</label>
                 <input type="text" name="idTramite" id="idTramite" class="form-control" [(ngModel)]="this.dataService.selectedTram._id" name="_id" disabled>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Estado</label>
-                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.dataService.selectedTram.estadoTram" name="estadoTram" disabled>
+                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.dataService.selectedTram.estadoTram" name="estadoTram">
                   <option value="Iniciado">Iniciado</option>
                   <option value="En proceso">En proceso</option>
                   <option value="Finalizado">Finalizado</option>
@@ -31,10 +30,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Area</label>
-                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.dataService.selectedTram.area" name="area">
-                  <option>Mesa de entrada</option>
-                  <option>Coordinación de trámites oficiales</option>
-                  <option>Despacho - Mesa de entrada</option>
+                <select  class="form-control" id="exampleFormControlSelect2" [(ngModel)]="this.dataService.selectedTram.area._id" name="area">
+                  <option *ngFor="let area of dataArea" [ngValue]="area._id">{{area.nombre}}</option>
                 </select>
               </div>
             </div>
@@ -43,7 +40,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-success" (click)="updateTramite(this.dataService.selectedTram)">Actualizar</button>
+        <button type="button" class="btn btn-success" (click)="updateTramite(this.dataService.selectedTram); insertHistorial(this.dataService.selectedTram)">Actualizar</button>
       </div>
     </div>
   </div>

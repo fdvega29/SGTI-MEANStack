@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
 import { TramitesService } from 'src/app/components/services/tramites.service';
+import { dataTramites } from 'src/app/components/models/tramites.module';
 import { sessionUser } from 'src/app/components/models/session.module';
 
 //sweetalert2
@@ -9,6 +10,7 @@ import Swal from 'sweetalert2'
 //Toastr
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { HistorialService } from 'src/app/components/services/historial.service';
 
 
 declare var $;
@@ -31,6 +33,8 @@ export class NuevoTramiteComponent implements OnInit {
   tipoTramite:string = '';
   tipoFormulario:string = '';
 
+  historialTramite: any;
+
   formulario:number = 1;
 
   usuario: sessionUser;
@@ -39,16 +43,20 @@ export class NuevoTramiteComponent implements OnInit {
 
   minutaH: any = {};
   minutaG: any = {};
+  MinH: string = '5f3c6a13bc29a408dcd305e5';
+  MinG: string = '5f3b2c61d32fbf223ce446e7';
 
   domicilio: string;
   objetoPedido: string;
   ubicacionInmueble: string;
-
+  IdTramite: any;
+  areaTramite: string ='5f3a022f7485c832c49bd415';
   maxcodigo: number = 0;
 
 
   constructor(private userService: UsuarioService,
               private dataTramite: TramitesService,
+              private historialService: HistorialService,
               private toastr: ToastrService,
               private router: Router) {
                   this.usuario = userService.getCurrentUser();
@@ -79,7 +87,7 @@ export class NuevoTramiteComponent implements OnInit {
 
     //Utilizar formulario pedido desde componente Informacion
 
-    if (localForm == 'Minuta H') {
+    if (localForm == this.MinH) {
       this.guardar_tipotramite('Búsqueda de titulares dominiales', localForm);
 
       $('#card-h').prop("checked", true);
@@ -89,7 +97,7 @@ export class NuevoTramiteComponent implements OnInit {
       $('#confirmG').hide();
       $('#finalizarH').show();
       $('#finalizarG').hide();
-    }else if (localForm == 'Minuta G') {
+    }else if (localForm == this.MinG) {
 
       this.guardar_tipotramite('Búsqueda de estado jurídico de inmueble', localForm);
 
@@ -116,7 +124,7 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
       $('#stepwizard #li3').removeClass('active');
-      if (this.tipoFormulario == 'Minuta H') {
+      if (this.tipoFormulario == this.MinH) {
         $('#formH').show();
         $('#formG').hide();
         $('#confirmH').show();
@@ -286,6 +294,7 @@ export class NuevoTramiteComponent implements OnInit {
         ubicacionInmueble: '',
         tipoTram: tipoTramite,
         producto: producto,
+        area: this.areaTramite,
         usuario: this.usuario
       };
       //console.log(this.minutaH);
@@ -309,6 +318,7 @@ export class NuevoTramiteComponent implements OnInit {
       ubicacionInmueble: ubicacionInmueble,
       tipoTram: tipoTramite,
       producto: producto,
+      area: this.areaTramite,
       usuario: this.usuario
     };
      //console.log(this.minutaG);
@@ -318,8 +328,10 @@ export class NuevoTramiteComponent implements OnInit {
   public postDataTramMinH(create){
     console.log("Data-form", create);
     this.dataTramite.postDataTram(create)
-                                  .subscribe(data => {
-                                  console.log("Res-Api", data);
+                                  .subscribe((res: any) => {
+                                  console.log("Res-Api", res);
+                                  this.IdTramite = res.data._id;
+                                  this.insertHistorial(this.IdTramite);
                                   this.alertSuccess();
                                   this.router.navigate(['/dashboard/mis-tramites']);
                                 });
@@ -329,6 +341,17 @@ export class NuevoTramiteComponent implements OnInit {
     this.dataTramite.getAllMaxCodi().subscribe((data: any) => { 
       this.maxcodigo = data.tramite[0].codigo+1;
     });
+  }
+
+  public insertHistorial(id: string){
+    this.historialTramite = {
+      estTramite: 'Iniciado',
+      area: this.areaTramite,
+      usuario: this.usuario, 
+      tramite: id
+    }
+    console.log(this.historialTramite);
+    this.historialService.postDataHistorial(this.historialTramite).subscribe(res => console.log(res));
   }
 
   public remove(){

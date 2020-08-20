@@ -22,6 +22,7 @@ export class GestionTramitesComponent implements OnInit {
 
   tramites: dataTramites[] = [];
   dataTable: any;
+  dataArea: any;
 
   ngOnInit() {
     this.getDataTramite();
@@ -44,8 +45,6 @@ export class GestionTramitesComponent implements OnInit {
     this.dataTramites.selectedTram = Object.assign({}, tramite);
     console.log(this.dataTramites.selectedTram);
   };
-
-
 
   public imprimirFormularioMinG(tipoTramite: string,
                                 objeto: string,

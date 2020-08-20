@@ -30,7 +30,7 @@ export class UpdateProfileComponent implements OnInit {
     console.log(this.usuario);
   }
 
-  updateDataUser(user: usersModule){
+  public updateDataUser(user: usersModule){
     this.userService.editUserById(user)
         .subscribe(data => {
           console.log(data)
@@ -41,7 +41,7 @@ export class UpdateProfileComponent implements OnInit {
 
   }
 
-  seleccionImage( archivo: File ) {
+  public seleccionImage( archivo: File ) {
 
     if ( !archivo ) {
       this.imagenSubir = null;
@@ -62,7 +62,7 @@ export class UpdateProfileComponent implements OnInit {
 
   }
 
-  cambiarImagen() {
+  public cambiarImagen() {
     console.log(this.usuario);
     this.userService.cambiarImagen( this.imagenSubir, this.user._id );
 

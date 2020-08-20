@@ -8,6 +8,8 @@ const dataCtrl = {};
 dataCtrl.getAllData = async (req, res) => {
     const dataAll = await dataTramite.find()
         .populate('usuario', 'apellido nombre telefono')
+        .populate('area', 'nombre')
+        .populate('producto', 'formulario descripcion')
         .sort({_id:-1});
         
 
@@ -45,6 +47,9 @@ dataCtrl.getAllData = async (req, res) => {
 dataCtrl.getAllDataById = async (req, res) => {
     const _id = req.params.id;
     const dataAll = await dataTramite.find({'usuario': _id})
+    .populate('usuario', 'apellido nombre telefono')
+    .populate('area', 'nombre')
+    .populate('producto', 'formulario descripcion')
     .sort({_id:-1});
     if (!dataAll) {
         return res.status(400).json({
@@ -85,7 +90,9 @@ dataCtrl.getData = async (req, res) => {
         })
     }
     const dataMinH = await dataTramite.findById(id)
-            .populate('usuario', 'id');
+            .populate('usuario', 'apellido nombre telefono')
+            .populate('area', 'nombre')
+            .populate('producto', 'formulario descripcion')
     return res.status(200).json({
         ok: true,
         dataMinH: dataMinH

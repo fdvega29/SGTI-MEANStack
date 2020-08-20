@@ -1,14 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
-
+//Services
+import {UsuarioService} from "../../services/usuario.service";
+import { TramitesService } from '../../services/tramites.service';
+//Modelo
+import {usersModule} from "../../models/user.module";
 //sweetalert2
 import Swal from 'sweetalert2'
 //PDFMake
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {UsuarioService} from "../../services/usuario.service";
-import {usersModule} from "../../models/user.module";
-import { TramitesService } from '../../services/tramites.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var $;
