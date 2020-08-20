@@ -115,7 +115,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let histTram of historial; index as i">
+                    <tr *ngFor="let histTram of historial">
                       <td class="text-center" scope="row">{{histTram.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</td>
                       <td class="text-center">{{histTram.estTramite}}</td>
                       <td class="text-center">{{histTram.area.nombre}}</td>

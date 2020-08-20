@@ -63,7 +63,7 @@
                       </a>&nbsp;
                       <p>{{minH.usuario.telefono}}</p>
                     </td>
-                    <td *ngIf="minH.producto == 'Minuta G' else imprimeMinH"  class="text-center">
+                    <td *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH"  class="text-center">
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
                          (click)="imprimirFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
