@@ -4,6 +4,7 @@
   "description": "En este package vamos a construir una API basada en el Stack MEAN - MongoDB, NodeJS, y ExpressJs",
   "main": "index.js",
   "scripts": {
+    "start": "node server/index.js",
     "dev": "nodemon server/index.js"
   },
   "repository": {
