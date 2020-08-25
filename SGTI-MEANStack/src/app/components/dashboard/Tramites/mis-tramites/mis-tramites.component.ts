@@ -33,8 +33,8 @@ export class MisTramitesComponent implements OnInit {
     this.dataTramites
       .getAllTramitesById(this.usuario._id)
       .subscribe( (resp: any) => {
-        console.log(resp.allDataMinH);
         this.tramites = resp.allDataMinH;
+        console.log(this.tramites);
       })
   }
 
@@ -80,7 +80,7 @@ export class MisTramitesComponent implements OnInit {
   }
 
   public imprimirComprobante(apellido, nombre, product, tipoTramite, fechagenerado, estadotramite, areadestino ) {
-
+    //console.log(product.formulario, areadestino.nombre);
     const comprobante  = {
       content: [
         {
@@ -93,8 +93,8 @@ export class MisTramitesComponent implements OnInit {
             'Fecha: ' + fechagenerado.substr(0,10)  + '\n \n',
             'Cliente solicitante: ' + apellido + ' ' + nombre + '\n \n',
             'Tipo de trámite: ' + tipoTramite +  '\n \n',
-            'Formulario: ' + product + '\n \n',
-            'Área: ' + areadestino + '\n \n',
+            'Formulario: ' + product.formulario + '\n \n',
+            'Área: ' + areadestino.nombre + '\n \n',
             'Estado del trámite: ' + estadotramite + '\n'
           ],
           style: 'body',

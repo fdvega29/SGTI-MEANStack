@@ -21,7 +21,7 @@ usersCtrl.getUser = async (req, res) => {
 usersCtrl.getAllUser = async (req, res) => {
 
     const [users, total] = await Promise.all([
-        User.find({}, 'apellido nombre email telefono img roles google'),
+        User.find({}, 'apellido nombre email telefono img roles estado google'),
         
         User.countDocuments()
     ]);
@@ -61,6 +61,28 @@ usersCtrl.editUser = async (req, res) => {
         usuario: dataUser,
         message: "Usuario actualizado correctamente"
     })
+};
+
+usersCtrl.editEstadoUser = async (req, res) => {
+    const estado = req.body.estado;
+    if(estado){
+        this.estado = false;
+    }else{
+        this.estado = true;
+    }
+    await User.findByIdAndUpdate(req.body._id, { $set: {'estado': this.estado}}, 
+                                                 { new: true },
+                                                 function(err, newEstado){
+                                                     if(err){
+                                                        res.json({error :err}) ; 
+                                                     }else{
+                                                        return res.status(200).json({
+                                                            ok: true,
+                                                            estadoUser: newEstado,
+                                                            message: "Estado actualizado correctamente"
+                                                        })
+                                                     }
+                                                 });
 };
 
 usersCtrl.deleteUser = async (req, res) => {

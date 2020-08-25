@@ -16,9 +16,9 @@ const data = new Schema({
     objetoPedido: { type: String},
     ubicacionInmueble: { type: String},
     tipoTram: {type: String, required: true},
-    producto: {type: String, required: true},
+    producto: { type: Schema.Types.ObjectId, ref: 'TipoTramite'},
     estadoTram: {type: String, default: 'Iniciado'},
-    area: {type: String, default: 'Mesa de entrada'},
+    area: { type: Schema.Types.ObjectId, ref: 'Area'},
     usuario: { type: Schema.Types.ObjectId, ref: 'Users'}
 },
 {

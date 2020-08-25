@@ -19,9 +19,12 @@
         <div class="card">
           <div class="card-header p-0">
             <ul class="nav nav-pills row p-2">
-              <li class="nav-item col-4"><a class="nav-link active text-center" href="#tab_1" data-toggle="tab">Todos</a></li>
-              <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_2" data-toggle="tab">En proceso</a></li>
-              <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_3" data-toggle="tab">Finalizado</a></li>
+              <li class="nav-item col-4"><a class="nav-link active text-center" href="#tab_1"
+                  data-toggle="tab">Todos</a></li>
+              <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_2" data-toggle="tab">En proceso</a>
+              </li>
+              <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_3" data-toggle="tab">Finalizado</a>
+              </li>
             </ul>
           </div><!-- /.card-header -->
           <div class="card-body">
@@ -30,84 +33,114 @@
                 <div *ngFor="let data of tramites; index as i">
                   <div *ngIf="data.estadoTram == 'Iniciado'" class="row callout callout-info animate__animated animate__flipInX" style="border-left-color: #007bff !important;">
                     <div class="col-md-3">
-                      <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
-                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+                      <p class="text-muted">Generado: <span
+                          style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}}
+                          {{data.nombre}}</span></p>
                     </div>
                     <div class="col-md-4">
-                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
-                      <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto.formulario}}</span></p>
+                      <p class="text-muted">Descripción: <span style="color: black;">{{data.producto.descripcion}}</span></p>
                     </div>
                     <div class="col-md-3">
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span
+                          class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span
+                          class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span
+                          class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
                       <div>
-                        <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
+                        <p class="text-muted">Area: <span style="color: black;">{{data.area.nombre}}</span></p>
                       </div>
                     </div>
                     <div class="col-md-2">
                       <p class="text-center" style="color: black">Nro. {{data.codigo}}<br>
-              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                 (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                          (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-danger ml-2"><i class="fa fa-print"></i></a>
                         &nbsp;
-                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                        <!--<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
                            (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
                   aria-hidden="true"></i></a>
             </p>
           </div>
         </div>
         <div *ngIf="data.estadoTram == 'En proceso'" class="row callout callout-warning animate__animated animate__flipInX">
+                  aria-hidden="true"></i></a>-->
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Ver"
+                          class="btn btn-primary"  [routerLink]="['/dashboard/historial-tramite/', data._id]" routerLinkActive="router-link-active"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                      </p>
+                    </div>
+                  </div>
+                  <div *ngIf="data.estadoTram == 'En proceso'"
+                    class="row callout callout-warning animate__animated animate__flipInX">
                     <div class="col-md-3">
-                      <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
-                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+                      <p class="text-muted">Generado: <span
+                          style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}}
+                          {{data.nombre}}</span></p>
                     </div>
                     <div class="col-md-4">
-                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
-                      <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto.formulario}}</span></p>
+                      <p class="text-muted">Descripción: <span style="color: black;">{{data.producto.descripcion}}</span></p>
                     </div>
                     <div class="col-md-3">
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span
+                          class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span
+                          class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span
+                          class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
                       <div>
-                        <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
+                        <p class="text-muted">Area: <span style="color: black;">{{data.area.nombre}}</span></p>
                       </div>
                     </div>
                     <div class="col-md-2">
                       <p class="text-center" style="color: black">Nro. {{data.codigo}}<br>
                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                         (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>            &nbsp;
-            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-               (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
-                          aria-hidden="true"></i></a>
+                          (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-danger ml-2"><i class="fa fa-print"></i></a> &nbsp;
+                        <!--<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                          (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></a>-->
+                          <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Ver"
+                          class="btn btn-primary"  [routerLink]="['/dashboard/historial-tramite/', data._id]" routerLinkActive="router-link-active"><i class="fa fa-eye" aria-hidden="true"></i></a>
                       </p>
                     </div>
                   </div>
                   <div *ngIf="data.estadoTram == 'Finalizado'" class="row callout callout-success animate__animated animate__flipInX" style="border-left-color: #28a745 !important;">
                     <div class="col-md-3">
-                      <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
-                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+                      <p class="text-muted">Generado: <span
+                          style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}}
+                          {{data.nombre}}</span></p>
                     </div>
                     <div class="col-md-4">
-                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
-                      <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto.formulario}}</span></p>
+                      <p class="text-muted">Descripción: <span style="color: black;">{{data.producto.descripcion}}</span></p>
                     </div>
                     <div class="col-md-3">
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span
+                          class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span
+                          class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span
+                          class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
                       <div>
-                        <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
+                        <p class="text-muted">Area: <span style="color: black;">{{data.area.nombre}}</span></p>
                       </div>
                     </div>
                     <div class="col-md-2">
                       <p class="text-center" style="color: black">Nro. {{data.codigo}}<br>
                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                           (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
-                      &nbsp;
-                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                         (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
-                          aria-hidden="true"></i></a>
+                          (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-danger ml-2"><i class="fa fa-print"></i></a>
+                        &nbsp;
+                        <!--<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                          (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></a>-->
+                          <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Ver"
+                          class="btn btn-primary"  [routerLink]="['/dashboard/historial-tramite/', data._id]" routerLinkActive="router-link-active"><i class="fa fa-eye" aria-hidden="true"></i></a>
                       </p>
                     </div>
                   </div>
@@ -116,31 +149,40 @@
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_2">
                 <div *ngFor="let data of tramites; index as i">
-                  <div *ngIf="data.estadoTram == 'En proceso'" class="row callout callout-warning animate__animated animate__flipInX">
+                  <div *ngIf="data.estadoTram == 'En proceso'"
+                    class="row callout callout-warning animate__animated animate__flipInX">
                     <div class="col-md-3">
-                      <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
-                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+                      <p class="text-muted">Generado: <span
+                          style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}}
+                          {{data.nombre}}</span></p>
                     </div>
                     <div class="col-md-4">
-                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
-                      <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto.formulario}}</span></p>
+                      <p class="text-muted">Descripción: <span style="color: black;">{{data.producto.descripcion}}</span></p>
                     </div>
                     <div class="col-md-3">
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span
+                          class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span
+                          class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span
+                          class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
                       <div>
-                        <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
+                        <p class="text-muted">Area: <span style="color: black;">{{data.area.nombre}}</span></p>
                       </div>
                     </div>
                     <div class="col-md-2">
                       <p class="text-center" style="color: black">Nro. {{data.codigo}}<br>
                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                        target="_blank" (click)="imprimirPdf()" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
-                      &nbsp;
-                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                        target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
-                          aria-hidden="true"></i></a>
+                          target="_blank" (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-danger ml-2"><i
+                            class="fa fa-print"></i></a>
+                        &nbsp;
+                        <!--<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                          target="_blank" (click)="descargarPdf()" class="btn btn-success"><i class="fa fa-download"
+                            aria-hidden="true"></i></a>-->
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Ver"
+                          class="btn btn-primary"  [routerLink]="['/dashboard/historial-tramite/', data._id]" routerLinkActive="router-link-active"><i class="fa fa-eye" aria-hidden="true"></i></a>
                       </p>
                     </div>
                   </div>
@@ -151,29 +193,37 @@
                 <div *ngFor="let data of tramites; index as i">
                   <div *ngIf="data.estadoTram == 'Finalizado'" class="row callout callout-success animate__animated animate__flipInX" style="border-left-color: #28a745 !important;">
                     <div class="col-md-3">
-                      <p class="text-muted">Generado: <span style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
-                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}} {{data.nombre}}</span></p>
+                      <p class="text-muted">Generado: <span
+                          style="color: black;">{{data.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
+                      <p class="text-muted">Solicitante: <span style="color: black;">{{data.apellido}}
+                          {{data.nombre}}</span></p>
                     </div>
                     <div class="col-md-4">
-                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto}}</span></p>
-                      <p class="text-muted">Descripción: <span style="color: black;">{{data.tipoTram}}</span></p>
+                      <p class="text-muted">Tipo tramite: <span style="color: black;">{{data.producto.formulario}}</span></p>
+                      <p class="text-muted">Descripción: <span style="color: black;">{{data.producto.descripcion}}</span></p>
                     </div>
                     <div class="col-md-3">
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
-                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Iniciado'">Estado tramite: <span
+                          class="badge bg-primary ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'En proceso'">Estado tramite: <span
+                          class="badge bg-warning ml-1" id="estado">{{data.estadoTram}}</span></p>
+                      <p class="text-muted" *ngIf="data.estadoTram == 'Finalizado'">Estado tramite: <span
+                          class="badge bg-success ml-1" id="estado">{{data.estadoTram}}</span></p>
                       <div>
-                        <p class="text-muted">Area: <span style="color: black;">{{data.area}}</span></p>
+                        <p class="text-muted">Area: <span style="color: black;">{{data.area.nombre}}</span></p>
                       </div>
                     </div>
                     <div class="col-md-2">
                       <p class="text-center" style="color: black">Nro. {{data.codigo}}<br>
-              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                 (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-primary ml-2"><i class="fa fa-print"></i></a>
-                      &nbsp;
-                      <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                         (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)" class="btn btn-success"><i class="fa fa-download"
-                          aria-hidden="true"></i></a>
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                          (click)="imprimirComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-danger ml-2"><i class="fa fa-print"></i></a>
+                        &nbsp;
+                        <!--<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                          (click)="descargarComprobante(data.apellido, data.nombre, data.producto, data.tipoTram, data.createdAt, data.estadoTram, data.area)"
+                          class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></a>-->
+                          <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Ver"
+                          class="btn btn-primary"  [routerLink]="['/dashboard/historial-tramite/', data._id]" routerLinkActive="router-link-active"><i class="fa fa-eye" aria-hidden="true"></i></a>
                       </p>
                     </div>
                   </div>

@@ -20,13 +20,13 @@
                 <thead>
                   <tr>
                     <th scope="col" class="text-center">N°</th>
-                    <th scope="col" class="text-center">Usuario</th>
                     <th scope="col" class="text-center">Generado</th>
+                    <th scope="col" class="text-center">Usuario</th>
                     <!--<th scope="col" class="text-center">Solicitante</th>-->
                     <th scope="col" class="text-center">Producto</th>
-                    <th scope="col" class="text-center">Descripción</th>
-                    <th scope="col" class="text-center">Area</th>
-                    <th scope="col" class="text-center">Estado</th>
+                    <!--<th scope="col" class="text-center">Descripción</th>-->
+                    <!--<th scope="col" class="text-center">Area</th>-->
+                    <th scope="col" class="text-center">Estado/Area</th>
                     <th scope="col" class="text-center">Editar</th>
                     <th scope="col" class="text-center">Notificar</th>
                     <th scope="col" class="text-center">Formulario</th>
@@ -34,20 +34,21 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let minH of tramites; index as i">
-                    <td scope="row">{{i+1}}</td>
-                    <td scope="text-center">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</td>
+                    <td class="text-center" scope="row">{{i+1}}</td>
                     <td class="text-center">{{minH.createdAt | date: "dd/MM/yyyy"}}</td>
+                    <td scope="text-center">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</td>
                     <!--<td class="text-center">{{minH.apellido}} {{minH.nombre}}</td>-->
-                    <td class="text-center">{{minH.producto}}</td>
-                    <td class="text-center">{{minH.tipoTram}}</td>
-                    <td class="text-center">{{minH.area}}</td>
+                    <td class="text-center">{{minH.producto.formulario}}</td>
+                    <!--<td class="text-center">{{minH.tipoTram}}</td>
+                    <td class="text-center">{{minH.area}}</td>-->
                     <td class="text-center">
                       <span *ngIf="minH.estadoTram == 'Iniciado'" class="badge bg-primary ml-1"
                         id="estado">{{minH.estadoTram}}</span>
                       <span *ngIf="minH.estadoTram == 'En proceso'" class="badge bg-warning ml-1"
                         id="estado">{{minH.estadoTram}}</span>
                       <span *ngIf="minH.estadoTram == 'Finalizado'" class="badge bg-success ml-1"
-                        id="estado">{{minH.estadoTram}}</span>
+                        id="estado">{{minH.estadoTram}}</span>&nbsp;
+                      <p>{{minH.area.nombre}}</p>  
                     </td>
                     <td class="text-center">
                       <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
@@ -62,7 +63,7 @@
                       </a>&nbsp;
                       <p>{{minH.usuario.telefono}}</p>
                     </td>
-                    <td *ngIf="minH.producto == 'Minuta G' else imprimeMinH"  class="text-center">
+                    <td *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH"  class="text-center">
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
                          (click)="imprimirFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
