@@ -44,6 +44,7 @@ export class PrincipalAdminComponent implements OnInit {
       .subscribe((data: any) => {
         this.usuarios = data.usuarios;
         this.total = data.total;
+        console.log(this.usuarios);
 
         this.chRef.detectChanges();
         const table: any = $('#example1');
@@ -92,8 +93,10 @@ export class PrincipalAdminComponent implements OnInit {
     })
   }
 
-  public editUser(usuario: usersModule){
-    //console.log(usuario);
+  public changeEstado(usuario: usersModule){
+    this.usuarioService.editEstadoUserById(usuario).subscribe((res: any) => {
+      console.log(res)
+    });
   }
 
   public obtenerPdf(){

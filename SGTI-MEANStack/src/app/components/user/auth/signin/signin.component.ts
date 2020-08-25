@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { usersModule } from '../../../models/user.module';
 import { AutenticacionService } from 'src/app/components/services/autenticacion.service';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
+//sweetalert2
+import Swal from 'sweetalert2'
 
 declare const gapi: any;
 
@@ -23,6 +25,8 @@ export class SigninComponent implements OnInit {
   auth2: any;
 
   roleUsuario : string;
+  estadoUsuario: any;
+  nombre: string;
 
   usuario: usersModule;
 
@@ -58,10 +62,22 @@ export class SigninComponent implements OnInit {
           console.log(data.dataUser.usuario);
           this.userService.setUser(data.dataUser.usuario);
           this.roleUsuario = data.dataUser.usuario.roles;
-          if (this.roleUsuario == "ADMIN_ROLE"){
-            window.location.href = '/dashboard/principal-admin';
+          this.nombre = data.dataUser.usuario.nombre;
+          this.estadoUsuario = data.dataUser.usuario.estado;
+          if(this.estadoUsuario == false){
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Cuenta inactiva'
+            })
           }else {
-            window.location.href = '/dashboard/principal';
+            if (this.roleUsuario == "ADMIN_ROLE"){
+              this.showToatr();
+              window.location.href = '/dashboard/principal-admin';
+            }else {
+              this.showToatr();
+              window.location.href = '/dashboard/principal';
+            }
           }
         },
         err => console.log(err)
@@ -107,7 +123,7 @@ export class SigninComponent implements OnInit {
   }
 
   showToatr() {
-    this.toastr.success('¡Bien hecho!', 'Success', {
+    this.toastr.success('¡Bienvenido! '+this.nombre, 'Success', {
       timeOut: 1000,
       progressBar: true,
       progressAnimation: 'increasing'

@@ -21,6 +21,8 @@ const usersSchema = new Schema({
 
     roles: { type: String, required: false, default: "USER_ROLE"},
 
+    estado: {type: Boolean, default: true},
+
     google: { type: Boolean, required: false, default: false},
 },
     {

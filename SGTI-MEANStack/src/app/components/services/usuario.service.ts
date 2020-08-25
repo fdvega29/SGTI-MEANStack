@@ -59,6 +59,11 @@ export class UsuarioService {
     return this.http.put(url_api, user);
   }
 
+  public editEstadoUserById(user: usersModule) {
+    const url_api = this.AUTH_SERVER + `/user/updateEstado/${user._id}`;
+    return this.http.put(url_api, user);
+  }
+
   public deleteUserById(id: string) {
     const url_api = this.AUTH_SERVER + `/user/delete/${id}`;
     return this.http.delete(url_api)
