@@ -1,1 +1,1 @@
-web: node SGTI-MEANStack/index.js
+web: node ./index.js
