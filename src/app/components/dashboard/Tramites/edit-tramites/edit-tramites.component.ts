@@ -18,7 +18,7 @@ export class EditTramitesComponent implements OnInit {
   historialTramite: any = [];
   usuarioLogueado: any;
 
-  constructor(private dataService: TramitesService, private areaService: AreaService, private historialService: HistorialService, private usuarioService: UsuarioService) { }
+  constructor(public dataService: TramitesService, private areaService: AreaService, private historialService: HistorialService, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     $('#idTramite').hide();
