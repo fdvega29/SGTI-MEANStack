@@ -268,7 +268,7 @@ export class NuevoTramiteComponent implements OnInit {
     }
   }
 
-  public createFormH(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string, usuario: string){
+  public createFormH(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string){
 
     if(!ConyuApellido){
       ConyuApellido = '';
@@ -301,7 +301,7 @@ export class NuevoTramiteComponent implements OnInit {
       this.postDataTramMinH(this.minutaH);
   };
 
-  public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string, usuario: string) {
+  public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string) {
     this.minutaG = {
       codigo: this.maxcodigo,
       apellido: apellido,
