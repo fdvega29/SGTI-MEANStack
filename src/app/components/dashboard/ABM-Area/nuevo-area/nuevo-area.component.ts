@@ -14,7 +14,7 @@ declare var $;
 export class NuevoAreaComponent implements OnInit {
 
   constructor(
-    private serviceArea: AreaService, 
+    public serviceArea: AreaService, 
     private location: Location) { }
 
   ngOnInit() {
