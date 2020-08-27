@@ -1,11 +1,11 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a *ngIf="usuario.roles == 'USER_ROLE'" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
+  <a *ngIf="usuario.dataUser.usuario.roles == 'USER_ROLE'" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
     <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
     <span class="brand-text text-white">SGTI</span>
   </a>
-  <a *ngIf="usuario.roles == 'ADMIN_ROLE'" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
+  <a *ngIf="usuario.dataUser.usuario.roles == 'ADMIN_ROLE'" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="brand-link elevation-4" style="background: #3282b8 !important;">
     <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
     <span class="brand-text text-white">SGTI</span>
   </a>
@@ -18,13 +18,13 @@
          <div class="row">
            <div class="col-md-12 text-center">
             <div class="image widget-user-image">
-              <img [src]="usuario.img | imagen" class="img-circle elevation-2" alt="User Image">
+              <img [src]="usuario.dataUser.usuario.img | imagen" class="img-circle elevation-2" alt="User Image">
             </div>
            </div>
            <div class="col-md-12 text-center">
             <div class="info">
-              <h5 class="text-white" style="font-size: 19px !important;">{{usuario.apellido}} {{usuario.nombre}}</h5>
-              <span class="text-white" style="font-size: 15px !important;">{{usuario.email}}</span>
+              <h5 class="text-white" style="font-size: 19px !important;">{{usuario.dataUser.usuario.apellido}} {{usuario.dataUser.usuario.nombre}}</h5>
+              <span class="text-white" style="font-size: 15px !important;">{{usuario.dataUser.usuario.email}}</span>
             </div>
            </div>
            <div class="col-md-12 text-center">
