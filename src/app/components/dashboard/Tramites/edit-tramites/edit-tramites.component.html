@@ -30,7 +30,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Area</label>
-                <select  class="form-control" id="exampleFormControlSelect2" [(ngModel)]="this.dataService.selectedTram.area._id" name="area">
+                <!--<select  class="form-control" id="exampleFormControlSelect2" [(ngModel)]="this.dataService.selectedTram.area._id" name="area">-->
+                <select  class="form-control" id="exampleFormControlSelect2" [(ngModel)]="this.dataService.selectedTram.area" name="area">
                   <option *ngFor="let area of dataArea" [ngValue]="area._id">{{area.nombre}}</option>
                 </select>
               </div>
