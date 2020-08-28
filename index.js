@@ -13,7 +13,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
 app.use(express.json());
 //app.use(cors({origin: 'http://localhost:4200'})); Trabajando con el server 4200
-app.use(cors({origin: 'https://total-tooling-272001.web.app/'})); //Trabajando con el server 4200
+app.use(cors({origin: 'https://total-tooling-272001.web.app'})); //Trabajando con el server 4200
 
 
 //Routes
