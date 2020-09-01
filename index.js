@@ -26,6 +26,8 @@ app.use('/api/historialTramite',require('./routes/historialTramite.route'));
 app.use('/api/tipoTramites',require('./routes/tipoTramites.route'));
 app.use('/api/img', require('./routes/imagenes.route'));
 app.use('/api/upload', require('./routes/upload.route'));
+app.use('/api/mercadoPago', require('./routes/mercadoPago'));
+
 
 
 //Starting the server
