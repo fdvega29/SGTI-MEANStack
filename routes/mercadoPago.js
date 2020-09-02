@@ -12,7 +12,7 @@ app.post('/checkout', async (req, res) =>{
     const pref = req.body;
     await mercadopago.preferences.create(pref);
     return res.json({
-        data: pref
+        data: res
     })
     /*.then(function(res){
         global.id = res.body.id;
