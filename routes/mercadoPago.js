@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express(); 
 const mercadopago = require('mercadopago');
-const comprobantePago = require('../models/comprobantePago');
+//const comprobantePago = require('../models/comprobantePago');
 
 // Credenciales
 mercadopago.configure({
@@ -11,9 +11,16 @@ mercadopago.configure({
 app.post('/checkout', async (req, res) =>{
     const data = req.body;
     await mercadopago.preferences.create(data)
-    return res.status(200).json({
-        data: res
-    })
+    .then(function(res){
+        // Este valor reemplazará el string "<%= global.id %>" en tu HTML
+        global.id = res.body.id;
+        console.log(global.id);
+        return res.status(200).json({
+            data: res
+        })
+    }).catch(function(error){
+        console.log(error);
+    });
 });
 
 /*app.post('/payments', async (req, res) =>{
