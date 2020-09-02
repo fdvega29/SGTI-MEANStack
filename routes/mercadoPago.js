@@ -13,7 +13,7 @@ app.post('/checkout', async (req, res) =>{
     await mercadopago.preferences.create(data)
     .then(function(res){
         // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-        //global.id = res.body.id;
+        global.id = res.body.id;
         console.log(global.id);
         return res.status(200).json({
             data: res
