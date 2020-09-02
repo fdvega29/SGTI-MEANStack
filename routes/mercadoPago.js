@@ -23,12 +23,12 @@ app.post('/checkout', async (req, res) =>{
     });
 });
 
-app.post('/payments', async (req, res) =>{
+/*app.post('/payments', async (req, res) =>{
  const operacion = new comprobantePagoModel(req.body);
  await operacion.save();
  return res.status(200).json({
     resp: operacion
     })
-});
+});*/
 
 module.exports = app;
