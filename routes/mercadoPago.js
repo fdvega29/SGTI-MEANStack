@@ -11,16 +11,9 @@ mercadopago.configure({
 app.post('/checkout', async (req, res) =>{
     const data = req.body;
     await mercadopago.preferences.create(data)
-    .then(function(res){
-        // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-        global.id = res.body.id;
-        console.log(global.id);
-        return res.status(200).json({
-            data: res
-        })
-    }).catch(function(error){
-        console.log(error);
-    });
+    return res.status(200).json({
+        data: res
+    })
 });
 
 /*app.post('/payments', async (req, res) =>{
