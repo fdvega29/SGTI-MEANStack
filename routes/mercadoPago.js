@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express(); 
 const mercadopago = require('mercadopago');
-const comprobantePagoModel = require('../models/comprobantePago.model');
+const Comprobante = require('../models/comprobantePago');
 
 // Credenciales
 mercadopago.configure({
@@ -23,12 +23,12 @@ app.post('/checkout', async (req, res) =>{
     });
 });
 
-/*app.post('/payments', async (req, res) =>{
- const operacion = new comprobantePagoModel(req.body);
+app.post('/payments', async (req, res) =>{
+ const operacion = new Comprobante(req.body);
  await operacion.save();
  return res.status(200).json({
     resp: operacion
     })
-});*/
+});
 
 module.exports = app;
