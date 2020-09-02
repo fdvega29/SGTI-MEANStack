@@ -9,9 +9,12 @@ mercadopago.configure({
 });
 
 app.post('/checkout', async (req, res) =>{
-    const data = req.body;
-    await mercadopago.preferences.create(data)
-    .then(function(res){
+    const pref = req.body;
+    await mercadopago.preferences.create(pref);
+    return res.json({
+        data: pref
+    })
+    /*.then(function(res){
         global.id = res.body.id;
         console.log(global.id);
         return res.json({
@@ -19,7 +22,7 @@ app.post('/checkout', async (req, res) =>{
         })
     }).catch(function(error){
         console.log(error);
-    });
+    });*/
 });
 
 /*app.post('/payments', async (req, res) =>{
