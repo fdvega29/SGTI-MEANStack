@@ -6,7 +6,7 @@ const operacion = new Schema({
     usuario: { type: Schema.Types.ObjectId, ref: 'Users'},
     tramite: {type: String},
     importe: {type: Number},
-    idOperacion: {type: Schema.Types.ObjectId},
+    idOperacion: {type: String},
     estado: {type: String}
 },
 {
