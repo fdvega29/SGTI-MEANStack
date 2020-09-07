@@ -9,7 +9,7 @@ import { AutenticacionService } from 'src/app/components/services/autenticacion.
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  providers: [usersModule]
+  providers: []
 })
 export class SignupComponent implements OnInit {
 

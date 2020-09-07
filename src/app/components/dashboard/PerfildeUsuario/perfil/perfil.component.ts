@@ -6,13 +6,13 @@ import { UsuarioService } from 'src/app/components/services/usuario.service';
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css'],
-  providers: [UsuarioService]
+  providers: []
 })
 export class PerfilComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService) { }
 
-  usuario: sessionUser;
+  usuario: any;
 
   ngOnInit() {
     this.usuario = this.usuarioService.getCurrentUser();

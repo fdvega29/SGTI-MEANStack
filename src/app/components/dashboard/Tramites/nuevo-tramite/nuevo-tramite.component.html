@@ -33,7 +33,7 @@
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" id="card-h" />
 
-                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de titulares dominiales', '5f3c6a13bc29a408dcd305e5');">
+                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de titulares dominiales', '5f4abf33aeae370004723e34'); getDataTipoTram('5f4abf33aeae370004723e34')">
                           <div class="small-box bg-info-gradient">
                             <div class="inner">
                               <h4 class="card-header">Búsqueda de titulares dominiales</h4>
@@ -51,7 +51,7 @@
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" id="card-g"/>
 
-                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', '5f3b2c61d32fbf223ce446e7');">
+                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', '5f4abf44aeae370004723e35'); getDataTipoTram('5f4abf44aeae370004723e35')">
                           <div class="small-box bg-info-gradient">
                             <div class="inner">
                               <h4 class="card-header">Búsqueda de estado jurídico de inmueble</h4>
@@ -459,9 +459,9 @@
                         <tbody>
                         <tr>
 
-                          <td><i class="fa fa-file-o" aria-hidden="true"></i> {{tipoFormulario}}</td>
+                          <td><i class="fa fa-file-o" aria-hidden="true"></i> {{formTipoTram}}</td>
                           <td><i class="fa fa-info-circle" aria-hidden="true"></i> {{tipoTramite}}</td>
-                          <td>$250.00</td>
+                          <td>{{importe}}</td>
                         </tr>
                         </tbody>
                       </table>
@@ -489,7 +489,7 @@
                           </tr>
                           <tr>
                             <th>Total:</th>
-                            <td>$300.00</td>
+                            <td>{{importe}}</td>
                           </tr>
                           </tbody>
                         </table>
@@ -501,7 +501,7 @@
 
                   <div class="row no-print pull-right">
                     <div class="col-12">
-                      <button type="button" class="btn btn-success btn-block"><i class="fa fa-credit-card"></i> Pagar
+                      <button type="button" class="btn btn-success btn-block" (click)="apiMercadoPago();"><i class="fa fa-credit-card"></i> Pagar
                       </button>
                     </div>
                   </div>
@@ -511,17 +511,22 @@
                   <div class="row" id="finalizarH">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
-                      <button id="btn-siguiente-4" (click)="createFormH(this.apellido, this.nombre, this.estCivil, this.tdocumento, this.numDocu, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario);  insertHistorial()" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                      <button id="btn-siguiente-4" (click)="createFormH(this.apellido, this.nombre, this.estCivil, this.tdocumento, this.numDocu, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>
                   <!-- Finalizar Minuta G -->
                   <div class="row" id="finalizarG">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
-                      <button (click)="createFormG(this.apellido, this.nombre, this.estCivil, this.numDocu, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario);  insertHistorial();" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                      <button (click)="createFormG(this.apellido, this.nombre, this.estCivil, this.numDocu, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>
-
+                  <form method="POST">
+                    <script
+                     src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+                     data-preference-id='<%= global %>'>
+                    </script>
+                  </form>
                 </section>
                </div>
             <!--/ Fin Div -->

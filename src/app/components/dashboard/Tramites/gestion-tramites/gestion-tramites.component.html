@@ -58,7 +58,7 @@
                     </td>
                     <td class="text-center">
                       <a class="btn btn-outline-success" *ngIf="minH.estadoTram == 'Finalizado'"
-                      href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20¿Como%20estás?%20Ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20el%20tramite%20{{minH.producto}}."><i
+                      href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
                       class="fa fa-whatsapp" aria-hidden="true"></i>
                       </a>&nbsp;
                       <p>{{minH.usuario.telefono}}</p>

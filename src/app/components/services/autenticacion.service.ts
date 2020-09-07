@@ -11,7 +11,8 @@ import { sessionUser } from '../models/session.module';
 })
 export class AutenticacionService {
 
-  AUTH_SERVER: string = 'http://localhost:3000/api';
+  //AUTH_SERVER: string = 'http://localhost:3000/api';
+  AUTH_SERVER: string = 'https://app-sgti-v01.herokuapp.com';
   authSubject = new BehaviorSubject(false);
   selectedUser: usersModule;
   usuarios: usersModule[];
@@ -25,7 +26,7 @@ export class AutenticacionService {
     Registro de usuario
   ====================================*/
   public signup(user: usersModule): Observable<sessionUser> {
-    return this.http.post<sessionUser>(`${this.AUTH_SERVER}/signup`,
+    return this.http.post<sessionUser>('https://app-sgti-v01.herokuapp.com/api/signup',
       user).pipe(tap(
         (res: sessionUser) => {
           if (res) {
@@ -48,7 +49,7 @@ export class AutenticacionService {
     }else {
       localStorage.removeItem("EMAIL");
     }
-    return this.http.post<sessionUser>(`${this.AUTH_SERVER}/signin`,
+    return this.http.post<sessionUser>('https://app-sgti-v01.herokuapp.com/api/signin',
       user).pipe(tap(
         (res: sessionUser) => {
           if (res) {
@@ -65,7 +66,7 @@ export class AutenticacionService {
     Login Google
   ====================================*/
   public signinGoogle(token: string) {
-    const url = this.AUTH_SERVER + '/signin/google';
+    const url = 'https://app-sgti-v01.herokuapp.com/api/signin/google';
     return this.http.post<sessionUser>(url, { token })
       .pipe(map((res: sessionUser) => {
         this.saveStorage(
@@ -84,7 +85,7 @@ export class AutenticacionService {
     localStorage.removeItem("EXPIRES_IN");
     localStorage.removeItem("currentUser");
     //window.location.href = '#/home'
-    window.location.href = 'http://localhost:4200/user/signin';
+    window.location.href = 'https://total-tooling-272001.web.app/user/signin';
   };
 
   getToken() {

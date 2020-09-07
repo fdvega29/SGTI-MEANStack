@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class CargarImgService {
 
-  AUTH_SERVER: string = 'http://localhost:3000/api';
+  //AUTH_SERVER: string = 'http://localhost:3000/api';
+  AUTH_SERVER: string = 'https://app-sgti-v01.herokuapp.com/api';
 
   constructor() { }
 

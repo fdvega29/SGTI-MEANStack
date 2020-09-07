@@ -9,7 +9,9 @@ export class TramitesService {
 
   selectedTram: dataTramites;
   tramites: dataTramites[];
-  AUTH_SERVER: string = 'http://localhost:3000/api';
+  //AUTH_SERVER: string = 'http://localhost:3000/api';
+  AUTH_SERVER: string = 'https://app-sgti-v01.herokuapp.com/api';
+
 
   constructor(private http: HttpClient) { 
     this.selectedTram = new dataTramites();

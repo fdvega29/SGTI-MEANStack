@@ -13,7 +13,7 @@ declare var $;
 })
 export class NuevoTipoTramiteComponent implements OnInit {
 
-  constructor(private tipoTramService: TipoTramiteService, private location: Location) { }
+  constructor(public tipoTramService: TipoTramiteService, private location: Location) { }
 
   ngOnInit() {
     $('#IdTipoTramite').hide();
