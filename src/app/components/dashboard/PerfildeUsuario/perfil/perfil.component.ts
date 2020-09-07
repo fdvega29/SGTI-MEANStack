@@ -12,7 +12,7 @@ export class PerfilComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService) { }
 
-  usuario: sessionUser;
+  usuario: any;
 
   ngOnInit() {
     this.usuario = this.usuarioService.getCurrentUser();

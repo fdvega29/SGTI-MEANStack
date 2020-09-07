@@ -13,27 +13,27 @@
 					</div>
 					<br>
 					<div class="widget-user-image">
-						<img class="img-circle elevation-1" [src]="usuario.dataUser.usuario.img | imagen">
+						<img class="img-circle elevation-1" [src]="usuario.img | imagen">
 						<!--<img *ngIf="!imagenTemp" class="img-circle elevation-1" [src]="usuario.img">
 						<img *ngIf="imagenTemp" class="img-circle elevation-1" [src]="imagenTemp">-->
 					</div>
 					<div class="card-body box-profile">
 						<ul class="list-group list-group-unbordered mt-3">
 							<li class="list-group-item">
-								<h3 class="float-lefth">{{usuario.dataUser.usuario.apellido}} {{usuario.dataUser.usuario.nombre}} <i class="fa fa-circle" id="estado"></i></h3>
+								<h3 class="float-lefth">{{usuario.apellido}} {{usuario.nombre}} <i class="fa fa-circle" id="estado"></i></h3>
 							</li>
 							<li class="list-group-item">
 								<label class="text-muted">Correo:</label>
-								<h5 class="float-lefth">{{usuario.dataUser.usuario.email}}</h5>
+								<h5 class="float-lefth">{{usuario.email}}</h5>
 							</li>
 							<li class="list-group-item">
 								<label class="text-muted">Teléfono:</label>
-								<h5 class="float-lefth">{{usuario.dataUser.usuario.telefono}}</h5>
+								<h5 class="float-lefth">{{usuario.telefono}}</h5>
 							</li>
 						</ul>
 					</div>
 					<div class="card-footer text-muted">
-						<button type="button" class="btn btn-info btn-lg btn-block" (click)="getDataUser(usuario)" [routerLink]="['/dashboard/update/profile/', usuario.dataUser.usuario._id]" routerLinkActive="router-link-active">
+						<button type="button" class="btn btn-info btn-lg btn-block" (click)="getDataUser(usuario)" [routerLink]="['/dashboard/update/profile/', usuario._id]" routerLinkActive="router-link-active">
 							Actualizar información
 						</button>
 					</div>

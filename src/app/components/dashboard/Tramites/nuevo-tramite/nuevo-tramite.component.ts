@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
 import { TramitesService } from 'src/app/components/services/tramites.service';
-import { dataTramites } from 'src/app/components/models/tramites.module';
-import { sessionUser } from 'src/app/components/models/session.module';
 
 //sweetalert2
 import Swal from 'sweetalert2'
@@ -11,6 +9,8 @@ import Swal from 'sweetalert2'
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { HistorialService } from 'src/app/components/services/historial.service';
+import { TipoTramiteService } from 'src/app/components/services/tipo-tramite.service';
+import { MercadoPagoService } from 'src/app/components/services/mercado-pago.service';
 
 
 declare var $;
@@ -21,6 +21,7 @@ declare var $;
   styleUrls: ['./nuevo-tramite.component.css']
 })
 export class NuevoTramiteComponent implements OnInit {
+
   nombre:string;
   apellido:string;
   fechanac:any;
@@ -37,31 +38,39 @@ export class NuevoTramiteComponent implements OnInit {
 
   formulario:number = 1;
 
-  usuario: sessionUser;
+  usuario: any;
 
   currenDate = new Date();
 
   minutaH: any = {};
   minutaG: any = {};
-  MinH: string = '5f3c6a13bc29a408dcd305e5';
-  MinG: string = '5f3b2c61d32fbf223ce446e7';
+  MinH: any = '5f4abf33aeae370004723e34';
+  MinG: any = '5f4abf44aeae370004723e35';
 
   domicilio: string;
   objetoPedido: string;
   ubicacionInmueble: string;
   IdTramite: any;
-  areaTramite: string ='5f3a022f7485c832c49bd415';
+  areaTramite: any ='5f4ab851aeae370004723e31';
   maxcodigo: number = 0;
+  dataTipoTramite: any;
+  importe: any;
+  formTipoTram: any;
+  global: any;
+  comprobantePago: any;
+  dataOper: any;
 
-
-  constructor(private userService: UsuarioService,
+ constructor(private userService: UsuarioService,
               private dataTramite: TramitesService,
               private historialService: HistorialService,
+              private tipoTramiteService: TipoTramiteService,
+              private mercadopago: MercadoPagoService,
               private toastr: ToastrService,
               private router: Router) {
                   this.usuario = userService.getCurrentUser();
    }
 
+   
   ngOnInit() {
       //Smart-Wizard
       $('#stepwizard').smartWizard({
@@ -343,6 +352,15 @@ export class NuevoTramiteComponent implements OnInit {
     });
   }
 
+  public getDataTipoTram(id: string){
+    this.tipoTramiteService.getTipoTramiteById(id)
+                           .subscribe((res: any) => {
+                             console.log(res.data);
+                             this.importe = res.data.costo;
+                             this.formTipoTram = res.data.formulario;
+                           })
+  }
+
   public insertHistorial(id: string){
     this.historialTramite = {
       estTramite: 'Iniciado',
@@ -352,6 +370,43 @@ export class NuevoTramiteComponent implements OnInit {
     }
     console.log(this.historialTramite);
     this.historialService.postDataHistorial(this.historialTramite).subscribe(res => console.log(res));
+  }
+
+  public apiMercadoPago(){
+    let preference = {
+        items: [
+                  {
+                    title: 'Minuta H',
+                    unit_price: 100,
+                    quantity: 1,
+                  }
+              ]
+    };
+    this.mercadopago.postDataCheckout(preference)
+                    .subscribe((res: any) => {
+                      console.log(res);
+                      this.global = res.data.body.id;
+                      this.dataOper = res.data.body;
+                      //window.location.href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global;
+                      window.open('https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global, '_blank');
+                      this.postComprobantePago();
+                    });
+  }
+
+  public postComprobantePago(){
+    this.comprobantePago = {
+      fecha: this.dataOper.date_created,
+      usuario: this.usuario,
+      importe: this.dataOper.items[0].unit_price,
+      tramite: this.dataOper.items[0].title,
+      idOperacion: this.global,
+      estado: 'Iniciado'
+    };
+    console.log(this.comprobantePago);
+    this.mercadopago.postDataComprobante(this.comprobantePago)
+                    .subscribe((res: any) => {
+                      console.log(res);
+                    })
   }
 
   public remove(){

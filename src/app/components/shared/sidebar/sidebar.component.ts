@@ -20,13 +20,13 @@ export class SidebarComponent implements OnInit {
               public _autenticacion : AutenticacionService,
               ) {  }
 
-  usuario: sessionUser;
+  usuario: any;
   title = "SGTI";
   roleUsuario: string;
 
   ngOnInit() {
     this.usuario = this.usuarioService.getCurrentUser();
-    //console.log(this.usuario);
+    console.log(this.usuario);
 
     //Obtiene el Rol de Usuario
     this.roleUsuario = JSON.stringify(this.usuario['roles']);

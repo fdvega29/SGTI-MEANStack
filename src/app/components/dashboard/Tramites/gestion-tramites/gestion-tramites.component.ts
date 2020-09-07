@@ -7,6 +7,7 @@ import { dataTramites } from 'src/app/components/models/tramites.module';
 //PDFMake
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { ThrowStmt } from '@angular/compiler';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var $;
@@ -23,6 +24,7 @@ export class GestionTramitesComponent implements OnInit {
   tramites: dataTramites[] = [];
   dataTable: any;
   dataArea: any;
+  producto: any;
 
   ngOnInit() {
     this.getDataTramite();
@@ -34,6 +36,9 @@ export class GestionTramitesComponent implements OnInit {
       .subscribe( (resp: any) => {
         console.log(resp.allDataMinH);
         this.tramites = resp.allDataMinH;
+        this.producto = JSON.stringify(resp.allDataMinH.producto.formulario);
+        console.log(this.tramites);
+        console.log(this.producto);
 
         this.chRef.detectChanges();
         const table: any = $('#example1');

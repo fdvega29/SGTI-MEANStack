@@ -14,13 +14,20 @@ export class TipoTramiteService {
     costo: 0
   }
   tipoTramites: TipoTramite[];
-  AUTH_SERVER: string = 'http://localhost:3000/api';
+  //AUTH_SERVER: string = 'http://localhost:3000/api';
+  AUTH_SERVER: string = 'https://app-sgti-v01.herokuapp.com/api';
+
 
   constructor(private http: HttpClient) { 
     this.selectedTipoTramite = new TipoTramite();
   }
 
   /*Metodos HTTP*/
+
+  public getTipoTramiteById(id: string){
+    const url_api = this.AUTH_SERVER + `/tipoTramites/${id}`;
+    return this.http.get(url_api);
+  }
 
   public getAllTipoTramites() {
     const url_api = this.AUTH_SERVER + '/tipoTramites/all';

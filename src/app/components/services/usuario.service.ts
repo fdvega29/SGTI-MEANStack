@@ -15,8 +15,8 @@ export class UsuarioService {
 
   selectedUser: usersModule;
   usuarios: usersModule[];
-  AUTH_SERVER: string = 'http://localhost:3000/api';
-
+  //AUTH_SERVER: string = 'http://localhost:3000/api';
+  AUTH_SERVER: string = 'https://app-sgti-v01.herokuapp.com/api';
 
   constructor(private http: HttpClient, private cargarImagen: CargarImgService, private authService: AutenticacionService) {
     this.selectedUser = new usersModule();

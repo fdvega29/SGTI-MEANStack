@@ -13,7 +13,7 @@ import { sessionUser } from 'src/app/components/models/session.module';
 })
 export class UpdateProfileComponent implements OnInit {
 
-  usuario: sessionUser;
+  usuario: any;
 
   user: any;
 

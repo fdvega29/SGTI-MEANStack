@@ -10,14 +10,15 @@ import { AutenticacionService } from '../../services/autenticacion.service';
 })
 export class NavbarComponent implements OnInit {
 
-  usuario: sessionUser;
+  //usuario: sessionUser;
+  usuario: any;
   title = 'SGTI';
 
   constructor(public authService: AutenticacionService, public userService : UsuarioService) { }
 
   ngOnInit() {
     this.usuario = this.userService.getCurrentUser();
-    console.log(this.usuario);
+    console.log(this.usuario.nombre);
   }
 
 }
