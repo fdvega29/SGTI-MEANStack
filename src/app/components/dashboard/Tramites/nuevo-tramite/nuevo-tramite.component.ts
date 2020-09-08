@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 
 //Toastr
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HistorialService } from 'src/app/components/services/historial.service';
 import { TipoTramiteService } from 'src/app/components/services/tipo-tramite.service';
 import { MercadoPagoService } from 'src/app/components/services/mercado-pago.service';
@@ -22,21 +22,21 @@ declare var $;
 })
 export class NuevoTramiteComponent implements OnInit {
 
-  nombre:string;
-  apellido:string;
-  fechanac:any;
-  estCivil:string;
-  tdocumento:string;
-  numDocu:string;
-  nacionalidad:string;
-  ConyuApellido:string;
-  ConyuNombre:string;
-  tipoTramite:string = '';
-  tipoFormulario:string = '';
+  nombre: string;
+  apellido: string;
+  fechanac: any;
+  estCivil: string;
+  tdocumento: string;
+  numDocu: string;
+  nacionalidad: string;
+  ConyuApellido: string;
+  ConyuNombre: string;
+  tipoTramite: string = '';
+  tipoFormulario: string = '';
 
   historialTramite: any;
 
-  formulario:number = 1;
+  formulario: number = 1;
 
   usuario: any;
 
@@ -51,7 +51,7 @@ export class NuevoTramiteComponent implements OnInit {
   objetoPedido: string;
   ubicacionInmueble: string;
   IdTramite: any;
-  areaTramite: any ='5f4ab851aeae370004723e31';
+  areaTramite: any = '5f4ab851aeae370004723e31';
   maxcodigo: number = 0;
   dataTipoTramite: any;
   importe: any;
@@ -59,33 +59,39 @@ export class NuevoTramiteComponent implements OnInit {
   global: any;
   comprobantePago: any;
   dataOper: any;
+  refId: string;
+  urlData: any;
+  collection_id: any;
+  order_id: any;
+  estadoOrden: any;
 
- constructor(private userService: UsuarioService,
-              private dataTramite: TramitesService,
-              private historialService: HistorialService,
-              private tipoTramiteService: TipoTramiteService,
-              private mercadopago: MercadoPagoService,
-              private toastr: ToastrService,
-              private router: Router) {
-                  this.usuario = userService.getCurrentUser();
-   }
+  constructor(private userService: UsuarioService,
+    private dataTramite: TramitesService,
+    private historialService: HistorialService,
+    private tipoTramiteService: TipoTramiteService,
+    private mercadopago: MercadoPagoService,
+    private toastr: ToastrService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
+    this.usuario = userService.getCurrentUser();
+  }
 
-   
+
   ngOnInit() {
-      //Smart-Wizard
-      $('#stepwizard').smartWizard({
-        theme: 'dots',
-        //transitionEffect: 'slide',
-        transitionSpeed: '400',
-        selected: 0,
-        lang: { next: 'Siguiente', previous: 'Anterior'},
-        toolbarSettings: {
-          showNextButton: false,
-          showPreviousButton: false
-        }
-      });
+    //Smart-Wizard
+    $('#stepwizard').smartWizard({
+      theme: 'dots',
+      //transitionEffect: 'slide',
+      transitionSpeed: '400',
+      selected: 0,
+      lang: { next: 'Siguiente', previous: 'Anterior' },
+      toolbarSettings: {
+        showNextButton: false,
+        showPreviousButton: false
+      }
+    });
 
-      $('#stepwizard #btn-siguiente-1').hide();
+    $('#stepwizard #btn-siguiente-1').hide();
 
     let localForm = localStorage.getItem('FormularioPedido');
 
@@ -106,7 +112,7 @@ export class NuevoTramiteComponent implements OnInit {
       $('#confirmG').hide();
       $('#finalizarH').show();
       $('#finalizarG').hide();
-    }else if (localForm == this.MinG) {
+    } else if (localForm == this.MinG) {
 
       this.guardar_tipotramite('Búsqueda de estado jurídico de inmueble', localForm);
 
@@ -120,15 +126,16 @@ export class NuevoTramiteComponent implements OnInit {
     }
 
     this.maxCodi();
+    this.getParamsUrl();
   }
 
-  public irPaso(paso:number){
-    if(paso==1){
+  public irPaso(paso: number) {
+    if (paso == 1) {
       $('#stepwizard #step1').show();
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
     }
-    if(paso==2){
+    if (paso == 2) {
       $('#stepwizard #step1').hide();
       $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
@@ -140,7 +147,7 @@ export class NuevoTramiteComponent implements OnInit {
         $('#confirmG').hide();
         $('#finalizarH').show();
         $('#finalizarG').hide();
-      }else {
+      } else {
         $('#formG').show();
         $('#formH').hide();
         $('#confirmG').show();
@@ -150,7 +157,7 @@ export class NuevoTramiteComponent implements OnInit {
       }
       $('#stepwizard #step3').hide();
     }
-    if(paso==3){
+    if (paso == 3) {
       $('#stepwizard #step2').hide();
       $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
@@ -158,7 +165,7 @@ export class NuevoTramiteComponent implements OnInit {
 
       $('#stepwizard #step4').hide();
     }
-    if(paso==4){
+    if (paso == 4) {
       $('#stepwizard #step3').hide();
       $('#stepwizard #step4').show();
       $('#stepwizard #li4').addClass('active');
@@ -166,24 +173,24 @@ export class NuevoTramiteComponent implements OnInit {
 
   }
 
-  public volverPaso(paso:number){
+  public volverPaso(paso: number) {
 
-    if(paso==1){
+    if (paso == 1) {
       $('#stepwizard #step1').show();
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
     }
-    if(paso==2){
+    if (paso == 2) {
       $('#stepwizard #step1').hide();
       $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
     }
-    if(paso==3){
+    if (paso == 3) {
       $('#stepwizard #step2').hide();
       $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
     }
-    if(paso==4){
+    if (paso == 4) {
       $('#stepwizard #step3').hide();
       $('#stepwizard #step4').show();
       $('#stepwizard #li4').addClass('active');
@@ -191,41 +198,41 @@ export class NuevoTramiteComponent implements OnInit {
 
   }
 
-  public guardar_nombre(nomb:string){
+  public guardar_nombre(nomb: string) {
     this.nombre = nomb;
   }
-  public guardar_apellido(apel:string){
+  public guardar_apellido(apel: string) {
     this.apellido = apel;
   }
-  public guardar_fechanac(fnac:string){
+  public guardar_fechanac(fnac: string) {
     this.fechanac = fnac;
   }
-  public guardar_estadocivil(ecivi:string){
+  public guardar_estadocivil(ecivi: string) {
     this.estCivil = ecivi;
   }
-  public guardar_tdoc(tdoc:string){
+  public guardar_tdoc(tdoc: string) {
     this.tdocumento = tdoc;
   }
-  public guardar_ndoc(ndoc:string){
+  public guardar_ndoc(ndoc: string) {
     this.numDocu = ndoc;
   }
-  public guardar_nacion(nacion:string){
+  public guardar_nacion(nacion: string) {
     this.nacionalidad = nacion;
   }
-  public guardar_con_ape(conApe:string){
+  public guardar_con_ape(conApe: string) {
     this.ConyuApellido = conApe;
   }
-  public guardar_con_nomb(conNomb:string){
+  public guardar_con_nomb(conNomb: string) {
     this.ConyuNombre = conNomb;
   }
 
-  public guardar_tipotramite(tipoTram:string, form: string){
+  public guardar_tipotramite(tipoTram: string, form: string) {
     this.tipoTramite = tipoTram;
     this.tipoFormulario = form;
 
-    if(this.tipoTramite!=''){
+    if (this.tipoTramite != '') {
       $('#stepwizard #btn-siguiente-1').show();
-    } else{
+    } else {
       $('#stepwizard #btn-siguiente-1').hide();
     }
   }
@@ -245,8 +252,8 @@ export class NuevoTramiteComponent implements OnInit {
   }
 
   //Toastr
-  public msgError(){
-    this.toastr.error('¡Completar campos!', '',{
+  public msgError() {
+    this.toastr.error('¡Completar campos!', '', {
       timeOut: 2000,
       progressBar: true,
       progressAnimation: 'increasing'
@@ -254,7 +261,7 @@ export class NuevoTramiteComponent implements OnInit {
   };
 
   //sweetalert2
-  public alertSuccess(){
+  public alertSuccess() {
     Swal.fire({
       icon: 'success',
       title: 'Felicidades',
@@ -262,52 +269,52 @@ export class NuevoTramiteComponent implements OnInit {
     })
   };
 
-  public validateFormMinH(nombre:string, apellido:string, fechanac:any, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string){
-    if(nombre == '' || apellido == '' || fechanac == '' || estadocivil == '' || tdocumento  == '' || ndocumento == '' || nacionalidad == ''){
+  public validateFormMinH(nombre: string, apellido: string, fechanac: any, estadocivil: string, tdocumento: string, ndocumento: string, nacionalidad: string) {
+    if (nombre == '' || apellido == '' || fechanac == '' || estadocivil == '' || tdocumento == '' || ndocumento == '' || nacionalidad == '') {
       this.msgError();
       return this.irPaso(2);
     }
   }
 
 
-  validateFormMinG(nombreG:string, apellidoG:string,estadocivilG:string, ndocumentoG:string, domicilio:string, objetoPedido:string, ubicacionInm:string) {
-    if(nombreG == '' || apellidoG == '' || estadocivilG == '' || ndocumentoG == '' || domicilio == '' || objetoPedido == '' || ubicacionInm == ''){
+  validateFormMinG(nombreG: string, apellidoG: string, estadocivilG: string, ndocumentoG: string, domicilio: string, objetoPedido: string, ubicacionInm: string) {
+    if (nombreG == '' || apellidoG == '' || estadocivilG == '' || ndocumentoG == '' || domicilio == '' || objetoPedido == '' || ubicacionInm == '') {
       this.msgError();
       return this.irPaso(2);
     }
   }
 
-  public createFormH(apellido:string, nombre:string, estadocivil:string, tdocumento:string, ndocumento:string, nacionalidad:string, fechanac:any, ConyuApellido:string, ConyuNombre: string, tipoTramite: string, producto: string){
+  public createFormH(apellido: string, nombre: string, estadocivil: string, tdocumento: string, ndocumento: string, nacionalidad: string, fechanac: any, ConyuApellido: string, ConyuNombre: string, tipoTramite: string, producto: string) {
 
-    if(!ConyuApellido){
+    if (!ConyuApellido) {
       ConyuApellido = '';
     }
 
-    if(!ConyuNombre){
+    if (!ConyuNombre) {
       ConyuNombre = '';
     }
 
-      this.minutaH = {
-        codigo: this.maxcodigo,
-        apellido: apellido,
-        nombre: nombre,
-        estCivil: estadocivil,
-        tipoDoc: tdocumento,
-        numDoc: ndocumento,
-        nacionalidad: nacionalidad,
-        fechNac: fechanac,
-        apeConyu: ConyuApellido,
-        nomConyu: ConyuNombre,
-        domicilio: '',
-        objetoPedido: '',
-        ubicacionInmueble: '',
-        tipoTram: tipoTramite,
-        producto: producto,
-        area: this.areaTramite,
-        usuario: this.usuario
-      };
-      //console.log(this.minutaH);
-      this.postDataTramMinH(this.minutaH);
+    this.minutaH = {
+      codigo: this.maxcodigo,
+      apellido: apellido,
+      nombre: nombre,
+      estCivil: estadocivil,
+      tipoDoc: tdocumento,
+      numDoc: ndocumento,
+      nacionalidad: nacionalidad,
+      fechNac: fechanac,
+      apeConyu: ConyuApellido,
+      nomConyu: ConyuNombre,
+      domicilio: '',
+      objetoPedido: '',
+      ubicacionInmueble: '',
+      tipoTram: tipoTramite,
+      producto: producto,
+      area: this.areaTramite,
+      usuario: this.usuario
+    };
+    //console.log(this.minutaH);
+    this.postDataTramMinH(this.minutaH);
   };
 
   public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string) {
@@ -330,70 +337,77 @@ export class NuevoTramiteComponent implements OnInit {
       area: this.areaTramite,
       usuario: this.usuario
     };
-     //console.log(this.minutaG);
+    //console.log(this.minutaG);
     this.postDataTramMinH(this.minutaG);
   };
 
-  public postDataTramMinH(create){
+  public postDataTramMinH(create) {
     console.log("Data-form", create);
     this.dataTramite.postDataTram(create)
-                                  .subscribe((res: any) => {
-                                  console.log("Res-Api", res);
-                                  this.IdTramite = res.data._id;
-                                  this.insertHistorial(this.IdTramite);
-                                  this.alertSuccess();
-                                  this.router.navigate(['/dashboard/mis-tramites']);
-                                });
+      .subscribe((res: any) => {
+        console.log("Res-Api", res);
+        this.IdTramite = res.data._id;
+        this.insertHistorial(this.IdTramite);
+        this.alertSuccess();
+        this.router.navigate(['/dashboard/mis-tramites']);
+      });
   };
 
-  public maxCodi(){
-    this.dataTramite.getAllMaxCodi().subscribe((data: any) => { 
-      this.maxcodigo = data.tramite[0].codigo+1;
+  public maxCodi() {
+    this.dataTramite.getAllMaxCodi().subscribe((data: any) => {
+      this.maxcodigo = data.tramite[0].codigo + 1;
     });
   }
 
-  public getDataTipoTram(id: string){
+  public getDataTipoTram(id: string) {
     this.tipoTramiteService.getTipoTramiteById(id)
-                           .subscribe((res: any) => {
-                             console.log(res.data);
-                             this.importe = res.data.costo;
-                             this.formTipoTram = res.data.formulario;
-                           })
+      .subscribe((res: any) => {
+        console.log(res.data);
+        this.importe = res.data.costo;
+        this.formTipoTram = res.data.formulario;
+      })
   }
 
-  public insertHistorial(id: string){
+  public insertHistorial(id: string) {
     this.historialTramite = {
       estTramite: 'Iniciado',
       area: this.areaTramite,
-      usuario: this.usuario, 
+      usuario: this.usuario,
       tramite: id
     }
     console.log(this.historialTramite);
     this.historialService.postDataHistorial(this.historialTramite).subscribe(res => console.log(res));
   }
 
-  public apiMercadoPago(){
+  public apiMercadoPago() {
     let preference = {
-        items: [
-                  {
-                    title: this.formTipoTram,
-                    unit_price: 5,
-                    quantity: 1,
-                  }
-              ]
+      back_urls: 
+        {
+          failure: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite',
+          pending: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite',
+          success: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite'
+        },
+      auto_return: 'approved',
+      items: [
+        {
+          title: this.formTipoTram,
+          unit_price: 5,
+          quantity: 1,
+        }
+      ]
     };
     this.mercadopago.postDataCheckout(preference)
-                    .subscribe((res: any) => {
-                      console.log(res);
-                      this.global = res.data.body.id;
-                      this.dataOper = res.data.body;
-                      //window.location.href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global;
-                      window.open('https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global, '_blank');
-                      this.postComprobantePago();
-                    });
+      .subscribe((res: any) => {
+        console.log(res);
+        this.global = res.data.body.id;
+        this.dataOper = res.data.body;
+        //window.location.href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global;
+        window.open('https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=' + this.global);
+        //this.postComprobantePago();
+      });
   }
 
-  public postComprobantePago(){
+  public postComprobantePago() {
     this.comprobantePago = {
       fecha: this.dataOper.date_created,
       usuario: this.usuario,
@@ -404,12 +418,32 @@ export class NuevoTramiteComponent implements OnInit {
     };
     console.log(this.comprobantePago);
     this.mercadopago.postDataComprobante(this.comprobantePago)
-                    .subscribe((res: any) => {
-                      console.log(res);
-                    })
+      .subscribe((res: any) => {
+        console.log(res);
+      })
   }
 
-  public remove(){
+  public getParamsUrl(){
+    this.urlData = this.router.parseUrl(this.router.url);
+
+    this.collection_id = this.urlData.queryParams['collection_id'];
+    this.order_id = this.urlData.queryParams['merchant_order_id'];
+    this.estadoOrden = this.urlData.queryParams['collection_status']
+
+    console.log(this.urlData);
+    console.log(this.collection_id);
+    console.log(this.order_id);
+    console.log(this.estadoOrden);
+    if(this.urlData.queryParams['collection_id']){
+      console.log('Si existe el collection_id')
+      this.postComprobantePago();
+      
+    }else{
+      console.log('No existe')
+    }
+  }
+
+  public remove() {
     localStorage.removeItem('FormularioPedido');
   }
 }
