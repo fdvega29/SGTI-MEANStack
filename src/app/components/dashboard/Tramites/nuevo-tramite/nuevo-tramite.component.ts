@@ -376,8 +376,8 @@ export class NuevoTramiteComponent implements OnInit {
     let preference = {
         items: [
                   {
-                    title: 'Minuta H',
-                    unit_price: 100,
+                    title: this.formTipoTram,
+                    unit_price: 5,
                     quantity: 1,
                   }
               ]
