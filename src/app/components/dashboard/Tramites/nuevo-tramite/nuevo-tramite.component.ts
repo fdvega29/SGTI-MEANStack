@@ -403,7 +403,7 @@ export class NuevoTramiteComponent implements OnInit {
         this.dataOper = res.data.body;
         //window.location.href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global;
         window.open('https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=' + this.global);
-        //this.postComprobantePago();
+        this.postComprobantePago();
       });
   }
 
@@ -436,8 +436,8 @@ export class NuevoTramiteComponent implements OnInit {
     console.log(this.estadoOrden);
     if(this.urlData.queryParams['collection_id']){
       console.log('Si existe el collection_id')
-      this.postComprobantePago();
-      
+      //this.postComprobantePago();
+
     }else{
       console.log('No existe')
     }
