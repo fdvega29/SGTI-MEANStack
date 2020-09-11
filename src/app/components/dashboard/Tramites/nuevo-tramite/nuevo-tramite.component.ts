@@ -64,6 +64,12 @@ export class NuevoTramiteComponent implements OnInit {
   collection_id: any;
   order_id: any;
   estadoOrden: any;
+  Minuta: any;
+  lsImporte: any;
+  lsFormulario: any;
+  lsMinuta: any;
+  lsMinuta2: any;
+  fechaPago: any;
 
   constructor(private userService: UsuarioService,
     private dataTramite: TramitesService,
@@ -147,13 +153,15 @@ export class NuevoTramiteComponent implements OnInit {
         $('#confirmG').hide();
         $('#finalizarH').show();
         $('#finalizarG').hide();
+        $('#PagarMinH').show();
+        $('#PagarMinG').hide();
       } else {
         $('#formG').show();
         $('#formH').hide();
         $('#confirmG').show();
         $('#confirmH').hide();
-        $('#finalizarG').show();
-        $('#finalizarH').hide();
+        $('#PagarMinG').show();
+        $('#PagarMinH').hide();
       }
       $('#stepwizard #step3').hide();
     }
@@ -311,10 +319,15 @@ export class NuevoTramiteComponent implements OnInit {
       tipoTram: tipoTramite,
       producto: producto,
       area: this.areaTramite,
+      comprobantePago: '',
       usuario: this.usuario
     };
     //console.log(this.minutaH);
-    this.postDataTramMinH(this.minutaH);
+    //this.postDataTramMinH(this.minutaH);
+    
+    localStorage.setItem('Minuta', JSON.stringify(this.minutaH));
+    //this.PagarMinutaH = localStorage.getItem('Minuta');
+    //console.log('Pago minuta H',this.PagarMinutaH);
   };
 
   public createFormG(apellido: string, nombre: string, estadocivil: string, ndocumento: string, domicilio: string, objetoPedido: string, ubicacionInmueble: string, tipoTramite: string, producto: string) {
@@ -335,10 +348,12 @@ export class NuevoTramiteComponent implements OnInit {
       tipoTram: tipoTramite,
       producto: producto,
       area: this.areaTramite,
+      comprobantePago: '',
       usuario: this.usuario
     };
     //console.log(this.minutaG);
-    this.postDataTramMinH(this.minutaG);
+    localStorage.setItem('Minuta', JSON.stringify(this.minutaG));
+    //this.postDataTramMinH(this.minutaG);
   };
 
   public postDataTramMinH(create) {
@@ -362,9 +377,10 @@ export class NuevoTramiteComponent implements OnInit {
   public getDataTipoTram(id: string) {
     this.tipoTramiteService.getTipoTramiteById(id)
       .subscribe((res: any) => {
-        console.log(res.data);
         this.importe = res.data.costo;
         this.formTipoTram = res.data.formulario;
+        localStorage.setItem('Importe', this.importe);
+        localStorage.setItem('Formulario', this.formTipoTram);
       })
   }
 
@@ -391,53 +407,77 @@ export class NuevoTramiteComponent implements OnInit {
       items: [
         {
           title: this.formTipoTram,
-          unit_price: 5,
+          unit_price: this.importe,
           quantity: 1,
         }
       ]
     };
     this.mercadopago.postDataCheckout(preference)
       .subscribe((res: any) => {
-        console.log(res);
         this.global = res.data.body.id;
         this.dataOper = res.data.body;
-        //window.location.href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global;
-        window.open('https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=' + this.global);
-        this.postComprobantePago();
+        console.log(this.dataOper);
+        window.location.href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id='+this.global;
+        //window.open('https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=' + this.global);
+        localStorage.setItem('Fecha_Pago', this.dataOper.date_created);
       });
   }
 
   public postComprobantePago() {
     this.comprobantePago = {
-      fecha: this.dataOper.date_created,
+      fecha: this.fechaPago,
       usuario: this.usuario,
-      importe: this.dataOper.items[0].unit_price,
-      tramite: this.dataOper.items[0].title,
-      idOperacion: this.global,
-      estado: 'Iniciado'
+      importe: this.lsImporte,      
+      tramite: this.lsFormulario,
+      idOperacion: this.order_id,
+      idColeccion: this.collection_id,
+      estado:  this.estadoOrden
     };
-    console.log(this.comprobantePago);
+    console.log('Comprobante', this.comprobantePago);
     this.mercadopago.postDataComprobante(this.comprobantePago)
       .subscribe((res: any) => {
         console.log(res);
+        this.lsMinuta = localStorage.getItem('Minuta');
+        this.lsMinuta2 = JSON.parse(this.lsMinuta);
+        console.log('lsMinuta2', this.lsMinuta2);
+        this.Minuta = {
+          codigo: this.lsMinuta2.codigo,
+          apellido: this.lsMinuta2.apellido,
+          nombre: this.lsMinuta2.nombre,
+          estCivil: this.lsMinuta2.estCivil,
+          tipoDoc: this.lsMinuta2.tipoDoc,
+          numDoc: this.lsMinuta2.numDoc,
+          nacionalidad: this.lsMinuta2.nacionalidad,
+          fechNac: this.lsMinuta2.fechNac,
+          apeConyu: this.lsMinuta2.apeConyu,
+          nomConyu: this.lsMinuta2.nomConyu,
+          domicilio: this.lsMinuta2.domicilio,
+          objetoPedido: this.lsMinuta2.objetoPedido,
+          ubicacionInmueble: this.lsMinuta2.ubicacionInmueble,
+          tipoTram: this.lsMinuta2.tipoTram,
+          producto: this.lsMinuta2.producto,
+          area: this.lsMinuta2.area,
+          comprobantePago: res.payments._id,
+          usuario: this.usuario
+        }
+        console.log('MinutaCargada', this.Minuta);
+        this.postDataTramMinH(this.Minuta);
       })
   }
 
   public getParamsUrl(){
     this.urlData = this.router.parseUrl(this.router.url);
 
-    this.collection_id = this.urlData.queryParams['collection_id'];
-    this.order_id = this.urlData.queryParams['merchant_order_id'];
-    this.estadoOrden = this.urlData.queryParams['collection_status']
-
-    console.log(this.urlData);
-    console.log(this.collection_id);
-    console.log(this.order_id);
-    console.log(this.estadoOrden);
     if(this.urlData.queryParams['collection_id']){
-      console.log('Si existe el collection_id')
-      //this.postComprobantePago();
+      this.collection_id = this.urlData.queryParams['collection_id'];
+      this.order_id = this.urlData.queryParams['merchant_order_id'];
+      this.estadoOrden = this.urlData.queryParams['collection_status']
 
+      this.lsImporte = localStorage.getItem('Importe');
+      this.lsFormulario = localStorage.getItem('Formulario');
+      this.fechaPago = localStorage.getItem('Fecha_Pago');
+
+      this.postComprobantePago();
     }else{
       console.log('No existe')
     }

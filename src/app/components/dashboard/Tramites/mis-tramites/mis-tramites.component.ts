@@ -27,6 +27,10 @@ export class MisTramitesComponent implements OnInit {
   ngOnInit() {
     this.usuario = this.userService.getCurrentUser();
     this.getDataTramiteById();
+    localStorage.removeItem('Minuta');
+    localStorage.removeItem('Importe');
+    localStorage.removeItem('Formulario');
+    localStorage.removeItem('Fecha_Pago');
   }
 
   public getDataTramiteById(): void {
