@@ -2,15 +2,15 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
-          <div class="row">
+          <div class="row p-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-black-50"><i class="fa fa-user" id="icono" aria-hidden="true"></i> Detalle Tramite</h1>
+              <h1 class="m-0 text-black-50"><i class="fa fa-user" id="icono" aria-hidden="true"></i> Detalle del Tramite</h1>
             </div>
             <!-- Breadcrumb -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="javascript:void(0)" [routerLink]="['/dashboard/mis-tramites']" routerLinkActive="router-link-active">Mis tramites</a></li>
-                <li class="breadcrumb-item active">Detalle Tramite</li>
+                <li class="breadcrumb-item active">Detalle del Tramite</li>
               </ol>
             </div>
           </div>
@@ -23,6 +23,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
+                            <p class="text-muted">Nro. de Orden: <span style="color: black;">{{codigo}}</span></p>
                             <p class="text-muted">Generado: <span
                                 style="color: black;">{{create | date: "dd/MM/yyyy | HH:MM:ss"}}</span></p>
                             <p class="text-muted">Solicitante: <span style="color: black;">{{apellido}} {{nombre}}</span></p>
@@ -30,10 +31,14 @@
                           <div class="col-md-4">
                             <p class="text-muted">Tipo tramite: <span style="color: black;">{{producto}}</span></p>
                             <p class="text-muted">Descripción: <span style="color: black;">{{descripcion}}</span></p>
+                            <p class="text-muted">Area: <span style="color: black;">{{area}}</span></p>
                           </div>
                           <div class="col-md-4">
-                              <p class="text-muted">Numero de orden: <span style="color: black;">{{codigo}}</span></p>
-                              <p class="text-muted">Area: <span style="color: black;">{{area}}</span></p>
+                              <p class="text-muted">Nro. Pago: <span style="color: black;">{{idOperacion}}</span></p>
+                              <p *ngIf="estadoPago == 'Aprobado'" class="text-muted">Estado Pago: <span class="badge bg-success ml-1">{{estadoPago}}</span></p>
+                              <p *ngIf="estadoPago == 'Pendiente'" class="text-muted">Estado Pago: <span class="badge bg-warning ml-1">{{estadoPago}}</span></p>
+                              <p *ngIf="estadoPago == 'Rechazado'" class="text-muted">Estado Pago: <span class="badge bg-danger ml-1">{{estadoPago}}</span></p>
+                              <p *ngIf="estadoPago == 'Cancelado'" class="text-muted">Estado Pago: <span class="badge bg-danger ml-1">{{estadoPago}}</span></p>
                           </div>
                     </div>
                 </div>

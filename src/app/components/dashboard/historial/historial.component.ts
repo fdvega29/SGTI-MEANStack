@@ -24,6 +24,9 @@ export class HistorialComponent implements OnInit {
   descripcion: any;
   dataTable: any;
   historial: any;
+  idOperacion: any;
+  estadoPago: any;
+
 
   constructor(private tramiteService: TramitesService, private historialService: HistorialService, private activatedRoute: ActivatedRoute, private chRef: ChangeDetectorRef) { }
 
@@ -43,13 +46,13 @@ export class HistorialComponent implements OnInit {
     this.historialService.getAllHistorialById(this.refId)
       .subscribe( (resp: any) => {
         this.historial = resp.historialTramite;
-        console.log(this.historial);
       })
   }
 
   public getDataTramById(id: string){
     this.tramiteService.getDataById(id)
                        .subscribe((data: any) => {
+                         console.log('Tramite', data);
                          this.dataTramite = data.dataMinH
                          this.apellido = data.dataMinH.apellido;
                          this.nombre = data.dataMinH.nombre;
@@ -60,6 +63,19 @@ export class HistorialComponent implements OnInit {
                          this.estado = data.dataMinH.estadoTram;
                          this.codigo = data.dataMinH.codigo;
                          this.create = data.dataMinH.createdAt
+                         this.idOperacion = data.dataMinH.comprobantePago.idOperacion;
+                         if (data.dataMinH.comprobantePago.estado == 'approved'){
+                              this.estadoPago = 'Aprobado'
+                         }
+                         if (data.dataMinH.comprobantePago.estado == 'pending'){
+                              this.estadoPago = 'Pendiente'
+                         }
+                         if (data.dataMinH.comprobantePago.estado == 'rejected'){
+                              this.estadoPago = 'Rechazado'
+                         }
+                         if (data.dataMinH.comprobantePago.estado == 'cancelled'){
+                          this.estadoPago = 'Cancelado'
+                         }
                       });
   }
 
