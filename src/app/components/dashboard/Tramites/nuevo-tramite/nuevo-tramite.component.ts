@@ -51,8 +51,8 @@ export class NuevoTramiteComponent implements OnInit {
   objetoPedido: string;
   ubicacionInmueble: string;
   IdTramite: any;
-  areaTramite: any = '5f4ab851aeae370004723e31';
-  maxcodigo: number = 0;
+  areaTramite: any = '5f5d60f57f61c50004819fcd';
+  maxcodigo: number = 1;
   dataTipoTramite: any;
   importe: any;
   formTipoTram: any;
