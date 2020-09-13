@@ -1,24 +1,31 @@
 
-<div class="wrapper">
+<div class="wrapper" data-aos="zoom-in-down">
 
 
  <!-- Navbar -->
-<nav class="main-header navbar layout-navbar-fixed navbar-expand navbar-static-top" id="navbar">
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-      <a href="/"routerLink="/" class="brand-link navbar-brand">
-        <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-        <span class="brand-text text-light">SGTI</span>
+      <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity: .8">
+      <a routerLink="/home" routerLinkActive="router-link-active" href="#" class="navbar-brand title-sgti">
+        {{title}}
       </a>
-      <!-- Right navbar links -->
-      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
-      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-        <li class="nav-item">
-          <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Registrarse</a>
-        </li>
-      </ul>
+
+      <button class="navbar-toggler order-3" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse" style="">
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+          <li class="nav-item">
+            <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="btn btn-light btn-lg">Registrarse</a>
+          </li>
+        </ul>
+      </div>
+
+
+
     </div>
-    </div>
-</nav>
+  </nav>
 
 <!-- Login
 <div class="container">
@@ -72,16 +79,16 @@
     </div>
     <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
       <div class="box-body">
-        <div class="form-group input-group mb-3">
-          <input type="email" [ngModel]="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
+        <div class="form-group input-group mb-3 inputForm">
+          <input type="email" [ngModel]="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Correo electrónico">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fa fa-envelope"></span>
             </div>
           </div>
         </div>
-        <div class="form-group input-group mb-3">
-            <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+        <div class="form-group input-group mb-3 inputForm">
+            <input type="password" class="form-control " formControlName="password" id="password" placeholder="Contraseña">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fa fa-lock"></span>
@@ -107,8 +114,8 @@
           </button>
         </div>
         <div class="col-md-12">
-          <a href="/user/signup">
-            <h5>Crear Cuenta</h5>
+          <a  routerLink="/user/signup" routerLinkActive="router-link-active" href="#" >
+            <span>Crear Cuenta</span>
           </a>
         </div>
       </div>
@@ -116,7 +123,16 @@
   </div>
 </div>
 
+
+
 </div>
 
+<footer class="bg-white text-center">
+  <strong>Copyright &copy; 2020 </strong><p> © Todos los derechos reservados | Sistema de Gestión de Trámite Inmueble.</p>
+</footer>
 
-<app-footer></app-footer>
+
+
+
+
+

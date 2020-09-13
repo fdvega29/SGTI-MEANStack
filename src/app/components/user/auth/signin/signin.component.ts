@@ -19,6 +19,8 @@ declare const gapi: any;
 })
 export class SigninComponent implements OnInit {
 
+  title = 'SGTI';
+
   signinFormUser: FormGroup;
   recuerdame: boolean = false;
   email: string;
