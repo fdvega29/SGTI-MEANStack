@@ -1,7 +1,19 @@
 #icono{
-    color: #3282b8;
+    color: #0b58a2;
 }
 
 .content-header {
     padding-bottom: 0;
 }
+
+h1 {
+  color: #0c0c0c;
+  font-family: "Roboto", sans-serif;
+  font-size: medium;
+}
+
+ol li {
+  color: #0c0c0c;
+  font-family: "Roboto", sans-serif
+}
+
