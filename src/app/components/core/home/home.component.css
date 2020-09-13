@@ -1,76 +1,118 @@
-.content-wrapper{
-    background: #141E30;
-    margin-left: 75px;
-    min-height: 520px !important;
+.wrapper {
+  margin-left: 0px !important;
+  padding-bottom: 300px !important;
 }
 
 .navbar-static-top{
       margin-left: 0px !important;
 }
 
-.animate {
-    top: 50%;
-    transform: translate(-15%, 20%);
-    width: 100%;
-    font-family: 'Quicksand', sans-serif;
+.nav-item {
+  text-align: center;
 }
 
-.container span{
-    text-transform: initial;
-    display: block;
+.title-sgti {
+  font-family: 'Bebas Neue', cursive !important;
+  font-size: 3em;
+  font-weight: 400;
 }
 
-.text1{
-    color: #e0eafc;
-    font-size: 50px;
-    font-weight: 100px;
-    letter-spacing: 2px;
-    margin-block: 10px;
-    background: #141E30;
+.title-sgti:hover {
+  cursor: pointer;
+  color: #0c0c0c;
+}
+
+
+.item {
+  width: 300px;
+  height: 200px;
+  margin: 10px auto;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  text-align: center;
+  color: #0b58a2;
+}
+
+.btn-lg {
+  font-size: medium;
+  border-radius: 3.0rem !important;
+  margin-right: 1em;
+  margin-bottom: 15px;
+}
+.inicio-sesion-btn {
+  color: #fff0ff;
+  background-color: #0b58a2;
+  border: 2px solid #0b58a2;
+}
+
+.inicio-sesion-btn:hover {
+  background: #ffffff;
+  color: #0b58a2;
+}
+
+.description-sgti {
+  margin-bottom: 20px;
+}
+
+.registro-btn {
+  margin: 20px 15px 10px 15px;
+  color: #fff;
+  border-radius: 30px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 16px;
+  display: block;
+  border: 5px solid #0b58a2;
+  text-align: center;
+  align-items: center;
+}
+
+
+.registro-btn:hover {
+  background: #0b58a2;
+  color: #fff;
+}
+
+#img-business {
+  max-width: 400px;
+  position: relative;
+  opacity: 0.3;
+  padding: 0px 40px 0px 0px;
+}
+
+.indexZ {
+  z-index: 2;
+}
+
+.indexY {
+  z-index: 1;
+}
+
+@media screen and (min-width: 600px) {
+
+  #img-business {
+    max-width: 400px !important;
+    padding-top: 40px;
     position: relative;
-    animation: text 3s 1;
+  }
 }
-
-.text2{
-    font-size: 25px;
-    color: #e0eafc;
-}
-
-#img-business{
-    width: 500px;
-}
-#Text-Home{
-    padding-top: 115px;
-}
-
-@keyframes text{
-    0%{
-        background: #141E30;
-        margin-bottom: -65px;
-    }
-    30%{
-        letter-spacing: 6px;
-        margin-bottom: -75px;
-    }
-    85%{
-        letter-spacing: 4px;
-        margin-bottom: -65px;
-    }
-}
-
 
 /* Diseño responsive para tabletas */
 @media screen and (min-width: 800px) {
-    .content-wrapper {
-        margin-left: 150px;
-        min-height: 510px !important;
+
+    #img-business {
+      opacity: 1;
     }
 }
 
 /* Diseño responsive para PC */
 @media screen and (min-width: 1025px) {
-    .content-wrapper {
-        margin-left: 200px;
-        min-height: 500px !important;
+  #img-business {
+    width: 800px !important;
+    opacity: 1;
     }
+
+  .item {
+    width: 600px;
+  }
 }
