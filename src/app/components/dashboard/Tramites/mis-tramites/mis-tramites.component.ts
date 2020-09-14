@@ -57,7 +57,7 @@ export class MisTramitesComponent implements OnInit {
             'Tipo de trámite: ' + tipoTramite +  '\n \n',
             'Formulario: ' + product + '\n \n',
             'Área: ' + areadestino + '\n \n',
-            'Estado del trámite: ' + estadotramite + '\n'
+            'Estado del trámite: ' + estadotramite + '\n',
           ],
           style: 'body',
         },
@@ -83,7 +83,7 @@ export class MisTramitesComponent implements OnInit {
     pdfMake.createPdf(comprobante).download('comprobanteDeTramite.pdf');
   }
 
-  public imprimirComprobante(apellido, nombre, product, tipoTramite, fechagenerado, estadotramite, areadestino ) {
+  public imprimirComprobante(apellido, nombre, product, tipoTramite, fechagenerado, estadotramite, areadestino, idOperacion, estadoOper) {
     //console.log(product.formulario, areadestino.nombre);
     const comprobante  = {
       content: [
@@ -99,7 +99,9 @@ export class MisTramitesComponent implements OnInit {
             'Tipo de trámite: ' + tipoTramite +  '\n \n',
             'Formulario: ' + product.formulario + '\n \n',
             'Área: ' + areadestino.nombre + '\n \n',
-            'Estado del trámite: ' + estadotramite + '\n'
+            'Estado del trámite: ' + estadotramite + '\n',
+            'Id Operacion: ' + idOperacion + '\n',
+            'Estado del Pago: ' + estadoOper + '\n'
           ],
           style: 'body',
         },
