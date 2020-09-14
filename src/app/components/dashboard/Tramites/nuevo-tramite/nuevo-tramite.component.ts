@@ -84,12 +84,13 @@ export class NuevoTramiteComponent implements OnInit {
 
 
   ngOnInit() {
-    //Smart-Wizard
+    // Smart-Wizard
     $('#stepwizard').smartWizard({
-      theme: 'dots',
-      //transitionEffect: 'slide',
+      theme: 'progress',
+      transitionEffect: 'slide',
       transitionSpeed: '400',
       selected: 0,
+      autoAdjustHeight: true,
       lang: { next: 'Siguiente', previous: 'Anterior' },
       toolbarSettings: {
         showNextButton: false,
@@ -324,7 +325,7 @@ export class NuevoTramiteComponent implements OnInit {
     };
     //console.log(this.minutaH);
     //this.postDataTramMinH(this.minutaH);
-    
+
     localStorage.setItem('Minuta', JSON.stringify(this.minutaH));
     //this.PagarMinutaH = localStorage.getItem('Minuta');
     //console.log('Pago minuta H',this.PagarMinutaH);
@@ -397,7 +398,7 @@ export class NuevoTramiteComponent implements OnInit {
 
   public apiMercadoPago() {
     let preference = {
-      back_urls: 
+      back_urls:
         {
           failure: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite',
           pending: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite',
@@ -427,7 +428,7 @@ export class NuevoTramiteComponent implements OnInit {
     this.comprobantePago = {
       fecha: this.fechaPago,
       usuario: this.usuario,
-      importe: this.lsImporte,      
+      importe: this.lsImporte,
       tramite: this.lsFormulario,
       idOperacion: this.order_id,
       idColeccion: this.collection_id,
