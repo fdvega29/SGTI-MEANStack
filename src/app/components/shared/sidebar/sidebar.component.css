@@ -1,39 +1,41 @@
 .sidebar {
-    overflow-y: initial !important;
-    /*background: #3c3d47;*/
-    background: #141E30;
-    background: -webkit-linear-gradient(to bottom, #243B55, #141E30); 
-    background: linear-gradient(to bottom, #243B55, #141E30); 
-
-}
-.main-sidebar:before {
-    width: 350px !important;
+  font-family: 'Roboto', sans-serif;
 }
 
-.main-sidebar{
-    background: #3c3d47;
+.main-sidebar {
+  background-color: #ffffff;
 }
 
-.main-header:before {
-   margin-left: 350px !important;
+.title-sgti {
+  font-family: 'Bebas Neue', cursive !important;
+  font-size: 1.2em;
+  font-weight: 200;
 }
 
-.user-panel img{
-    width: 4.1rem !important;
-    height: auto;
+.title-sgti:hover {
+  cursor: pointer;
+  color: #0c0c0c;
+}
+.name{
+  color: #0b58a2;
 }
 
-.elevation-4{
-    box-shadow: none !important;
+.name:hover {
+  color: #0c0c0c;
 }
 
-.home{
-    background: white;
-    border-radius: 5px;
-}
-.home p,
-.home i
-{
-    color: #141E30!important;
+
+.btn-lg {
+  color: #fff0ff;
+  background-color: #0b58a2;
+  border: 2px solid #0b58a2;
+  font-size: medium;
+  border-radius: 3.0rem !important;
+  margin-right: 1em;
+  margin-bottom: 15px;
 }
 
+.btn-lg:hover {
+  background: #ffffff;
+  color: #0b58a2;
+}

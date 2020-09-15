@@ -1,9 +1,9 @@
 .navbar {
-	background-color: #3282b8 !important;
-	-webkit-box-shadow: 0px 9px 19px 0px rgba(0,0,0,0.2);
--moz-box-shadow: 0px 9px 19px 0px rgba(0,0,0,0.2);
-box-shadow: 0px 9px 19px 0px rgba(0,0,0,0.2);
+	background-color: #0b58a2 !important;
+}
 
+.float-rigth {
+  font-family: "Roboto", sans-serif;
 }
 
 .navbar-static-top{
@@ -15,5 +15,9 @@ box-shadow: 0px 9px 19px 0px rgba(0,0,0,0.2);
 }
 
 .widget-user .widget-user-header{
-	height: 115px !important;
+	height: 75px !important;
+}
+
+#nBar {
+
 }

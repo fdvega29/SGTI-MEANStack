@@ -1,8 +1,41 @@
-#navbar{
-    margin: auto;
+.wrapper {
+  margin-left: 0px !important;
+  padding-bottom: 300px !important;
 }
-#col{
-    margin-top: 10px;
+
+.navbar-static-top{
+  margin-left: 0px !important;
+}
+
+.nav-item {
+  text-align: center;
+}
+
+.title-sgti  {
+  font-family: 'Bebas Neue', cursive !important;
+  font-size: 3em;
+  font-weight: 400;
+}
+
+.title-sgti:hover {
+  cursor: pointer;
+  color: #0c0c0c;
+}
+.btn-lg {
+  font-size: medium;
+  border-radius: 3.0rem !important;
+  margin-right: 1em;
+  margin-bottom: 15px;
+}
+.inicio-sesion-btn {
+  color: #fff0ff;
+  background-color: #0b58a2;
+  border: 2px solid #0b58a2;
+}
+
+.inicio-sesion-btn:hover {
+  background: #ffffff;
+  color: #0b58a2;
 }
 
 #box-signup{

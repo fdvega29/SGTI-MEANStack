@@ -1,3 +1,6 @@
+.content-wrapper {
+  font-family: "Roboto", sans-serif !important;
+}
 
 .content {
   color: rgba(0, 0, 0, 0.6);
