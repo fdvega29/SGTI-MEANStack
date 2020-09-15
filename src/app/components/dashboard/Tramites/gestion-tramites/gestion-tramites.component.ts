@@ -25,6 +25,7 @@ export class GestionTramitesComponent implements OnInit {
   dataTable: any;
   dataArea: any;
   producto: any;
+  estadoPago: any;
 
   ngOnInit() {
     this.getDataTramite();
@@ -39,6 +40,19 @@ export class GestionTramitesComponent implements OnInit {
         this.producto = JSON.stringify(resp.allDataMinH.producto.formulario);
         console.log(this.tramites);
         console.log(this.producto);
+
+        if (resp.allDataMinH.comprobantePago.estado == 'approved'){
+              this.estadoPago = 'Aprobado'
+        }
+        if (resp.allDataMinH.comprobantePago.estado == 'pending'){
+              this.estadoPago = 'Pendiente'
+        }
+        if (resp.allDataMinH.comprobantePago.estado == 'rejected'){
+              this.estadoPago = 'Rechazado'
+        }
+        if (resp.allDataMinH.comprobantePago.estado == 'cancelled'){
+              this.estadoPago = 'Cancelado'
+        }
 
         this.chRef.detectChanges();
         const table: any = $('#example1');

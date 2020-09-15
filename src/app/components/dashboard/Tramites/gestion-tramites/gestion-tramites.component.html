@@ -25,9 +25,9 @@
                     <!--<th scope="col" class="text-center">Solicitante</th>-->
                     <th scope="col" class="text-center">Producto</th>
                     <!--<th scope="col" class="text-center">Descripción</th>-->
-                    <!--<th scope="col" class="text-center">Area</th>-->
                     <th scope="col" class="text-center">Estado/Area</th>
                     <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Estado Pago</th>
                     <th scope="col" class="text-center">Notificar</th>
                     <th scope="col" class="text-center">Formulario</th>
                   </tr>
@@ -55,6 +55,16 @@
                           data-target="#exampleModal">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </button>
+                    </td>
+                    <td>
+                      <span *ngIf="minH.comprobantePago.estado == 'Aprobado'" class="badge bg-success ml-1"
+                        id="estado">{{estadoPago}}</span>
+                      <span *ngIf="minH.comprobantePago.estado == 'Pendiente'" class="badge bg-warning ml-1"
+                        id="estado">{{estadoPago}}</span>
+                      <span *ngIf="minH.comprobantePago.estado == 'Rechazado'" class="badge bg-danger ml-1"
+                        id="estado">{{estadoPago}}</span>
+                      <span *ngIf="minH.comprobantePago.estado == 'Cancelado'" class="badge bg-default ml-1"
+                        id="estado">{{estadoPago}}</span>  
                     </td>
                     <td class="text-center">
                       <a class="btn btn-outline-success" *ngIf="minH.estadoTram == 'Finalizado'"
