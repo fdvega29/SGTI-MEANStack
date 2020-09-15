@@ -1,6 +1,64 @@
-#navbar{
-    margin: auto;
+.wrapper {
+  margin-left: 0px !important;
+  padding-bottom: 300px !important;
 }
+
+.navbar-static-top{
+  margin-left: 0px !important;
+}
+
+.nav-item {
+  text-align: center;
+}
+
+.title-sgti  {
+  font-family: 'Bebas Neue', cursive !important;
+  font-size: 3em;
+  font-weight: 400;
+}
+
+.title-sgti:hover {
+  cursor: pointer;
+  color: #0c0c0c;
+}
+
+.btn-lg {
+  font-size: medium;
+  border-radius: 3.0rem !important;
+  margin-right: 1em;
+  margin-bottom: 15px;
+}
+.inicio-sesion-btn {
+  color: #fff0ff;
+  background-color: #0b58a2;
+  border: 2px solid #0b58a2;
+}
+
+.inicio-sesion-btn:hover {
+  background: #ffffff;
+  color: #0b58a2;
+}
+
+#btnGoogle {
+  font-size: medium;
+  border-radius: 3.0rem !important;
+}
+
+#box-signup{
+  border: 0px solid #00c0ef;
+  border-radius: 15px;
+}
+
+#img-logo {
+  height: 85px
+}
+
+.login-box{
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
 
 #box-shadow{
     -webkit-box-shadow: 0px 4px 19px -5px rgba(0,0,0,0.5);

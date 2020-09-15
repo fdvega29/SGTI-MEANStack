@@ -1,41 +1,98 @@
 <div class="wrapper">
+	 <!-- Navbar
+  <div class="container">
+    <nav class="main-header navbar navbar-expand navbar-static-top">
+      <a href="/"routerLink="/" class="brand-link navbar-brand">
+        <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+        <h1 class="mr-auto">{{title}}</h1>
+      </a>
 
-	 <!-- Navbar -->
-	<nav class="main-header navbar layout-navbar-fixed navbar-expand navbar-static-top">
-	    <div class="container">
-	      <a href="/"routerLink="/" class="brand-link navbar-brand">
-	        <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-	        <span class="brand-text text-light">{{title}}</span>
-	      </a>
-	      <!-- Right navbar links -->
-	      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
-	      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-	        <li class="nav-item">
-	          <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Iniciar Sesión</a>
-	        </li>
-	        <li class="nav-item">
-	          <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Registrarse</a>
-	        </li>
-	      </ul>
-	    </div>
-	    </div>
-	</nav>
 
-	<!-- /.navbar -->
-	
+
+      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+          <li class="nav-item">
+            <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Iniciar Sesión</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="nav-link text-light">Registrarse</a>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+  </div>
+	< -->
+
+
+
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container">
+      <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity: .8">
+      <a routerLink="/home" routerLinkActive="router-link-active" href="#" class="navbar-brand title-sgti">
+        {{title}}
+      </a>
+
+      <button class="navbar-toggler order-3" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse" style="">
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+          <li class="nav-item">
+            <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="btn btn-light btn-lg">Registrarse</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="btn btn-light btn-lg inicio-sesion-btn">Iniciar Sesión</a>
+          </li>
+        </ul>
+      </div>
+
+
+
+    </div>
+  </nav>
+
+
+
 	<!--Home Body-->
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 text-center text-white" id="Text-Home">
-				<h1>¡Bienvenido a SGTI!</h1>
-				<h4 class="pb-3">Sistema de Gestion de Tramite de Inmueble</h4>
-				<a href="/user/signin" class="btn btn-light btn-lg">Comenzar</a>
-			</div>
-			<div class="col-md-6">
-				<img src="./assets/dist/img/technical-animations.png" id="img-business">
-			</div>
+        <div class="col-md-6 text-center indexZ">
+          <div class="item" data-aos="fade-right"
+               data-aos-offset="300"
+               data-aos-easing="ease-in-sine">
+          <h1 class="pb-5">¡Bienvenido a SGTI!</h1>
+          <h3 class="pb-sm-1">Sistema de Gestion de Tramite de Inmueble</h3>
+            <span class="description-sgti">
+            Este sistema ha sido diseñado y programado para que constituya un medio virtual para el acceso de los usuarios a las prestaciones ofrecidas por la Secretaría de Tierras y Hábitat Social.
+            </span>
+            <br>
+            <br>
+          <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="btn btn-light btn-lg inicio-sesion-btn">Comenzar</a>
+        </div>
+      </div>
+
+        <div class="col-md-6 indexY" >
+          <div class="item"  data-aos="fade-left"
+               data-aos-anchor="#example-anchor"
+               data-aos-offset="500"
+               data-aos-duration="500">
+          <img src="./assets/dist/img/technical-animations.png" id="img-business">
+        </div>
+      </div>
+
 		</div>
 	</div>
-	<app-footer></app-footer>
+
+  <!--Footer-->
 
 </div>
+
+
+<footer class="bg-white text-center">
+  <strong>Copyright &copy; 2020 </strong><p> © Todos los derechos reservados | Sistema de Gestión de Trámite Inmueble.</p>
+</footer>
+
+
+

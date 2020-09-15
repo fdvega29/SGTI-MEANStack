@@ -4,21 +4,21 @@
   <app-breadcrumbs></app-breadcrumbs>
   <hr>
   <section class="content">
-    <div class="row" >
+    <div class="row" data-aos="zoom-in" >
       <div class="col-md-12">
         <div id="stepwizard">
           <ul>
-            <li id="li1"><a href="#step1"><span><i class="fa fa-list-alt"></i></span><br><small>1 - Elegí el trámite.</small></a></li>
-            <li id="li2"><a href="#step2"><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span><br><small>2 - Completa el formulario.</small></a></li>
-            <li id="li3"><a href="#step3"><span><i class="fa fa-check-square-o"></i></span><br><small>3 - Confirmá los datos ingresados</small></a></li>
-            <li id="li4"><a href="#step4"><span><i class="fa fa-money"></i></span><br><small>4 -  Realizá el pago</small></a></li>
+            <li id="li1"><a href="#step1" class="nav-link"><span><i class="fa fa-list-alt"></i></span><br><small>1 - Elegí el trámite.</small></a></li>
+            <li id="li2"><a href="#step2" class="nav-link"><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span><br><small>2 - Completa el formulario.</small></a></li>
+            <li id="li3"><a href="#step3" class="nav-link"><span><i class="fa fa-check-square-o"></i></span><br><small>3 - Confirmá los datos ingresados</small></a></li>
+            <li id="li4"><a href="#step4" class="nav-link"><span><i class="fa fa-money"></i></span><br><small>4 - Realizá el pago</small></a></li>
           </ul>
 
           <!-- DIV -->
-          <div>
+          <div data-aos="zoom-in">
             <!-- DIV Elegir el trámite -->
-            <div id="step1">
-                <section class="invoice">
+            <div id="step1" class="tab-pane" role="tabpanel">
+                <section class="tab-content">
                   <!-- titulo row -->
                   <div class="col-xs-12 text-center">
                     <h2 class="page-header">
@@ -26,41 +26,37 @@
                     </h2>
                   </div>
                   <!-- /.col -->
-
-                  <div class="row">
+                  <div class="row"  data-aos="flip-up">
                     <div class="col-md-2"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-8 text-center">
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" id="card-h" />
 
-                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de titulares dominiales', '5f4abf33aeae370004723e34'); getDataTipoTram('5f4abf33aeae370004723e34')">
-                          <div class="small-box bg-info-gradient">
-                            <div class="inner">
-                              <h4 class="card-header">Búsqueda de titulares dominiales</h4>
-                              <p class="lead">Búsqueda de inmuebles registrados a nombre de una persona humana ó persona jurídica, según el Índice de Titulares de Dominio.</p>
-                            </div>
-                            <div class="icon">
-                              <i class="fa fa-list-alt"></i>
-                            </div>
-                          </div>
-                        </div>
-                      </label>
+                        <div class="card card-input text-center hvr-grow" (click)="guardar_tipotramite('Búsqueda de titulares dominiales', '5f4abf33aeae370004723e34'); getDataTipoTram('5f4abf33aeae370004723e34')">
 
+                              <div class="caja">
+                                <h4 class="card-header">Búsqueda de titulares dominiales</h4>
+                                <p class="lead">Búsqueda de inmuebles registrados a nombre de una persona humana ó persona jurídica, según el Índice de Titulares de Dominio.</p>
+                              </div>
+
+                          </div>
+                      </label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2"></div>
+                  </div>
+                  <div class="row" >
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 text-center">
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" id="card-g"/>
 
-                        <div class="card card-input text-center" (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', '5f4abf44aeae370004723e35'); getDataTipoTram('5f4abf44aeae370004723e35')">
-                          <div class="small-box bg-info-gradient">
-                            <div class="inner">
+                        <div class="card card-input text-center hvr-grow" (click)="guardar_tipotramite('Búsqueda de estado jurídico de inmueble', '5f4abf44aeae370004723e35'); getDataTipoTram('5f4abf44aeae370004723e35')">
+
+                            <div class="caja">
                               <h4 class="card-header">Búsqueda de estado jurídico de inmueble</h4>
-                              <p>Verificar el estado actual de la propiedad respecto a cargas y gravámenes que pudieran figurar asentadas en el registro</p>
+                              <p class="lead">Verificar el estado actual de la propiedad respecto a cargas y gravámenes que pudieran figurar asentadas en el registro</p>
                             </div>
-                            <div class="icon">
-                              <i class="fa fa-list-alt"></i>
-                            </div>
-                          </div>
+
                         </div>
 
                       </label>
@@ -68,7 +64,7 @@
                     <div class="col-md-2"></div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row" data-aos="zoom-in">
                     <div class="col-12" style="text-align: right;">
                       <button id="btn-siguiente-1" class="btn btn-primary" (click)="[irPaso(2), remove()]">Siguiente</button>
                     </div>
@@ -77,10 +73,10 @@
                 </section>
               </div>
             <!-- DIV Completa formulario -->
-            <div id="step2">
+            <div id="step2" class="tab-pane" role="tabpanel" >
 
               <!-- Formulario H -->
-                <section class="invoice" id="formH">
+                <section class="tab-content" id="formH" data-aos="flip-up">
                   <!-- titulo row -->
                   <div class="row">
                     <div class="col-xs-12">
@@ -158,7 +154,7 @@
 
 
               <!-- Formulario G -->
-                <section class="invoice" id="formG">
+                <section class="invoice" id="formG" data-aos="flip-up">
                 <!-- titulo row -->
                 <div class="row">
                   <div class="col-xs-12">
@@ -244,10 +240,10 @@
 
             </div>
             <!-- DIV Confirma los datos -->
-            <div id="step3">
+            <div id="step3" class="tab-pane" role="tabpanel" >
 
               <!-- Confirma Formulario H -->
-              <section class="invoice" id="confirmH">
+              <section class="invoice" id="confirmH" data-aos="flip-up">
                 <!-- titulo row -->
                 <div class="col-xs-12">
                   <h2 class="page-header">
@@ -408,7 +404,7 @@
               </section>
             </div>
             <!-- DIV Realiza el Pago -->
-            <div id="step4">
+            <div id="step4" data-aos="flip-up" class="tab-pane" role="tabpanel">
                 <section style="padding-bottom: 50px;" class="invoice">
                   <!-- titulo row -->
                   <div class="row">
@@ -424,7 +420,7 @@
                       <address>
                         <strong>Secretaría de Tierras y Hábitat Social.</strong><br>
                         <h5 class="text-muted">Teléfono: <span style="color: black;">(3804) 426-352</span></h5>
-                        <h5 class="text-muted">Email: <span style="color: black;">info@secretariadetierras.com.ar</span></h5>  
+                        <h5 class="text-muted">Email: <span style="color: black;">info@secretariadetierras.com.ar</span></h5>
                       </address>
                     </div>
                     <!-- /.col -->
@@ -516,14 +512,14 @@
                   </div>
                   <br>
                   <hr>
-                  <!-- Finalizar Minuta H 
+                  <!-- Finalizar Minuta H
                   <div class="row" id="finalizarH">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
                       <button id="btn-siguiente-4" (click)="createFormH(this.apellido, this.nombre, this.estCivil, this.tdocumento, this.numDocu, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)" class="btn btn-primary">Finalizar <i class="fa fa-check-circle" aria-hidden="true"></i></button>
                     </div>
                   </div>-->
-                  <!-- Finalizar Minuta G 
+                  <!-- Finalizar Minuta G
                   <div class="row" id="finalizarG">
                     <div class="col-12" style="text-align: right;">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>

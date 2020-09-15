@@ -2,3 +2,6 @@
   /*align-self: flex-end !important;*/
   text-align: center;
 }
+.content-wrapper{
+  font-family: "Roboto", sans-serif !important;
+}

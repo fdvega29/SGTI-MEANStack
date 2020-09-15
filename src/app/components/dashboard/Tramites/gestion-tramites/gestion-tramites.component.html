@@ -9,7 +9,7 @@
       <div class="col-12">
 
         <!--DataTable -->
-        <div class="row p-2">
+        <div class="row p-2" data-aos="zoom-in">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Listado de tramites generados</h3>
@@ -48,7 +48,7 @@
                         id="estado">{{minH.estadoTram}}</span>
                       <span *ngIf="minH.estadoTram == 'Finalizado'" class="badge bg-success ml-1"
                         id="estado">{{minH.estadoTram}}</span>&nbsp;
-                      <p>{{minH.area.nombre}}</p>  
+                      <p>{{minH.area.nombre}}</p>
                     </td>
                     <td class="text-center">
                       <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"

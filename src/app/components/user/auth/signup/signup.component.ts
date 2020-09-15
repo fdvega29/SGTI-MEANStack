@@ -13,6 +13,8 @@ import { AutenticacionService } from 'src/app/components/services/autenticacion.
 })
 export class SignupComponent implements OnInit {
 
+  title : string = "SGTI";
+
   signupFormUser: FormGroup;
 
   createFormGroupUser() {
