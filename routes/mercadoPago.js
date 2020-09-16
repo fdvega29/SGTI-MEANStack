@@ -11,7 +11,7 @@ mercadopago.configure({
 });
 
 app.get('/pagos/all', async (req, res) =>{
-    const pagos = await comprobantePago.find({estado: 'pending'});
+    const pagos = await comprobantePago.find();
     return res.status(200).json({
         data: pagos
     });
