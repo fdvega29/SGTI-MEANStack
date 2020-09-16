@@ -9,15 +9,15 @@ mercadopago.configure({
     access_token: 'APP_USR-1433329887629306-090100-fab47c14d6a19fd4aa9ab2a5ef0fec7d-290597670'
 });
 
-app.get('/pagos/all', (req, res) =>{
-    const pagos = comprobantePago.find();
+app.get('/pagos/all', async (req, res) =>{
+    const pagos = await comprobantePago.find();
     return res.status(200).json({
         data: pagos
     });
 });
 
-app.get('/pagos/:id', (req, res) =>{
-    const pago = comprobantePago.findById(req.params.id);
+app.get('/pagos/:id', async (req, res) =>{
+    const pago = await comprobantePago.findById(req.params.id);
     return res.status(200).json({
         data: pago
     });
