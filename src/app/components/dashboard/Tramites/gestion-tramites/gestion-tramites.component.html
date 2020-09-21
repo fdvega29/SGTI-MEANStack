@@ -8,6 +8,25 @@
 
       <div class="col-12">
 
+        <div class="card card-primary card-outline">
+          <div class="card-body">
+             <div class="row">
+               <div class="col-md-3">
+                  <h5 class="text-muted">Ultima sincronización: <span style="color: black">{{datosProceso.createdAt |  date: "dd/MM/yyyy"}}</span></h5>
+               </div>
+               <div class="col-md-3">
+                  <h5 class="text-muted">Total Procesados: <span style="color: black">{{datosProceso.totProcesados}}</span></h5>
+               </div>
+               <div class="col-md-3">
+                  <h5 class="text-muted">Total Actualizados: <span style="color: black">{{datosProceso.totActualizados}}</span></h5>
+               </div>
+               <div class="col-md-3">
+                  <button type="button" (click)="sincronizarPagos()" class="btn btn-success"><i class="fa fa-refresh" aria-hidden="true"></i> Sincronizar Pagos</button>
+               </div>
+             </div>
+          </div>
+        </div>
+
         <!--DataTable -->
         <div class="row p-2" data-aos="zoom-in">
           <div class="card">
@@ -57,14 +76,14 @@
                       </button>
                     </td>
                     <td>
-                      <span *ngIf="minH.comprobantePago.estado == 'Aprobado'" class="badge bg-success ml-1"
-                        id="estado">{{estadoPago}}</span>
-                      <span *ngIf="minH.comprobantePago.estado == 'Pendiente'" class="badge bg-warning ml-1"
-                        id="estado">{{estadoPago}}</span>
-                      <span *ngIf="minH.comprobantePago.estado == 'Rechazado'" class="badge bg-danger ml-1"
-                        id="estado">{{estadoPago}}</span>
-                      <span *ngIf="minH.comprobantePago.estado == 'Cancelado'" class="badge bg-default ml-1"
-                        id="estado">{{estadoPago}}</span>  
+                      <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
+                        id="estado">Aprobado</span>
+                      <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
+                        id="estado">Pendiente</span>
+                      <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
+                        id="estado">Rechazado</span>
+                      <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
+                        id="estado">Cancelado</span>  
                     </td>
                     <td class="text-center">
                       <a class="btn btn-outline-success" *ngIf="minH.estadoTram == 'Finalizado'"
