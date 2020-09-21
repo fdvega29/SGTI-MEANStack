@@ -11,7 +11,9 @@ app.post('/add', async (req, res) => {
 });
 
 app.get('/all/procesos', async (req, res) =>{
-    const allProcess = await sincronizacionPagos.find().populate('usuario');
+    const allProcess = await sincronizacionPagos.find()
+                                                .populate('usuario')
+                                                .sort({_id:-1});
     return res.status(200).json({
         data: allProcess
     });
