@@ -1,13 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UsuarioService } from 'src/app/components/services/usuario.service';
 import { TramitesService } from 'src/app/components/services/tramites.service';
+import { MercadoPagoService } from 'src/app/components/services/mercado-pago.service';
+import { SincronizacionPagosService } from 'src/app/components/services/sincronizacion-pagos.service';
 import { dataTramites } from 'src/app/components/models/tramites.module';
 
 
 //PDFMake
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ThrowStmt } from '@angular/compiler';
+import { async } from '@angular/core/testing';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var $;
@@ -19,26 +21,40 @@ declare var $;
 })
 export class GestionTramitesComponent implements OnInit {
 
-  constructor(public dataTramites: TramitesService, public userService: UsuarioService, private chRef: ChangeDetectorRef) { }
+  constructor(public dataTramites: TramitesService,
+    public userService: UsuarioService,
+    public mercadoPagoService: MercadoPagoService,
+    public sicronizarPagos: SincronizacionPagosService,
+    private chRef: ChangeDetectorRef) { }
 
   tramites: dataTramites[] = [];
   dataTable: any;
   dataArea: any;
   producto: any;
+  estadoPago: any;
+  comprobantes: any;
+  estadoMercadoPago: any;
+  newComprobante: any;
+  totProcesados = 0;
+  totActualizados = 0;
+  usuario: any;
+  proceso: any;
+  longitudPagos = 0;
+  datosProceso: any;
 
   ngOnInit() {
+    this.usuario = this.userService.getCurrentUser();
     this.getDataTramite();
+    this.getProcesos();
   }
 
   public getDataTramite(): void {
     this.dataTramites
       .getAllTramites()
-      .subscribe( (resp: any) => {
-        console.log(resp.allDataMinH);
+      .subscribe((resp: any) => {
         this.tramites = resp.allDataMinH;
-        this.producto = JSON.stringify(resp.allDataMinH.producto.formulario);
+        //this.producto = resp.allDataMinH.producto.formulario;
         console.log(this.tramites);
-        console.log(this.producto);
 
         this.chRef.detectChanges();
         const table: any = $('#example1');
@@ -46,22 +62,97 @@ export class GestionTramitesComponent implements OnInit {
       })
   }
 
-  public cargarModal(tramite: any){
+  public cargarModal(tramite: any) {
     this.dataTramites.selectedTram = Object.assign({}, tramite);
     console.log(this.dataTramites.selectedTram);
   };
 
+  public sincronizarPagos() {
+    this.mercadoPagoService.getAllPagos()
+      .subscribe((res: any) => {
+        console.log(res)
+        this.comprobantes = res.data;
+        this.actualizarPagos(this.comprobantes);
+      })
+  };
+
+  public actualizarPagos(comprobantes: any) {
+    this.longitudPagos = this.comprobantes.length;
+    comprobantes.forEach(async (comprobante: any) => {
+      this.longitudPagos = this.longitudPagos - 1;
+      if (comprobante.estado != 'approved') {
+        this.totProcesados = this.totProcesados + 1;
+        this.mercadoPagoService.getByIdPagoMercadoPago(comprobante.idColeccion)
+          .subscribe((res: any) => {
+            this.estadoMercadoPago = res.results[0].status;
+            if (this.estadoMercadoPago != comprobante.estado) {
+              this.totActualizados = this.totActualizados + 1;
+              /*Post nuevo proceso*/
+              if (this.longitudPagos == 0) {
+                this.proceso = {
+                  usuario: this.usuario,
+                  totProcesados: this.totProcesados,
+                  totActualizados: this.totActualizados
+                }
+                console.log('Ingresa primer if')
+                this.sicronizarPagos.postDataProceso(this.proceso)
+                  .subscribe((res: any) => {
+                  });
+              }
+              /*Post nuevo comprobante*/
+              this.newComprobante = {
+                _id: comprobante._id,
+                fecha: comprobante.fecha,
+                usuario: comprobante.usuario,
+                tramite: comprobante.tramite,
+                importe: comprobante.importe,
+                idOperacion: comprobante.idOperacion,
+                idColeccion: comprobante.idColeccion,
+                estado: this.estadoMercadoPago
+              }
+              this.mercadoPagoService.editComprobante(this.newComprobante)
+                .subscribe((res: any) => {
+                  location.reload();
+                })
+            } else {
+              /*Post nuevo proceso*/
+              if (this.longitudPagos == 0) {
+                this.proceso = {
+                  usuario: this.usuario,
+                  totProcesados: this.totProcesados,
+                  totActualizados: this.totActualizados
+                }
+                console.log('Ingresa segundo IF')
+                this.sicronizarPagos.postDataProceso(this.proceso)
+                  .subscribe((res: any) => {
+                  });
+              }
+            }
+          });
+      }
+    })
+  };
+
+  public getProcesos(){
+    this.sicronizarPagos.getAllProcesos()
+                        .subscribe((res: any) =>{
+                          this.datosProceso = res.data[0];
+                          console.log(res);
+                        })
+  }
+
+
   public imprimirFormularioMinG(tipoTramite: string,
-                                objeto: string,
-                                ubicacion: string,
-                                apellido: string,
-                                nombre : string,
-                                numdoc: string,
-                                estadociv: string,
-                                domicilio: string,
-                                usuarioApe: string,
-                                usuarioNomb: string,
-                                telefono: string) {
+    objeto: string,
+    ubicacion: string,
+    apellido: string,
+    nombre: string,
+    numdoc: string,
+    estadociv: string,
+    domicilio: string,
+    usuarioApe: string,
+    usuarioNomb: string,
+    telefono: string) {
 
     const usuarioSolicitante = usuarioApe + ' ' + usuarioNomb;
 
@@ -69,15 +160,15 @@ export class GestionTramitesComponent implements OnInit {
       pageSize: 'LEGAL',
 
       content: [
-        {text: 'Secretaría de Tierras y Hábitat Social', style: 'header'},
-        {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
-        {text: 'Formulario Minuta "G" ', style: 'subheader'},
+        { text: 'Secretaría de Tierras y Hábitat Social', style: 'header' },
+        { text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader' },
+        { text: 'Formulario Minuta "G" ', style: 'subheader' },
         {
           style: 'tableExample',
           table: {
             widths: [200, '*'],
             body: [
-              [{text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTramite, italics: true, alignment: 'right'}]
+              [{ text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTramite, italics: true, alignment: 'right' }]
             ]
           }
         },
@@ -86,7 +177,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -95,7 +186,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: ['*'],
             body: [
-              [{ text: objeto , italics: true, alignment: 'center'}]
+              [{ text: objeto, italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -104,7 +195,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Ubicación del inmueble - Medidas - Linderos: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Ubicación del inmueble - Medidas - Linderos: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -114,160 +205,18 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [80],
             body: [
-              [{ text: ubicacion , italics: true, alignment: 'center'}]
+              [{ text: ubicacion, italics: true, alignment: 'center' }]
             ]
           }
         },
         {
           style: 'tableExample',
           table: {
-            widths: [30, '*', 30 , '*'],
+            widths: [30, '*', 30, '*'],
             body: [
-              [{text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Antecedentes de Dominio: ', bold: true, alignment: 'left', fontSize: 13}, {text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'N° Matricula Registral: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Antecedentes de Dominio: ', bold: true, alignment: 'left', fontSize: 13 }, { text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'N° Matricula Registral: ', bold: true, alignment: 'left', fontSize: 13 }]
 
 
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*','*'],
-            headerRows: 1,
-            body: [
-              [
-                {
-                  table: {
-                    widths: [40, 80, '*'],
-                    headerRows: 1,
-                    heights: [20, 20, 20],
-                    body: [
-                      [{text: 'Lote: ', style: 'tableHeader', alignment: 'center'},{text: 'Manzana: ', style: 'tableHeader', alignment: 'center'}, {text: 'Localidad: ', style: 'tableHeader', alignment: 'center'}],
-                      [ ' ', ' ', ' '],
-                    ]
-                  }
-                },
-                {text: ' ', style: 'tableHeader'},
-
-              ],
-              [
-                {
-                  table: {
-                    widths: ['*', '*', '*', '*'],
-                    heights: [20,20,20,20],
-                    headerRows: 1,
-                    body: [
-                      [{text: 'T°: ', style: 'tableHeader', alignment: 'left'},{text: 'F°: ', style: 'tableHeader', alignment: 'left'}, {text: 'N°: ', style: 'tableHeader', alignment: 'left'}, {text: 'Año°: ', style: 'tableHeader', alignment: 'left'}],
-                      [ ' ', ' ', ' ', ' '],
-                    ]
-                  }
-                },
-
-
-                {
-                  table: {
-                    widths: ['*','*','*','*'],
-                    heights: [40,40,40,40],
-                    headerRows: 1,
-                    body: [
-                      [{text: 'Plano: ', alignment: 'center'},
-                        {text: 'T°:',  alignment: 'left'},
-                        {text: 'F°:',  alignment: 'left'},
-                        {text: 'A°:',  alignment: 'left'}
-                        ]
-                    ]
-                  }
-                }
-
-              ],
-
-            ]
-          }
-        },
-
-
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, 30, 50, 50, 50, 50, 50, 30, "*"],
-            body: [
-              [
-                { text: ' 5 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'N° : ', bold: true, alignment: 'left', fontSize: 12},
-                { text: 'Circuns. : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Sección : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Manzana: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Parcela: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Depto.: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Hoja: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Coordenadas: ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [85, 50, 50, 50, 50, 50, 30, "*"],
-            body: [
-              [
-                { text: ' Matricula \n Catastral:', fontSize: 14, bold: true, alignment: 'center'},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, 40, 30, 50, 50, 70, "*"],
-            body: [
-              [
-                { text: ' 6 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'Unidad: ', bold: true, alignment: 'left', fontSize: 12},
-                { text: 'Piso : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Sub-Total : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Porcent.: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Destinada a: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' COMPLEMENTARIAS : ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [100, 30, 50, 50, 70, '*'],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Identidad del Titular del Dominio: ', bold: true, alignment: 'left', fontSize: 13}]
             ]
           }
         },
@@ -277,646 +226,6 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', '*'],
             headerRows: 1,
             body: [
-              [{text: 'Apellidos: ', style: 'tableHeader'}, {text: 'Nombres: ', style: 'tableHeader'}],
-              [ apellido, nombre],
-            ]
-          },
-          layout: 'headerLineOnly'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [60,'*'],
-            headerRows: 1,
-            body: [
-              [{text: 'Doc. N°: ', style: 'tableHeader'}, {text: 'Estado Civil: ', style: 'tableHeader'}],
-              [numdoc, estadociv ]
-            ]
-          },
-          layout: 'headerLineOnly'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            headerRows: 1,
-            body: [
-              [{text: 'Domicilio: ', style: 'tableHeader'}],
-              [domicilio],
-            ]
-          },
-          layout: 'headerLineOnly'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*',100],
-            headerRows: 1,
-            body: [
-              [{text: 'Solicitante: ', style: 'tableHeader'}, {text: 'Teléfono: ', style: 'tableHeader'}],
-              [ usuarioSolicitante, telefono],
-            ]
-          },
-          layout: 'headerLineOnly'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            body: [
-              [{ text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            heights: [80],
-            body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
-            ]
-          }
-        },
-        {text: 'Registro General de la Propiedad Inmueble', style: 'paddingBottom'},
-        {text: 'La Rioja - Republica Argentina', style: 'subheader'},
-
-
-
-        ////////////////
-        ////////Pagina 2
-        ////////////////
-
-
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: ', bold: true, alignment: 'left', fontSize: 13}]
-            ]
-          },
-          pageBreak: 'before'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            heights: [50],
-            body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
-            ]
-          }
-        },
-
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'El dominio consta a nombre de: ', bold: true, alignment: 'left', fontSize: 13}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            heights: [70],
-            body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 10 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Prevenciones: ', bold: true, alignment: 'left', fontSize: 13}]
-            ]
-          }
-        },
-        {
-          style: 'tableDescripcion',
-          table: {
-            widths: ['*'],
-            body: [
-              [
-                  {
-                    text: ' Articulo 25 Ley 17.801 - con Fecha:                       de                                         de             ',
-                    fontSize: 12,
-                    alignment: 'left',
-                    margin: [0, 12, 0, 0]
-                  }
-              ],
-              [
-                  {
-                    text:' Entró Certificado N°                                                       Operación                                 ',
-                    fontSize: 12,
-                    alignment: 'left',
-                    margin: [0, 12, 0, 0]
-                  }
-              ],
-              [
-                {
-                  text:' Escribano registro N°                                                   de                                            ',
-                  fontSize: 12,
-                  alignment: 'left',
-                  margin: [0, 12, 0, 0]
-                }
-              ]
-            ]
-          },
-          layout: {
-            hLineWidth: function (i, node) {
-              return (i === 0 || i === node.table.body.length) ? 1 : 1;
-            },
-            vLineWidth: function (i, node) {
-              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
-            },
-            hLineColor: function (i, node) {
-              return (i === 0 || i === node.table.body.length) ? 'black' : 'gray';
-            },
-            vLineColor: function (i, node) {
-              return (i === 0 || i === node.table.widths.length) ? 'black' : 'gray';
-            },
-
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, 55, 100, "*", 80, 50],
-            body: [
-              [
-                {text: ' 8 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'Hipoteca: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Fecha de la escritura: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Escribano o Autoridad Administrativa: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Acreedor: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 35, 100, 60, '*', 80, 50],
-            body: [
-              [
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: '', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Registro: ', bold: true, alignment: 'center', fontSize: 11},
-                { text: 'Lugar : ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 35, 100, 60, '*', 80, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 35, 100, 60, '*', 80, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 35, 100, 60, '*', 80, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 35, 100, 60, '*', 80, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 35, 100, 60, '*', 80, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*',120],
-            body: [
-              [
-                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12},
-
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
-
-              ],
-              [
-                {text: '  ', style: 'tableHeader'},
-
-                {
-                  table: {
-                    widths: [30, 30, 30],
-                    headerRows: 1,
-                    alignment: 'center',
-                    body: [
-                      [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
-                        ],
-                      [ ' ', ' ', ' '],
-                    ]
-                  }
-                },
-              ],
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*', 70, 70, 70, 70, 50],
-            body: [
-              [
-                {text: ' 11 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'Embargos y otras Anotaciones: ', bold: true, alignment: 'center', fontSize: 11},
-                { text: 'Fecha: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Autos: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Juzgado: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Secretaría: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
-            body: [
-              [
-                { text: ' T° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: '', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
-            body: [
-              [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*',120],
-            body: [
-              [
-                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12},
-
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
-
-              ],
-              [
-                {text: '  ', style: 'tableHeader'},
-
-                {
-                  table: {
-                    widths: [30, 30, 30],
-                    headerRows: 1,
-                    alignment: 'center',
-                    body: [
-                      [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
-                      ],
-                      [ ' ', ' ', ' '],
-                    ]
-                  }
-                },
-              ],
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 12 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Fecha: ', bold: true, alignment: 'left', fontSize: 13}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, 50, 50,'*'],
-            heights: [50, 50 , 50, 50],
-            body: [
-              [
-                { text: ' Día ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Mes ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Año ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Firma y Sello ', bold: true, alignment: 'center', fontSize: 12}
-              ]
-            ]
-          }
-        },
-
-
-
-      ],
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true,
-          margin: [0, 0, 0, 5],
-          alignment: 'center'
-        },
-        subheader: {
-          fontSize: 14,
-          bold: true,
-          margin: [0, 5, 0, 5],
-          alignment: 'center'
-        },
-        tableExample: {
-          margin: [0, 0, 0, 0],
-          heights: [20]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        },
-        tableDescripcion:{
-          margin: [0, 0, 0, 0],
-          heights: [20],
-          padding: [50, 100, 50, 100]
-        },
-        paddingBottom: {
-          alignment: 'center',
-          margin: [0, 20, 0, 10]
-        }
-      }
-    };
-
-    //Enviar
-    pdfMake.createPdf(FormularioMinG).open();
-
-  }
-
-  public descargarFormularioMinG(tipoTramite: string,
-                                 objeto: string,
-                                 ubicacion: string,
-                                 apellido: string,
-                                 nombre : string,
-                                 numdoc: string,
-                                 estadociv: string,
-                                 domicilio: string,
-                                 usuarioApe: string,
-                                 usuarioNomb: string,
-                                 telefono: string) {
-
-    const usuarioSolicitante = usuarioApe + ' ' + usuarioNomb;
-
-    const FormularioMinG = {
-      pageSize: 'LEGAL',
-
-      content: [
-        {text: 'Secretaría de Tierras y Hábitat Social', style: 'header'},
-        {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
-        {text: 'Formulario Minuta "G" ', style: 'subheader'},
-        {
-          style: 'tableExample',
-          table: {
-            widths: [200, '*'],
-            body: [
-              [{text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTramite, italics: true, alignment: 'right'}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            body: [
-              [{ text: objeto , italics: true, alignment: 'center'}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [50, '*'],
-            body: [
-              [{text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Ubicación del inmueble - Medidas - Linderos: ', bold: true, alignment: 'left', fontSize: 13}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*'],
-            heights: [80],
-            body: [
-              [{ text: ubicacion , italics: true, alignment: 'center'}]
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: [30, '*', 30 , '*'],
-            body: [
-              [{text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Antecedentes de Dominio: ', bold: true, alignment: 'left', fontSize: 13}, {text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'N° Matricula Registral: ', bold: true, alignment: 'left', fontSize: 13}]
-
-
-            ]
-          }
-        },
-        {
-          style: 'tableExample',
-          table: {
-            widths: ['*','*'],
-            headerRows: 1,
-            body: [
               [
                 {
                   table: {
@@ -924,23 +233,23 @@ export class GestionTramitesComponent implements OnInit {
                     headerRows: 1,
                     heights: [20, 20, 20],
                     body: [
-                      [{text: 'Lote: ', style: 'tableHeader', alignment: 'center'},{text: 'Manzana: ', style: 'tableHeader', alignment: 'center'}, {text: 'Localidad: ', style: 'tableHeader', alignment: 'center'}],
-                      [ ' ', ' ', ' '],
+                      [{ text: 'Lote: ', style: 'tableHeader', alignment: 'center' }, { text: 'Manzana: ', style: 'tableHeader', alignment: 'center' }, { text: 'Localidad: ', style: 'tableHeader', alignment: 'center' }],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
-                {text: ' ', style: 'tableHeader'},
+                { text: ' ', style: 'tableHeader' },
 
               ],
               [
                 {
                   table: {
                     widths: ['*', '*', '*', '*'],
-                    heights: [20,20,20,20],
+                    heights: [20, 20, 20, 20],
                     headerRows: 1,
                     body: [
-                      [{text: 'T°: ', style: 'tableHeader', alignment: 'left'},{text: 'F°: ', style: 'tableHeader', alignment: 'left'}, {text: 'N°: ', style: 'tableHeader', alignment: 'left'}, {text: 'Año°: ', style: 'tableHeader', alignment: 'left'}],
-                      [ ' ', ' ', ' ', ' '],
+                      [{ text: 'T°: ', style: 'tableHeader', alignment: 'left' }, { text: 'F°: ', style: 'tableHeader', alignment: 'left' }, { text: 'N°: ', style: 'tableHeader', alignment: 'left' }, { text: 'Año°: ', style: 'tableHeader', alignment: 'left' }],
+                      [' ', ' ', ' ', ' '],
                     ]
                   }
                 },
@@ -948,14 +257,14 @@ export class GestionTramitesComponent implements OnInit {
 
                 {
                   table: {
-                    widths: ['*','*','*','*'],
-                    heights: [40,40,40,40],
+                    widths: ['*', '*', '*', '*'],
+                    heights: [40, 40, 40, 40],
                     headerRows: 1,
                     body: [
-                      [{text: 'Plano: ', alignment: 'center'},
-                        {text: 'T°:',  alignment: 'left'},
-                        {text: 'F°:',  alignment: 'left'},
-                        {text: 'A°:',  alignment: 'left'}
+                      [{ text: 'Plano: ', alignment: 'center' },
+                      { text: 'T°:', alignment: 'left' },
+                      { text: 'F°:', alignment: 'left' },
+                      { text: 'A°:', alignment: 'left' }
                       ]
                     ]
                   }
@@ -975,15 +284,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [50, 30, 50, 50, 50, 50, 50, 30, "*"],
             body: [
               [
-                { text: ' 5 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'N° : ', bold: true, alignment: 'left', fontSize: 12},
-                { text: 'Circuns. : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Sección : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Manzana: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Parcela: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Depto.: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Hoja: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Coordenadas: ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'N° : ', bold: true, alignment: 'left', fontSize: 12 },
+                { text: 'Circuns. : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Sección : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Manzana: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Parcela: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Depto.: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Hoja: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Coordenadas: ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -995,14 +304,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [85, 50, 50, 50, 50, 50, 30, "*"],
             body: [
               [
-                { text: ' Matricula \n Catastral:', fontSize: 14, bold: true, alignment: 'center'},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' Matricula \n Catastral:', fontSize: 14, bold: true, alignment: 'center' },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1014,13 +323,13 @@ export class GestionTramitesComponent implements OnInit {
             widths: [50, 40, 30, 50, 50, 70, "*"],
             body: [
               [
-                { text: ' 6 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'Unidad: ', bold: true, alignment: 'left', fontSize: 12},
-                { text: 'Piso : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Sub-Total : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Porcent.: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Destinada a: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' COMPLEMENTARIAS : ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'Unidad: ', bold: true, alignment: 'left', fontSize: 12 },
+                { text: 'Piso : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Sub-Total : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Porcent.: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Destinada a: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' COMPLEMENTARIAS : ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1032,12 +341,12 @@ export class GestionTramitesComponent implements OnInit {
             widths: [100, 30, 50, 50, 70, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1049,7 +358,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Identidad del Titular del Dominio: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Identidad del Titular del Dominio: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1059,8 +368,8 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', '*'],
             headerRows: 1,
             body: [
-              [{text: 'Apellidos: ', style: 'tableHeader'}, {text: 'Nombres: ', style: 'tableHeader'}],
-              [ apellido, nombre],
+              [{ text: 'Apellidos: ', style: 'tableHeader' }, { text: 'Nombres: ', style: 'tableHeader' }],
+              [apellido, nombre],
             ]
           },
           layout: 'headerLineOnly'
@@ -1068,11 +377,11 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [60,'*'],
+            widths: [60, '*'],
             headerRows: 1,
             body: [
-              [{text: 'Doc. N°: ', style: 'tableHeader'}, {text: 'Estado Civil: ', style: 'tableHeader'}],
-              [numdoc, estadociv ]
+              [{ text: 'Doc. N°: ', style: 'tableHeader' }, { text: 'Estado Civil: ', style: 'tableHeader' }],
+              [numdoc, estadociv]
             ]
           },
           layout: 'headerLineOnly'
@@ -1083,7 +392,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             headerRows: 1,
             body: [
-              [{text: 'Domicilio: ', style: 'tableHeader'}],
+              [{ text: 'Domicilio: ', style: 'tableHeader' }],
               [domicilio],
             ]
           },
@@ -1092,11 +401,11 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',100],
+            widths: ['*', 100],
             headerRows: 1,
             body: [
-              [{text: 'Solicitante: ', style: 'tableHeader'}, {text: 'Teléfono: ', style: 'tableHeader'}],
-              [ usuarioSolicitante, telefono],
+              [{ text: 'Solicitante: ', style: 'tableHeader' }, { text: 'Teléfono: ', style: 'tableHeader' }],
+              [usuarioSolicitante, telefono],
             ]
           },
           layout: 'headerLineOnly'
@@ -1106,7 +415,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: ['*'],
             body: [
-              [{ text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13}]
+              [{ text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13 }]
             ]
           }
         },
@@ -1116,12 +425,12 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [80],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
-        {text: 'Registro General de la Propiedad Inmueble', style: 'paddingBottom'},
-        {text: 'La Rioja - Republica Argentina', style: 'subheader'},
+        { text: 'Registro General de la Propiedad Inmueble', style: 'paddingBottom' },
+        { text: 'La Rioja - Republica Argentina', style: 'subheader' },
 
 
 
@@ -1136,7 +445,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           },
           pageBreak: 'before'
@@ -1147,7 +456,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [50],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -1157,7 +466,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'El dominio consta a nombre de: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'El dominio consta a nombre de: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1167,7 +476,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [70],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -1176,7 +485,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 10 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Prevenciones: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 10 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Prevenciones: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1195,7 +504,7 @@ export class GestionTramitesComponent implements OnInit {
               ],
               [
                 {
-                  text:' Entró Certificado N°                                                       Operación                                 ',
+                  text: ' Entró Certificado N°                                                       Operación                                 ',
                   fontSize: 12,
                   alignment: 'left',
                   margin: [0, 12, 0, 0]
@@ -1203,7 +512,7 @@ export class GestionTramitesComponent implements OnInit {
               ],
               [
                 {
-                  text:' Escribano registro N°                                                   de                                            ',
+                  text: ' Escribano registro N°                                                   de                                            ',
                   fontSize: 12,
                   alignment: 'left',
                   margin: [0, 12, 0, 0]
@@ -1233,12 +542,12 @@ export class GestionTramitesComponent implements OnInit {
             widths: [50, 55, 100, "*", 80, 50],
             body: [
               [
-                {text: ' 8 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'Hipoteca: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Fecha de la escritura: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Escribano o Autoridad Administrativa: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Acreedor: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'Hipoteca: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Fecha de la escritura: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Escribano o Autoridad Administrativa: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Acreedor: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1249,14 +558,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 35, 100, 60, '*', 80, 50],
             body: [
               [
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: '', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Registro: ', bold: true, alignment: 'center', fontSize: 11},
-                { text: 'Lugar : ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: '', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Registro: ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: 'Lugar : ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1267,14 +576,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 35, 100, 60, '*', 80, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1285,14 +594,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 35, 100, 60, '*', 80, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1303,14 +612,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 35, 100, 60, '*', 80, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1321,14 +630,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 35, 100, 60, '*', 80, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1339,14 +648,14 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 35, 100, 60, '*', 80, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1354,16 +663,16 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '  ', style: 'tableHeader'},
+                { text: '  ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -1372,11 +681,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -1390,13 +699,13 @@ export class GestionTramitesComponent implements OnInit {
             widths: [50, '*', 70, 70, 70, 70, 50],
             body: [
               [
-                {text: ' 11 ', fontSize: 14, bold: true, alignment: 'center'},
-                { text: 'Embargos y otras Anotaciones: ', bold: true, alignment: 'center', fontSize: 11},
-                { text: 'Fecha: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Autos: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Juzgado: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Secretaría: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' 11 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'Embargos y otras Anotaciones: ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: 'Fecha: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Autos: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Juzgado: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Secretaría: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1404,18 +713,18 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
             body: [
               [
-                { text: ' T° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: '', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' T° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: '', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1423,18 +732,18 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1442,18 +751,18 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1461,18 +770,18 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1480,18 +789,18 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1499,18 +808,18 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [30, 30, 30,30, 70, 70, 70, 70, 50],
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 11},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1518,16 +827,16 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '  ', style: 'tableHeader'},
+                { text: '  ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -1536,11 +845,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -1553,21 +862,21 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 12 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Fecha: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 12 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Fecha: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
         {
           style: 'tableExample',
           table: {
-            widths: [50, 50, 50,'*'],
-            heights: [50, 50 , 50, 50],
+            widths: [50, 50, 50, '*'],
+            heights: [50, 50, 50, 50],
             body: [
               [
-                { text: ' Día ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Mes ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Año ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Firma y Sello ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' Día ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Mes ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Año ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Firma y Sello ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1598,7 +907,7 @@ export class GestionTramitesComponent implements OnInit {
           fontSize: 13,
           color: 'black'
         },
-        tableDescripcion:{
+        tableDescripcion: {
           margin: [0, 0, 0, 0],
           heights: [20],
           padding: [50, 100, 50, 100]
@@ -1610,44 +919,38 @@ export class GestionTramitesComponent implements OnInit {
       }
     };
 
-    pdfMake.createPdf(FormularioMinG).download('Minuta G - '+ apellido + ' ' + nombre);
+    //Enviar
+    pdfMake.createPdf(FormularioMinG).open();
+
   }
 
+  public descargarFormularioMinG(tipoTramite: string,
+    objeto: string,
+    ubicacion: string,
+    apellido: string,
+    nombre: string,
+    numdoc: string,
+    estadociv: string,
+    domicilio: string,
+    usuarioApe: string,
+    usuarioNomb: string,
+    telefono: string) {
 
-  // Minuta H
-    //Imprimir y Descargar
+    const usuarioSolicitante = usuarioApe + ' ' + usuarioNomb;
 
-
-  public imprimirFormularioMinH(tipoTram: string,
-                                apellido: string,
-                                nombre: string,
-                                nacionalidad: string,
-                                estadoCivil: string,
-                                nomConyu: string,
-                                apeConyu: string,
-                                tipoDoc: string,
-                                numDoc: string,
-                                fechNac: string,
-                                usuarioApe: any,
-                                usuarioNom: any,
-                                telefono: any) {
-
-    const apeNomConyugue = apeConyu + ' ' + nomConyu;
-    const usuarioSolicitante = usuarioApe + ' ' + usuarioNom;
-
-    const FormularioMinH = {
+    const FormularioMinG = {
       pageSize: 'LEGAL',
 
       content: [
-        {text: 'Secretaría de Tierras y Hábitat Social', style: 'header'},
-        {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
-        {text: 'Formulario Minuta "H" ', style: 'subheader'},
+        { text: 'Secretaría de Tierras y Hábitat Social', style: 'header' },
+        { text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader' },
+        { text: 'Formulario Minuta "G" ', style: 'subheader' },
         {
           style: 'tableExample',
           table: {
             widths: [200, '*'],
             body: [
-              [{text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTram, italics: true, alignment: 'right'}]
+              [{ text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTramite, italics: true, alignment: 'right' }]
             ]
           }
         },
@@ -1656,7 +959,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1665,7 +968,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: ['*'],
             body: [
-              [{ text: 'Se solicita información de Titularidad de Dominio ' , italics: true, alignment: 'center'}]
+              [{ text: objeto, italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -1674,7 +977,28 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Datos de identidad de la persona: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Ubicación del inmueble - Medidas - Linderos: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            heights: [80],
+            body: [
+              [{ text: ubicacion, italics: true, alignment: 'center' }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, '*', 30, '*'],
+            body: [
+              [{ text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Antecedentes de Dominio: ', bold: true, alignment: 'left', fontSize: 13 }, { text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'N° Matricula Registral: ', bold: true, alignment: 'left', fontSize: 13 }]
+
+
             ]
           }
         },
@@ -1684,8 +1008,775 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', '*'],
             headerRows: 1,
             body: [
-              [{text: 'Apellidos: ', style: 'tableHeader'}, {text: 'Nombres: ', style: 'tableHeader'}],
-              [ apellido, nombre]
+              [
+                {
+                  table: {
+                    widths: [40, 80, '*'],
+                    headerRows: 1,
+                    heights: [20, 20, 20],
+                    body: [
+                      [{ text: 'Lote: ', style: 'tableHeader', alignment: 'center' }, { text: 'Manzana: ', style: 'tableHeader', alignment: 'center' }, { text: 'Localidad: ', style: 'tableHeader', alignment: 'center' }],
+                      [' ', ' ', ' '],
+                    ]
+                  }
+                },
+                { text: ' ', style: 'tableHeader' },
+
+              ],
+              [
+                {
+                  table: {
+                    widths: ['*', '*', '*', '*'],
+                    heights: [20, 20, 20, 20],
+                    headerRows: 1,
+                    body: [
+                      [{ text: 'T°: ', style: 'tableHeader', alignment: 'left' }, { text: 'F°: ', style: 'tableHeader', alignment: 'left' }, { text: 'N°: ', style: 'tableHeader', alignment: 'left' }, { text: 'Año°: ', style: 'tableHeader', alignment: 'left' }],
+                      [' ', ' ', ' ', ' '],
+                    ]
+                  }
+                },
+
+
+                {
+                  table: {
+                    widths: ['*', '*', '*', '*'],
+                    heights: [40, 40, 40, 40],
+                    headerRows: 1,
+                    body: [
+                      [{ text: 'Plano: ', alignment: 'center' },
+                      { text: 'T°:', alignment: 'left' },
+                      { text: 'F°:', alignment: 'left' },
+                      { text: 'A°:', alignment: 'left' }
+                      ]
+                    ]
+                  }
+                }
+
+              ],
+
+            ]
+          }
+        },
+
+
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, 30, 50, 50, 50, 50, 50, 30, "*"],
+            body: [
+              [
+                { text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'N° : ', bold: true, alignment: 'left', fontSize: 12 },
+                { text: 'Circuns. : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Sección : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Manzana: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Parcela: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Depto.: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Hoja: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Coordenadas: ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [85, 50, 50, 50, 50, 50, 30, "*"],
+            body: [
+              [
+                { text: ' Matricula \n Catastral:', fontSize: 14, bold: true, alignment: 'center' },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, 40, 30, 50, 50, 70, "*"],
+            body: [
+              [
+                { text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'Unidad: ', bold: true, alignment: 'left', fontSize: 12 },
+                { text: 'Piso : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Sub-Total : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Porcent.: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Destinada a: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' COMPLEMENTARIAS : ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [100, 30, 50, 50, 70, '*'],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Identidad del Titular del Dominio: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*', '*'],
+            headerRows: 1,
+            body: [
+              [{ text: 'Apellidos: ', style: 'tableHeader' }, { text: 'Nombres: ', style: 'tableHeader' }],
+              [apellido, nombre],
+            ]
+          },
+          layout: 'headerLineOnly'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [60, '*'],
+            headerRows: 1,
+            body: [
+              [{ text: 'Doc. N°: ', style: 'tableHeader' }, { text: 'Estado Civil: ', style: 'tableHeader' }],
+              [numdoc, estadociv]
+            ]
+          },
+          layout: 'headerLineOnly'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            headerRows: 1,
+            body: [
+              [{ text: 'Domicilio: ', style: 'tableHeader' }],
+              [domicilio],
+            ]
+          },
+          layout: 'headerLineOnly'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*', 100],
+            headerRows: 1,
+            body: [
+              [{ text: 'Solicitante: ', style: 'tableHeader' }, { text: 'Teléfono: ', style: 'tableHeader' }],
+              [usuarioSolicitante, telefono],
+            ]
+          },
+          layout: 'headerLineOnly'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            body: [
+              [{ text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            heights: [80],
+            body: [
+              [{ text: ' ', italics: true, alignment: 'center' }]
+            ]
+          }
+        },
+        { text: 'Registro General de la Propiedad Inmueble', style: 'paddingBottom' },
+        { text: 'La Rioja - Republica Argentina', style: 'subheader' },
+
+
+
+        ////////////////
+        ////////Pagina 2
+        ////////////////
+
+
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          },
+          pageBreak: 'before'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            heights: [50],
+            body: [
+              [{ text: ' ', italics: true, alignment: 'center' }]
+            ]
+          }
+        },
+
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'El dominio consta a nombre de: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            heights: [70],
+            body: [
+              [{ text: ' ', italics: true, alignment: 'center' }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 10 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Prevenciones: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableDescripcion',
+          table: {
+            widths: ['*'],
+            body: [
+              [
+                {
+                  text: ' Articulo 25 Ley 17.801 - con Fecha:                       de                                         de             ',
+                  fontSize: 12,
+                  alignment: 'left',
+                  margin: [0, 12, 0, 0]
+                }
+              ],
+              [
+                {
+                  text: ' Entró Certificado N°                                                       Operación                                 ',
+                  fontSize: 12,
+                  alignment: 'left',
+                  margin: [0, 12, 0, 0]
+                }
+              ],
+              [
+                {
+                  text: ' Escribano registro N°                                                   de                                            ',
+                  fontSize: 12,
+                  alignment: 'left',
+                  margin: [0, 12, 0, 0]
+                }
+              ]
+            ]
+          },
+          layout: {
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 1 : 1;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'gray';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'gray';
+            },
+
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, 55, 100, "*", 80, 50],
+            body: [
+              [
+                { text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'Hipoteca: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Fecha de la escritura: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Escribano o Autoridad Administrativa: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Acreedor: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: '', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Registro: ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: 'Lugar : ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 35, 100, 60, '*', 80, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*', 120],
+            body: [
+              [
+                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12 },
+
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
+
+              ],
+              [
+                { text: '  ', style: 'tableHeader' },
+
+                {
+                  table: {
+                    widths: [30, 30, 30],
+                    headerRows: 1,
+                    alignment: 'center',
+                    body: [
+                      [
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
+                      ],
+                      [' ', ' ', ' '],
+                    ]
+                  }
+                },
+              ],
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*', 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' 11 ', fontSize: 14, bold: true, alignment: 'center' },
+                { text: 'Embargos y otras Anotaciones: ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: 'Fecha: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Autos: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Juzgado: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Secretaría: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: 'Monto: ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' T° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: '', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [30, 30, 30, 30, 70, 70, 70, 70, 50],
+            body: [
+              [
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 11 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*', 120],
+            body: [
+              [
+                { text: 'Intervino: ', bold: true, alignment: 'center', fontSize: 12 },
+
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
+
+              ],
+              [
+                { text: '  ', style: 'tableHeader' },
+
+                {
+                  table: {
+                    widths: [30, 30, 30],
+                    headerRows: 1,
+                    alignment: 'center',
+                    body: [
+                      [
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
+                      ],
+                      [' ', ' ', ' '],
+                    ]
+                  }
+                },
+              ],
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 12 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Fecha: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, 50, 50, '*'],
+            heights: [50, 50, 50, 50],
+            body: [
+              [
+                { text: ' Día ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Mes ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Año ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Firma y Sello ', bold: true, alignment: 'center', fontSize: 12 }
+              ]
+            ]
+          }
+        },
+
+
+
+      ],
+      styles: {
+        header: {
+          fontSize: 22,
+          bold: true,
+          margin: [0, 0, 0, 5],
+          alignment: 'center'
+        },
+        subheader: {
+          fontSize: 14,
+          bold: true,
+          margin: [0, 5, 0, 5],
+          alignment: 'center'
+        },
+        tableExample: {
+          margin: [0, 0, 0, 0],
+          heights: [20]
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        tableDescripcion: {
+          margin: [0, 0, 0, 0],
+          heights: [20],
+          padding: [50, 100, 50, 100]
+        },
+        paddingBottom: {
+          alignment: 'center',
+          margin: [0, 20, 0, 10]
+        }
+      }
+    };
+
+    pdfMake.createPdf(FormularioMinG).download('Minuta G - ' + apellido + ' ' + nombre);
+  }
+
+
+  // Minuta H
+  //Imprimir y Descargar
+
+
+  public imprimirFormularioMinH(tipoTram: string,
+    apellido: string,
+    nombre: string,
+    nacionalidad: string,
+    estadoCivil: string,
+    nomConyu: string,
+    apeConyu: string,
+    tipoDoc: string,
+    numDoc: string,
+    fechNac: string,
+    usuarioApe: any,
+    usuarioNom: any,
+    telefono: any) {
+
+    const apeNomConyugue = apeConyu + ' ' + nomConyu;
+    const usuarioSolicitante = usuarioApe + ' ' + usuarioNom;
+
+    const FormularioMinH = {
+      pageSize: 'LEGAL',
+
+      content: [
+        { text: 'Secretaría de Tierras y Hábitat Social', style: 'header' },
+        { text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader' },
+        { text: 'Formulario Minuta "H" ', style: 'subheader' },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [200, '*'],
+            body: [
+              [{ text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTram, italics: true, alignment: 'right' }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*'],
+            body: [
+              [{ text: 'Se solicita información de Titularidad de Dominio ', italics: true, alignment: 'center' }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: [50, '*'],
+            body: [
+              [{ text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Datos de identidad de la persona: ', bold: true, alignment: 'left', fontSize: 13 }]
+            ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['*', '*'],
+            headerRows: 1,
+            body: [
+              [{ text: 'Apellidos: ', style: 'tableHeader' }, { text: 'Nombres: ', style: 'tableHeader' }],
+              [apellido, nombre]
             ]
           }
 
@@ -1697,7 +1788,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', '*'],
             headerRows: 1,
             body: [
-              [{text: 'Estado Civíl: ', style: 'tableHeader'}, {text: 'Conyugue: ', style: 'tableHeader'}],
+              [{ text: 'Estado Civíl: ', style: 'tableHeader' }, { text: 'Conyugue: ', style: 'tableHeader' }],
               [estadoCivil, apeNomConyugue],
             ]
           }
@@ -1710,7 +1801,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', 60, '*'],
             headerRows: 1,
             body: [
-              [{text: 'Tipo de documento: ', style: 'tableHeader'}, {text: 'N°: ', style: 'tableHeader'}, {text: 'Nacionalidad: ', style: 'tableHeader'}],
+              [{ text: 'Tipo de documento: ', style: 'tableHeader' }, { text: 'N°: ', style: 'tableHeader' }, { text: 'Nacionalidad: ', style: 'tableHeader' }],
               [tipoDoc, numDoc, nacionalidad]
             ]
           }
@@ -1723,7 +1814,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [150, '*'],
             body: [
-              [{text: 'Fecha de Nacimiento: ', fontSize: 14, bold: true, alignment: 'left' }, {text: fechNac, fontSize: 12, bold: true, alignment: 'center' }]
+              [{ text: 'Fecha de Nacimiento: ', fontSize: 14, bold: true, alignment: 'left' }, { text: fechNac, fontSize: 12, bold: true, alignment: 'center' }]
 
             ]
           }
@@ -1734,7 +1825,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Nombre de la sociedad: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Nombre de la sociedad: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1776,7 +1867,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Si se trata de asociaciones civiles, consignar datos pertinentes: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Si se trata de asociaciones civiles, consignar datos pertinentes: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1786,7 +1877,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [50],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -1795,11 +1886,11 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',100],
+            widths: ['*', 100],
             headerRows: 1,
             body: [
-              [{text: 'Solicitante: ', style: 'tableHeader'}, {text: 'Teléfono: ', style: 'tableHeader'}],
-              [ usuarioSolicitante, telefono],
+              [{ text: 'Solicitante: ', style: 'tableHeader' }, { text: 'Teléfono: ', style: 'tableHeader' }],
+              [usuarioSolicitante, telefono],
             ]
           }
         },
@@ -1807,10 +1898,10 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [150,'*'],
+            widths: [150, '*'],
             headerRows: 1,
             body: [
-              [{text: 'Domicilio: ', style: 'tableHeader'}, {text: '   ', alignment: 'center'}]
+              [{ text: 'Domicilio: ', style: 'tableHeader' }, { text: '   ', alignment: 'center' }]
             ]
           }
         },
@@ -1818,9 +1909,9 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [50,'*'],
+            widths: [50, '*'],
             body: [
-              [{text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13}]
+              [{ text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13 }]
             ]
           }
         },
@@ -1830,12 +1921,12 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [100],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
-        {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
-        {text: 'La Rioja - Republica Argentina', style: 'subheader'},
+        { text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader' },
+        { text: 'La Rioja - Republica Argentina', style: 'subheader' },
 
 
 
@@ -1850,7 +1941,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: Salvedad de enmendaduras:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: Salvedad de enmendaduras:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           },
           pageBreak: 'before'
@@ -1862,7 +1953,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [50],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -1873,7 +1964,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -1884,15 +1975,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1904,15 +1995,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1924,15 +2015,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1944,15 +2035,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1964,15 +2055,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -1982,16 +2073,16 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '  ', style: 'tableHeader'},
+                { text: '  ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -2000,11 +2091,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2019,7 +2110,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2030,15 +2121,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2050,15 +2141,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2070,15 +2161,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2090,15 +2181,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2110,15 +2201,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2128,16 +2219,16 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '  ', style: 'tableHeader'},
+                { text: '  ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -2146,11 +2237,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2165,7 +2256,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Resultado del Informe - Registración - Carácter de la misma:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Resultado del Informe - Registración - Carácter de la misma:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2176,7 +2267,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [80],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -2184,20 +2275,20 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [50,'*', 120],
+            widths: [50, '*', 120],
             body: [
               [
-                { text: ' 10 ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' 10 ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: ' Firma y Sello del jefe informante ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' Firma y Sello del jefe informante ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '   ', style: 'tableHeader'},
+                { text: '   ', style: 'tableHeader' },
 
-                {text: '   ', style: 'tableHeader'},
+                { text: '   ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -2206,11 +2297,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'right',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2227,21 +2318,23 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Devolución de minuta H - Retirada por: ', bold: true, alignment: 'left', fontSize: 12},
+                { text: 'Devolución de minuta H - Retirada por: ', bold: true, alignment: 'left', fontSize: 12 },
 
-                {text: ' Fecha:  ', alignment: 'center', fontSize: 13},
+                { text: ' Fecha:  ', alignment: 'center', fontSize: 13 },
 
 
 
               ],
               [
-                { text: ' Apellido y Nombre: \n' +
-                    ' Domicilio: \n \n'+
+                {
+                  text: ' Apellido y Nombre: \n' +
+                    ' Domicilio: \n \n' +
                     '\n Firma: \n'
-                  , bold: true, alignment: 'left', fontSize: 12},
+                  , bold: true, alignment: 'left', fontSize: 12
+                },
 
                 {
                   table: {
@@ -2250,11 +2343,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2290,7 +2383,7 @@ export class GestionTramitesComponent implements OnInit {
           fontSize: 13,
           color: 'black'
         },
-        tableDescripcion:{
+        tableDescripcion: {
           margin: [0, 0, 0, 0],
           heights: [20],
           padding: [50, 100, 50, 100]
@@ -2309,18 +2402,18 @@ export class GestionTramitesComponent implements OnInit {
   }
 
   descargarFormularioMinH(tipoTram: string,
-                          apellido: string,
-                          nombre: string,
-                          nacionalidad: string,
-                          estadoCivil: string,
-                          nomConyu: string,
-                          apeConyu: string,
-                          tipoDoc: string,
-                          numDoc: string,
-                          fechNac: string,
-                          usuarioApe: any,
-                          usuarioNom: any,
-                          telefono: any) {
+    apellido: string,
+    nombre: string,
+    nacionalidad: string,
+    estadoCivil: string,
+    nomConyu: string,
+    apeConyu: string,
+    tipoDoc: string,
+    numDoc: string,
+    fechNac: string,
+    usuarioApe: any,
+    usuarioNom: any,
+    telefono: any) {
     const apeNomConyugue = apeConyu + ' ' + nomConyu;
     const usuarioSolicitante = usuarioApe + ' ' + usuarioNom;
 
@@ -2328,15 +2421,15 @@ export class GestionTramitesComponent implements OnInit {
       pageSize: 'LEGAL',
 
       content: [
-        {text: 'Secretaría de Tierras y Hábitat Social', style: 'header'},
-        {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
-        {text: 'Formulario Minuta "H" ', style: 'subheader'},
+        { text: 'Secretaría de Tierras y Hábitat Social', style: 'header' },
+        { text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader' },
+        { text: 'Formulario Minuta "H" ', style: 'subheader' },
         {
           style: 'tableExample',
           table: {
             widths: [200, '*'],
             body: [
-              [{text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTram, italics: true, alignment: 'right'}]
+              [{ text: 'SOLICITUD DE INFORME: ', fontSize: 14, bold: true }, { text: tipoTram, italics: true, alignment: 'right' }]
             ]
           }
         },
@@ -2345,7 +2438,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 1 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Objeto del Pedido: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2354,7 +2447,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: ['*'],
             body: [
-              [{ text: 'Se solicita información de Titularidad de Dominio ' , italics: true, alignment: 'center'}]
+              [{ text: 'Se solicita información de Titularidad de Dominio ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -2363,7 +2456,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Datos de identidad de la persona: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 2 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Datos de identidad de la persona: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2373,8 +2466,8 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', '*'],
             headerRows: 1,
             body: [
-              [{text: 'Apellidos: ', style: 'tableHeader'}, {text: 'Nombres: ', style: 'tableHeader'}],
-              [ apellido, nombre]
+              [{ text: 'Apellidos: ', style: 'tableHeader' }, { text: 'Nombres: ', style: 'tableHeader' }],
+              [apellido, nombre]
             ]
           }
 
@@ -2386,7 +2479,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', '*'],
             headerRows: 1,
             body: [
-              [{text: 'Estado Civíl: ', style: 'tableHeader'}, {text: 'Conyugue: ', style: 'tableHeader'}],
+              [{ text: 'Estado Civíl: ', style: 'tableHeader' }, { text: 'Conyugue: ', style: 'tableHeader' }],
               [estadoCivil, apeNomConyugue],
             ]
           }
@@ -2399,7 +2492,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*', 60, '*'],
             headerRows: 1,
             body: [
-              [{text: 'Tipo de documento: ', style: 'tableHeader'}, {text: 'N°: ', style: 'tableHeader'}, {text: 'Nacionalidad: ', style: 'tableHeader'}],
+              [{ text: 'Tipo de documento: ', style: 'tableHeader' }, { text: 'N°: ', style: 'tableHeader' }, { text: 'Nacionalidad: ', style: 'tableHeader' }],
               [tipoDoc, numDoc, nacionalidad]
             ]
           }
@@ -2412,7 +2505,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [150, '*'],
             body: [
-              [{text: 'Fecha de Nacimiento: ', fontSize: 14, bold: true, alignment: 'left' }, {text: fechNac, fontSize: 12, bold: true, alignment: 'center' }]
+              [{ text: 'Fecha de Nacimiento: ', fontSize: 14, bold: true, alignment: 'left' }, { text: fechNac, fontSize: 12, bold: true, alignment: 'center' }]
 
             ]
           }
@@ -2423,7 +2516,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Nombre de la sociedad: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 3 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Nombre de la sociedad: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2465,7 +2558,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Si se trata de asociaciones civiles, consignar datos pertinentes: ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 4 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Si se trata de asociaciones civiles, consignar datos pertinentes: ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2475,7 +2568,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [50],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -2484,11 +2577,11 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',100],
+            widths: ['*', 100],
             headerRows: 1,
             body: [
-              [{text: 'Solicitante: ', style: 'tableHeader'}, {text: 'Teléfono: ', style: 'tableHeader'}],
-              [ usuarioSolicitante, telefono],
+              [{ text: 'Solicitante: ', style: 'tableHeader' }, { text: 'Teléfono: ', style: 'tableHeader' }],
+              [usuarioSolicitante, telefono],
             ]
           }
         },
@@ -2496,10 +2589,10 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [150,'*'],
+            widths: [150, '*'],
             headerRows: 1,
             body: [
-              [{text: 'Domicilio: ', style: 'tableHeader'}, {text: '   ', alignment: 'center'}]
+              [{ text: 'Domicilio: ', style: 'tableHeader' }, { text: '   ', alignment: 'center' }]
             ]
           }
         },
@@ -2507,9 +2600,9 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [50,'*'],
+            widths: [50, '*'],
             body: [
-              [{text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13}]
+              [{ text: ' 5 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Firma y Sello: ', bold: true, alignment: 'center', fontSize: 13 }]
             ]
           }
         },
@@ -2519,12 +2612,12 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [100],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
-        {text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader'},
-        {text: 'La Rioja - Republica Argentina', style: 'subheader'},
+        { text: 'Dirección General de Registro de la Propiedad Inmueble', style: 'subheader' },
+        { text: 'La Rioja - Republica Argentina', style: 'subheader' },
 
 
 
@@ -2539,7 +2632,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: Salvedad de enmendaduras:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 6 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Observaciones: Salvedad de enmendaduras:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           },
           pageBreak: 'before'
@@ -2551,7 +2644,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [50],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -2562,7 +2655,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 7 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2573,15 +2666,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2593,15 +2686,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2613,15 +2706,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2633,15 +2726,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2653,15 +2746,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2671,16 +2764,16 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '  ', style: 'tableHeader'},
+                { text: '  ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -2689,11 +2782,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2708,7 +2801,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 8 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Búsqueda por indices de Titulares:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2719,15 +2812,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' T°: ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' N° : ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' F° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' A° :', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' Matricula N° ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2739,15 +2832,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2759,15 +2852,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2779,15 +2872,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2799,15 +2892,15 @@ export class GestionTramitesComponent implements OnInit {
             widths: [30, 30, 30, 30, 30, 30, 30, 30, '*'],
             body: [
               [
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12},
-                { text: ' ', bold: true, alignment: 'center', fontSize: 12}
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 },
+                { text: ' ', bold: true, alignment: 'center', fontSize: 12 }
               ]
             ]
           }
@@ -2817,16 +2910,16 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12},
+                { text: 'Firma y Sello : ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '  ', style: 'tableHeader'},
+                { text: '  ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -2835,11 +2928,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2854,7 +2947,7 @@ export class GestionTramitesComponent implements OnInit {
           table: {
             widths: [50, '*'],
             body: [
-              [{text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Resultado del Informe - Registración - Carácter de la misma:  ', bold: true, alignment: 'left', fontSize: 13}]
+              [{ text: ' 9 ', fontSize: 14, bold: true, alignment: 'center' }, { text: 'Resultado del Informe - Registración - Carácter de la misma:  ', bold: true, alignment: 'left', fontSize: 13 }]
             ]
           }
         },
@@ -2865,7 +2958,7 @@ export class GestionTramitesComponent implements OnInit {
             widths: ['*'],
             heights: [80],
             body: [
-              [{ text: ' ' , italics: true, alignment: 'center'}]
+              [{ text: ' ', italics: true, alignment: 'center' }]
             ]
           }
         },
@@ -2873,20 +2966,20 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: [50,'*', 120],
+            widths: [50, '*', 120],
             body: [
               [
-                { text: ' 10 ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' 10 ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: ' Firma y Sello del jefe informante ', bold: true, alignment: 'center', fontSize: 12},
+                { text: ' Firma y Sello del jefe informante ', bold: true, alignment: 'center', fontSize: 12 },
 
-                { text: '  ', bold: true, alignment: 'center', fontSize: 12},
+                { text: '  ', bold: true, alignment: 'center', fontSize: 12 },
 
               ],
               [
-                {text: '   ', style: 'tableHeader'},
+                { text: '   ', style: 'tableHeader' },
 
-                {text: '   ', style: 'tableHeader'},
+                { text: '   ', style: 'tableHeader' },
 
                 {
                   table: {
@@ -2895,11 +2988,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'right',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2916,21 +3009,23 @@ export class GestionTramitesComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
-            widths: ['*',120],
+            widths: ['*', 120],
             body: [
               [
-                { text: 'Devolución de minuta H - Retirada por: ', bold: true, alignment: 'left', fontSize: 12},
+                { text: 'Devolución de minuta H - Retirada por: ', bold: true, alignment: 'left', fontSize: 12 },
 
-                {text: ' Fecha:  ', alignment: 'center', fontSize: 13},
+                { text: ' Fecha:  ', alignment: 'center', fontSize: 13 },
 
 
 
               ],
               [
-                { text: ' Apellido y Nombre: \n' +
-                    ' Domicilio: \n \n'+
+                {
+                  text: ' Apellido y Nombre: \n' +
+                    ' Domicilio: \n \n' +
                     '\n Firma: \n'
-                  , bold: true, alignment: 'left', fontSize: 12},
+                  , bold: true, alignment: 'left', fontSize: 12
+                },
 
                 {
                   table: {
@@ -2939,11 +3034,11 @@ export class GestionTramitesComponent implements OnInit {
                     alignment: 'center',
                     body: [
                       [
-                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12},
-                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12}
+                        { text: ' D ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' M ', bold: true, alignment: 'center', fontSize: 12 },
+                        { text: ' A ', bold: true, alignment: 'center', fontSize: 12 }
                       ],
-                      [ ' ', ' ', ' '],
+                      [' ', ' ', ' '],
                     ]
                   }
                 },
@@ -2979,7 +3074,7 @@ export class GestionTramitesComponent implements OnInit {
           fontSize: 13,
           color: 'black'
         },
-        tableDescripcion:{
+        tableDescripcion: {
           margin: [0, 0, 0, 0],
           heights: [20],
           padding: [50, 100, 50, 100]
@@ -2992,6 +3087,6 @@ export class GestionTramitesComponent implements OnInit {
     };
 
 
-    pdfMake.createPdf(FormularioMinH).download('Minuta H - '+ apellido + ' ' + nombre);
+    pdfMake.createPdf(FormularioMinH).download('Minuta H - ' + apellido + ' ' + nombre);
   }
 }
