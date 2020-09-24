@@ -104,3 +104,10 @@ label:not(.form-check-label):not(.custom-file-label) {
 .lead {
   margin: 20px;
 }
+
+#card-pago img{
+  max-width: 800px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+

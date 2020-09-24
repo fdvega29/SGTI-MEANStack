@@ -70,6 +70,7 @@ export class NuevoTramiteComponent implements OnInit {
   lsMinuta: any;
   lsMinuta2: any;
   fechaPago: any;
+  redireccion: boolean = false;
 
   constructor(private userService: UsuarioService,
     private dataTramite: TramitesService,
@@ -472,7 +473,10 @@ export class NuevoTramiteComponent implements OnInit {
     if(this.urlData.queryParams['collection_id']){
       this.collection_id = this.urlData.queryParams['collection_id'];
       this.order_id = this.urlData.queryParams['merchant_order_id'];
-      this.estadoOrden = this.urlData.queryParams['collection_status']
+      this.estadoOrden = this.urlData.queryParams['collection_status'];
+
+      this.redireccion = true;
+      $('#stepwizard-Section').hide();
 
       this.lsImporte = localStorage.getItem('Importe');
       this.lsFormulario = localStorage.getItem('Formulario');
@@ -481,6 +485,7 @@ export class NuevoTramiteComponent implements OnInit {
       this.postComprobantePago();
     }else{
       console.log('No existe')
+      $('#stepwizard-Section').show();
     }
   }
 
