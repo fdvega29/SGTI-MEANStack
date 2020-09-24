@@ -41,11 +41,14 @@ export class GestionTramitesComponent implements OnInit {
   proceso: any;
   longitudPagos = 0;
   datosProceso: any;
+  notificacion = '0';
+  lsNotificacion: any;
 
   ngOnInit() {
     this.usuario = this.userService.getCurrentUser();
     this.getDataTramite();
     this.getProcesos();
+    this.lsNotificacion = localStorage.getItem('notificacion');
   }
 
   public getDataTramite(): void {
@@ -87,18 +90,6 @@ export class GestionTramitesComponent implements OnInit {
             this.estadoMercadoPago = res.results[0].status;
             if (this.estadoMercadoPago != comprobante.estado) {
               this.totActualizados = this.totActualizados + 1;
-              /*Post nuevo proceso*/
-              if (this.longitudPagos == 0) {
-                this.proceso = {
-                  usuario: this.usuario,
-                  totProcesados: this.totProcesados,
-                  totActualizados: this.totActualizados
-                }
-                console.log('Ingresa primer if')
-                this.sicronizarPagos.postDataProceso(this.proceso)
-                  .subscribe((res: any) => {
-                  });
-              }
               /*Post nuevo comprobante*/
               this.newComprobante = {
                 _id: comprobante._id,
@@ -112,11 +103,27 @@ export class GestionTramitesComponent implements OnInit {
               }
               this.mercadoPagoService.editComprobante(this.newComprobante)
                 .subscribe((res: any) => {
-                  location.reload();
+                  /*Post nuevo proceso*/
+                  if (this.longitudPagos == 0) {
+                    this.notificacion = '1';
+                    localStorage.setItem('notificacion', this.notificacion);
+                    this.proceso = {
+                      usuario: this.usuario,
+                      totProcesados: this.totProcesados,
+                      totActualizados: this.totActualizados
+                    }
+                    console.log('Ingresa primer if')
+                    this.sicronizarPagos.postDataProceso(this.proceso)
+                      .subscribe((res: any) => {
+                        location.reload();
+                      });
+                  }
                 })
             } else {
               /*Post nuevo proceso*/
               if (this.longitudPagos == 0) {
+                this.notificacion = '1';
+                localStorage.setItem('notificacion', this.notificacion);
                 this.proceso = {
                   usuario: this.usuario,
                   totProcesados: this.totProcesados,
@@ -125,6 +132,7 @@ export class GestionTramitesComponent implements OnInit {
                 console.log('Ingresa segundo IF')
                 this.sicronizarPagos.postDataProceso(this.proceso)
                   .subscribe((res: any) => {
+                    location.reload();
                   });
               }
             }
@@ -133,12 +141,16 @@ export class GestionTramitesComponent implements OnInit {
     })
   };
 
-  public getProcesos(){
+  public getProcesos() {
     this.sicronizarPagos.getAllProcesos()
-                        .subscribe((res: any) =>{
-                          this.datosProceso = res.data[0];
-                          console.log(res);
-                        })
+      .subscribe((res: any) => {
+        this.datosProceso = res.data[0];
+        console.log(res);
+      })
+  }
+
+  public removeItem() {
+    localStorage.removeItem('notificacion');
   }
 
 
