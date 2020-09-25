@@ -6,6 +6,10 @@
   background-color: #ffffff;
 }
 
+.brand-link {
+  background-color: rgb(45, 140, 255);
+}
+
 .title-sgti {
   font-family: 'Bebas Neue', cursive !important;
   font-size: 1.2em;
@@ -17,7 +21,7 @@
   color: #0c0c0c;
 }
 .name{
-  color: #0b58a2;
+  color: rgb(45, 140, 255);;
 }
 
 .name:hover {
@@ -27,8 +31,8 @@
 
 .btn-lg {
   color: #fff0ff;
-  background-color: #0b58a2;
-  border: 2px solid #0b58a2;
+  background-color: rgb(45, 140, 255);
+  border: 2px solid rgb(45, 140, 255);;
   font-size: medium;
   border-radius: 3.0rem !important;
   margin-right: 1em;
@@ -37,5 +41,5 @@
 
 .btn-lg:hover {
   background: #ffffff;
-  color: #0b58a2;
+  color: rgb(45, 140, 255);;
 }

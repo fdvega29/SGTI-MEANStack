@@ -1,11 +1,11 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light elevation-4">
   <!-- Brand Logo -->
-  <a *ngIf="usuario.roles == 'USER_ROLE'" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link" style="background: #0b58a2 !important;">
+  <a *ngIf="usuario.roles == 'USER_ROLE'" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link">
     <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
     <span class="brand-text text-white title-sgti">SGTI</span>
   </a>
-  <a *ngIf="usuario.roles == 'ADMIN_ROLE'" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="brand-link" style="background: #0b58a2 !important;">
+  <a *ngIf="usuario.roles == 'ADMIN_ROLE'" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="brand-link">
     <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
     <span class="brand-text text-white title-sgti">SGTI</span>
   </a>
@@ -21,6 +21,7 @@
       </div>
       <div class="info">
         <a href="javascript=void(0)" class="d-block" routerLink="/dashboard/perfil" routerLinkActive="router-link-active">{{usuario.apellido}} {{usuario.nombre}}</a>
+        <br>
         <span class="d-block" style="font-size: 15px !important;">{{usuario.email}}</span>
         <br>
         <button type="button" class="btn btn-block btn-lg" routerLink="/dashboard/perfil" routerLinkActive="router-link-active"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Mi perfil</button>
