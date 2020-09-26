@@ -1,3 +1,27 @@
 .content-wrapper{
   font-family: "Roboto", sans-serif !important;
 }
+
+.card {
+  width: 100%;
+  margin: 0px 5px 0px 5px;
+}
+
+.card-body hr  {
+  border-top: 3px solid rgb(45, 140, 255);
+}
+
+#cardsUsuarios {
+  display: none;
+}
+
+@media screen and (max-width: 725px) {
+
+  #cardsUsuarios {
+    display: block;
+  }
+
+  #tableUsuarios {
+    display: none;
+  }
+}
