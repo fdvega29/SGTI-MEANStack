@@ -32,7 +32,7 @@ export class AreasComponent implements OnInit {
         this.dataTable = table.DataTable();
       })
   }
-  
+
   public onPreUdateAres(area: Area){
     this.serviceArea.selectedArea = Object.assign({}, area);
   }
@@ -47,7 +47,7 @@ export class AreasComponent implements OnInit {
     console.log(area);
     Swal.fire({
       title: '¿Estas seguro?',
-      text: "Desea eliminar " + area.nombre,
+      text: 'Desea eliminar ' + area.nombre,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

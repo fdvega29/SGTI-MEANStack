@@ -4,47 +4,102 @@
     <app-breadcrumbs></app-breadcrumbs>
     <hr>
     <section class="content">
-        <div class="row" data-aos="zoom-in">
-            <div class="col-12">
-                <!--DataTable -->
-                <div class="row p-2">
-                    <div class="card col-12">
-                        <div class="card-header">
-                        <h3 class="card-title text-muted">Listado de areas
-                            <button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i>  Nuevo</button>
-                        </h3>
-                        </div>
-                        <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped dt-responsive nowrap">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">N°</th>
-                                        <th scope="col" class="text-center">Fecha Alta</th>
-                                        <th scope="col" class="text-center">Nombre</th>
-                                        <th scope="col" class="text-center">Encargado</th>
-                                        <th scope="col" class="text-center">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let area of areas; index as i">
-                                        <td class="text-center" scope="row">{{i+1}}</td>
-                                        <td class="text-center">{{area.createdAt | date: "dd/MM/yyyy"}}</td>
-                                        <td class="text-center">{{area.nombre}}</td>
-                                        <td class="text-center">{{area.encargado}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-outline-primary" (click)="onPreUdateAres(area)" data-toggle="modal"
-                                            data-target="#exampleModal"><i class="fa fa-edit"></i></button>
-                                            &nbsp;
-                                            <button class="btn btn-outline-danger" (click)="deleteArea(area)"><i class="fa fa-times"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+
+      <!-- TableAreas -->
+
+      <div class="row" data-aos="zoom-in" id="tableAreas">
+          <div class="col-12">
+              <!--DataTable -->
+              <div class="row p-2">
+                  <div class="card col-12">
+                      <div class="card-header">
+                      <h3 class="card-title text-muted">Listado de areas
+                          <button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i>  Nuevo</button>
+                      </h3>
+                      </div>
+                      <div class="card-body">
+                          <table id="example1" class="table table-bordered table-striped nowrap">
+                              <thead>
+                                  <tr>
+                                      <th scope="col" class="text-center">N°</th>
+                                      <th scope="col" class="text-center">Fecha Alta</th>
+                                      <th scope="col" class="text-center">Nombre</th>
+                                      <th scope="col" class="text-center">Encargado</th>
+                                      <th scope="col" class="text-center">Acciones</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let area of areas; index as i">
+                                      <td class="text-center" scope="row">{{i+1}}</td>
+                                      <td class="text-center">{{area.createdAt | date: "dd/MM/yyyy"}}</td>
+                                      <td class="text-center">{{area.nombre}}</td>
+                                      <td class="text-center">{{area.encargado}}</td>
+                                      <td class="text-center">
+                                          <button class="btn btn-outline-primary" (click)="onPreUdateAres(area)" data-toggle="modal"
+                                          data-target="#exampleModal"><i class="fa fa-edit"></i></button>
+                                          &nbsp;
+                                          <button class="btn btn-outline-danger" (click)="deleteArea(area)"><i class="fa fa-times"></i></button>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- CardsAreas -->
+      <div class="row" id="cardsAreas">
+        <div class="col-12">
+          <div class="card col-12" id="tituloCard">
+            <h4 class="card-title text-center">Listado de áreas</h4>
+            <button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i>  Nuevo</button>
+          </div>
+          <!--DataCards -->
+          <div class="row p-2">
+            <div class="card col-12" *ngFor="let area of areas; index as i" data-aos="zoom-in">
+                            <!-- /.card-header -->
+              <div class="card-body text-center">
+
+                <p>
+                  <strong>N°: </strong>{{i+1}} | <strong>Fecha Alta: </strong> {{area.createdAt | date: "dd/MM/yyyy"}}
+                </p>
+
+                <hr>
+
+                <strong>Nombre:</strong>
+
+                <p class="text-muted">{{area.nombre}}</p>
+
+                <hr>
+
+                <strong>Encargado:</strong>
+
+                <p class="text-muted">
+                  {{area.encargado}}
+                </p>
+
+                <hr>
+
+                <strong>Acciones</strong>
+
+                <p class="text-muted">
+                  <button class="btn btn-outline-primary" (click)="onPreUdateAres(area)" data-toggle="modal"
+                          data-target="#exampleModal"><i class="fa fa-edit"></i></button>
+                  &nbsp;
+                  <button class="btn btn-outline-danger" (click)="deleteArea(area)"><i class="fa fa-times"></i></button>
+                </p>
+
+              </div>
+              <!-- /.card-body -->
             </div>
+          </div>
         </div>
+      </div>
+
+
+
     </section>
   </div>
   <app-nuevo-area></app-nuevo-area>
