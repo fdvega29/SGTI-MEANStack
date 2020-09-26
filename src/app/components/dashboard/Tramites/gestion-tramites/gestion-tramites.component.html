@@ -35,13 +35,13 @@
 
         <!--DataTable -->
         <div class="row p-2" data-aos="zoom-in" id="tableTramites">
-          <div class="card">
+          <div class="card col-12">
             <div class="card-header">
               <h3 class="card-title">Listado de tramites generados</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped dt-responsive nowrap">
+              <table id="example1" class="table table-bordered table-striped nowrap">
                 <thead>
                   <tr>
                     <th scope="col" class="text-center">N°</th>
@@ -61,7 +61,7 @@
                   <tr *ngFor="let minH of tramites; index as i">
                     <td class="text-center" scope="row">{{i+1}}</td>
                     <td class="text-center">{{minH.createdAt | date: "dd/MM/yyyy"}}</td>
-                    <td scope="text-center">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</td>
+                    <td class="text-center">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</td>
                     <!--<td class="text-center">{{minH.apellido}} {{minH.nombre}}</td>-->
                     <td class="text-center">{{minH.producto.formulario}}</td>
                     <!--<td class="text-center">{{minH.tipoTram}}</td>
