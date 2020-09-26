@@ -22,8 +22,9 @@
             <!-- DIV -->
             <div data-aos="zoom-in">
               <!-- DIV Elegir el trámite -->
-              <div id="step1" class="tab-pane" role="tabpanel">
+              <div id="step1">
                 <section class="tab-content">
+                  <hr>
                   <!-- titulo row -->
                   <div class="col-xs-12 text-center">
                     <h2 class="page-header">
@@ -32,8 +33,8 @@
                   </div>
                   <!-- /.col -->
                   <div class="row" data-aos="flip-up">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 text-center">
+
+                    <div class="col-md-6 text-center">
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" id="card-h" />
 
@@ -49,11 +50,8 @@
                         </div>
                       </label>
                     </div>
-                    <div class="col-md-2"></div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 text-center">
+
+                  <div class="col-md-6 text-center">
                       <label>
                         <input type="radio" name="tramite" class="card-input-element" id="card-g" />
 
@@ -70,7 +68,7 @@
 
                       </label>
                     </div>
-                    <div class="col-md-2"></div>
+
                   </div>
                   <hr>
                   <div class="row" data-aos="zoom-in">
@@ -83,15 +81,15 @@
                 </section>
               </div>
               <!-- DIV Completa formulario -->
-              <div id="step2" class="tab-pane" role="tabpanel">
+              <div id="step2">
 
                 <!-- Formulario H -->
-                <section class="tab-content" id="formH" data-aos="flip-up">
+                <section id="formH" data-aos="flip-up">
                   <!-- titulo row -->
                   <div class="row">
-                    <div class="col-xs-12">
-                      <h3 class="page-header">
-                        <i class="fa fa-address-card" aria-hidden="true" style="color: #3282b8;"></i> Datos de identidad
+                    <div class="col-xs-12 text-center">
+                      <h3>
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Datos de identidad
                         de la persona
                       </h3>
                     </div>
@@ -99,19 +97,19 @@
 
                   </div>
                   <form ngNativeValidate>
-                    <div class="form-row">
+                    <div class="form-row text-center">
                       <div class="form-group col-md-4">
-                        <label for="inputApellido">Apellido/s:</label>
+                        <label for="inputApellido"><strong>Apellido/s:</strong></label>
                         <input type="text" class="form-control" id="inputApellido" placeholder=""
                           (focusout)="guardar_apellido(apel.value);" #apel>
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="inputNombres">Nombre completo:</label>
+                        <label for="inputNombres"><strong>Nombre completo:</strong></label>
                         <input type="text" class="form-control" id="inputNombres" placeholder="" value="{{this.nombre}}"
                           (focusout)="guardar_nombre(nomb.value);" #nomb>
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="inputEstadoCivil">Estado Civil</label>
+                        <label for="inputEstadoCivil"><strong>Estado Civil</strong></label>
                         <select id="inputEstadoCivil" class="form-control"
                           (focusout)="guardar_estadocivil(ecivi.value);" #ecivi>
                           <option selected value="">Seleccione..</option>
@@ -122,9 +120,9 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row text-center">
                       <div class="form-group col-md-4">
-                        <label for="inputTipoDoc">Tipo de documento:</label>
+                        <label for="inputTipoDoc"><strong>Tipo de documento:</strong></label>
                         <select id="inputTipoDoc" class="form-control" (focusout)="guardar_tdoc(tdoc.value);" #tdoc>
                           <option selected value="">Seleccione..</option>
                           <option value="Documento Nacional de Identidad (DNI)">Documento Nacional de Identidad (DNI)
@@ -135,30 +133,30 @@
                         </select>
                       </div>
                       <div class="form-group col-md-2">
-                        <label for="inputNumeroDocumento">Número:</label>
+                        <label for="inputNumeroDocumento"><strong>Número:</strong></label>
                         <input type="text" class="form-control" id="inputNumeroDocumento"
                           (focusout)="guardar_ndoc(ndoc.value);" #ndoc>
                       </div>
                       <div class="form-group col-md-3">
-                        <label for="inputNacionalidad">Nacionalidad</label>
+                        <label for="inputNacionalidad"><strong>Nacionalidad</strong></label>
                         <input type="text" class="form-control" id="inputNacionalidad"
                           (focusout)="guardar_nacion(nacion.value);" #nacion>
                       </div>
                       <div class="form-group col-md-3">
-                        <label for="inputFecha">Fecha de nacimiento:</label>
+                        <label for="inputFecha"><strong>Fecha de nacimiento:</strong></label>
                         <input class="form-control" type="date" id="inputFecha"
                           (focusout)="guardar_fechanac(fnac.value);" #fnac>
                       </div>
                     </div>
                     <br>
-                    <label>Datos del cónyugue</label>
-                    <div class="form-row">
+                    <label class="text-center">Datos del cónyugue</label>
+                    <div class="form-row text-center">
                       <div class="form-group col-md-6">
-                        <label for="inputApellidoConyugue">Apellido/s</label><input type="text" class="form-control"
+                        <label for="inputApellidoConyugue"><strong>Apellido/s</strong></label><input type="text" class="form-control"
                           id="inputApellidoConyugue" (focusout)="guardar_con_ape(conApe.value);" #conApe>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="inputNombresConyugue">Nombre completo</label><input type="text" class="form-control"
+                        <label for="inputNombresConyugue"><strong>Nombre completo</strong></label><input type="text" class="form-control"
                           id="inputNombresConyugue" (focusout)="guardar_con_nomb(conNomb.value);" #conNomb>
                       </div>
                     </div>
@@ -176,13 +174,13 @@
 
 
                 <!-- Formulario G -->
-                <section class="invoice" id="formG" data-aos="flip-up">
+                <section id="formG" data-aos="flip-up">
                   <!-- titulo row -->
                   <div class="row">
-                    <div class="col-xs-12">
-                      <h2 class="page-header">
+                    <div class="col-xs-12 text-center">
+                      <h3>
                         <i class="fa fa-address-card" aria-hidden="true"></i> Datos de identidad de la persona
-                      </h2>
+                      </h3>
                     </div>
                     <!-- /.col -->
 
@@ -190,25 +188,25 @@
                   <form ngNativeValidate>
                     <div class="form-row">
 
-                      <div class="col-md-12">
-                        <h5 class="page-header">
+                      <div class="col-md-12 text-center">
+                        <h5>
                           <i class="fa fa-user-circle-o" aria-hidden="true" style="color: #3282b8;"></i> Identidad del
                           Titular del Dominio:
                         </h5>
                       </div>
 
-                      <div class="col-md-4">
-                        <label for="inputApellido">Apellido/s:</label>
+                      <div class="col-md-4 text-center">
+                        <label for="inputApellido"><strong>Apellido/s:</strong></label>
                         <input type="text" class="form-control" id="inputApellidoMinG" placeholder=""
                           (focusout)="guardar_apellido(apelG.value);" #apelG>
                       </div>
-                      <div class="col-md-4">
-                        <label for="inputNombres">Nombre completo:</label>
+                      <div class="col-md-4 text-center">
+                        <label for="inputNombres"><strong>Nombre completo:</strong></label>
                         <input type="text" class="form-control" id="inputNombresMinG" placeholder=""
                           (focusout)="guardar_nombre(nombG.value);" #nombG>
                       </div>
-                      <div class="col-md-4">
-                        <label for="inputEstadoCivilMinG">Estado Civil</label>
+                      <div class="col-md-4 text-center">
+                        <label for="inputEstadoCivilMinG"><strong>Estado Civil</strong></label>
                         <select id="inputEstadoCivilMinG" class="form-control"
                           (focusout)="guardar_estadocivil(eciviG.value);" #eciviG>
                           <option selected value="">Seleccione..</option>
@@ -220,26 +218,28 @@
                       </div>
                     </div>
                     <div class="form-row">
-                      <div class="col-md-4">
-                        <label for="inputNumeroDocumentoMinG">Número de Documento:</label>
+                      <div class="col-md-4 text-center">
+                        <label for="inputNumeroDocumentoMinG"><strong>Número de Documento:</strong></label>
                         <input type="text" class="form-control" id="inputNumeroDocumentoMinG"
                           (focusout)="guardar_ndoc(ndocG.value);" #ndocG>
                       </div>
-                      <div class="col-md-8">
-                        <label for="inputDomicilioMinG">Domicilio:</label>
+                      <div class="col-md-8 text-center">
+                        <label for="inputDomicilioMinG"><strong>Domicilio:</strong></label>
                         <input type="text" class="form-control" id="inputDomicilioMinG"
                           (focusout)="guardar_domicilio(domiG.value);" #domiG>
                       </div>
                     </div>
 
-                    <div class="col-xs-12">
-                      <h5 class="page-header">
+                    <hr>
+
+                    <div class="col-xs-12 text-center">
+                      <h5>
                         <i class="fa fa-map-pin" aria-hidden="true"></i> Objetivo del pedido y datos del Inmueble:
                       </h5>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <label for="inputObjetoPedidoMinG">Objeto del Pedido:</label>
+                      <div class="col-md-6 text-center">
+                        <label for="inputObjetoPedidoMinG"><strong>Objeto del Pedido:</strong></label>
                         <select id="inputObjetoPedidoMinG" class="form-control"
                           (focusout)="guardar_objetoPedido(objPedido.value);" #objPedido>
                           <option selected value="">Seleccione..</option>
@@ -250,7 +250,7 @@
                         </select>
                       </div>
                       <div class="col-md-6">
-                        <label for="inputUbicacionMinG">Ubicación del inmueble:</label>
+                        <label for="inputUbicacionMinG"><strong>Ubicación del inmueble:</strong></label>
                         <textarea name="UbicacionInmueble" id="inputUbicacionMinG" class="form-control"
                           style="width: 100%" (focusout)="guardar_ubicacionInmueble(ubiInm.value);" #ubiInm>
 
@@ -272,14 +272,14 @@
 
               </div>
               <!-- DIV Confirma los datos -->
-              <div id="step3" class="tab-pane" role="tabpanel">
+              <div id="step3">
 
                 <!-- Confirma Formulario H -->
-                <section class="invoice" id="confirmH" data-aos="flip-up">
+                <section id="confirmH" data-aos="flip-up">
                   <!-- titulo row -->
-                  <div class="col-xs-12">
-                    <h2 class="page-header">
-                      <i class="fa fa-check-square-o" aria-hidden="true" style="color: #39ae54;"></i> Confirmá los datos
+                  <div class="col-xs-12 text-center">
+                    <h2>
+                      <i class="fa fa-check-square-o" aria-hidden="true"></i> Confirmá los datos
                       ingresados
                     </h2>
                   </div>
@@ -287,55 +287,55 @@
                     <fieldset disabled>
                       <div class="form-row">
                         <div class="form-group col-md-12 text-center">
-                          <label class="lead">Tipo de trámite</label>
+                          <label class="lead"><strong>Tipo de trámite</strong></label>
                         </div>
                       </div>
                       <div class="form-row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-12 text-center">
                           <input type="text" id="disabledInputTramite" name="tipoTramite" class="form-control"
                             value="{{this.tipoTramite}}">
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-12 text-center">
-                          <label class="lead">Datos de identidad de la persona</label>
+                          <label class="lead"><strong>Datos de identidad de la persona</strong></label>
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-4">
-                          <label for="disabledInputApellido">Apellido/s:</label>
+                          <label for="disabledInputApellido"><strong>Apellido/s:</strong></label>
                           <input type="text" id="disabledInputApellido" name="apellido" class="form-control"
                             value="{{this.apellido}}">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="disabledInputNombre">Nombre completo:</label>
+                          <label for="disabledInputNombre"><strong>Nombre completo:</strong></label>
                           <input type="text" id="disabledInputNombre" name="nombre" class="form-control"
                             value="{{this.nombre}}">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="disabledInputEstado">Estado Civil:</label>
+                          <label for="disabledInputEstado"><strong>Estado Civil:</strong></label>
                           <input type="text" id="disabledInputEstado" name="estCivil" class="form-control"
                             value="{{this.estCivil}}">
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-4">
-                          <label for="disabledInputTipoDoc">Tipo de documento:</label>
+                          <label for="disabledInputTipoDoc"><strong>Tipo de documento:</strong></label>
                           <input type="text" id="disabledInputTipoDoc" name="tdocumento" class="form-control"
                             value="{{this.tdocumento}}">
                         </div>
                         <div class="form-group col-md-2">
-                          <label for="disabledInputNumero">N° de documento:</label>
+                          <label for="disabledInputNumero"><strong>N° de documento:</strong></label>
                           <input type="text" id="disabledInputNumero" name="ndocumento" class="form-control"
                             value="{{this.numDocu}}">
                         </div>
                         <div class="form-group col-md-3">
-                          <label for="disabledInputNacionalidad">Nacionalidad:</label>
+                          <label for="disabledInputNacionalidad"><strong>Nacionalidad:</strong></label>
                           <input type="text" id="disabledInputNacionalidad" name="nacionalidad" class="form-control"
                             value="{{this.nacionalidad}}">
                         </div>
                         <div class="form-group col-md-3">
-                          <label for="disabledInputFecha">Fecha de nacimiento:</label>
+                          <label for="disabledInputFecha"><strong>Fecha de nacimiento:</strong></label>
                           <input type="date" id="disabledInputFecha" name="fechanac" class="form-control"
                             value="{{this.fechanac}}">
                         </div>
@@ -343,17 +343,17 @@
                       <br>
                       <div class="form-row">
                         <div class="form-group col-md-12 text-center">
-                          <label class="lead">Datos del cónyugue</label>
+                          <label class="lead"><strong>Datos del cónyugue</strong></label>
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="disabledInputApellidoConyugue">Apellido/s</label>
+                          <label for="disabledInputApellidoConyugue"><strong>Apellido/s</strong></label>
                           <input type="text" name="ConyuApellido" class="form-control"
                             id="disabledInputApellidoConyugue" value="{{this.ConyuApellido}}">
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="disabledInputNombresConyugue">Nombre completo:</label>
+                          <label for="disabledInputNombresConyugue"><strong>Nombre completo:</strong></label>
                           <input type="text" name="ConyuNombre" class="form-control" id="disabledInputNombresConyugue"
                             value="{{this.ConyuNombre}}">
                         </div>
@@ -373,19 +373,19 @@
                 </section>
 
                 <!-- Confirma Formulario G -->
-                <section class="invoice" id="confirmG">
+                <section id="confirmG">
                   <!-- titulo row -->
-                  <div class="col-xs-12">
-                    <h2 class="page-header">
-                      <i class="fa fa-check-square-o" aria-hidden="true" style="color: #39ae54;"></i> Confirmá los datos
+                  <div class="col-xs-12 text-center">
+                    <h3>
+                      <i class="fa fa-check-square-o" aria-hidden="true"></i> Confirmá los datos
                       ingresados
-                    </h2>
+                    </h3>
                   </div>
                   <form>
                     <fieldset disabled>
                       <div class="form-row">
                         <div class="form-group col-md-12 text-center">
-                          <label class="lead">Tipo de trámite</label>
+                          <label class="lead"><strong>Tipo de trámite</strong></label>
                         </div>
                       </div>
                       <div class="form-row">
@@ -396,49 +396,49 @@
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-12 text-center">
-                          <label class="lead">Datos de identidad de la persona</label>
+                          <label class="lead"><strong>Datos de identidad de la persona</strong></label>
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-4">
-                          <label for="disabledInputApellidoG">Apellido/s:</label>
+                          <label for="disabledInputApellidoG"><strong>Apellido/s:</strong></label>
                           <input type="text" id="disabledInputApellidoG" name="apellido" class="form-control"
                             value="{{this.apellido}}">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="disabledInputNombreG">Nombre completo:</label>
+                          <label for="disabledInputNombreG"><strong>Nombre completo:</strong></label>
                           <input type="text" id="disabledInputNombreG" name="nombre" class="form-control"
                             value="{{this.nombre}}">
                         </div>
                         <div class="form-group col-md-2">
-                          <label for="disabledInputEstadoG">Estado Civil:</label>
+                          <label for="disabledInputEstadoG"><strong>Estado Civil:</strong></label>
                           <input type="text" id="disabledInputEstadoG" name="estCivil" class="form-control"
                             value="{{this.estCivil}}">
                         </div>
                         <div class="form-group col-md-2">
-                          <label for="disabledInputNumero">N° de documento:</label>
+                          <label for="disabledInputNumero"><strong>N° de documento:</strong></label>
                           <input type="text" id="disabledInputNumeroG" name="ndocumento" class="form-control"
                             value="{{this.numDocu}}">
                         </div>
                         <div class="form-group col-md-12">
-                          <label for="disabledInputNumero">Domicilio:</label>
-                          <input type="text" id="disabledInputNumeroG" name="domicilio" class="form-control"
+                          <label for="disabledInputNumero"><strong>Domicilio:</strong></label>
+                          <input type="text" id="disabledInputDomG" name="domicilio" class="form-control"
                             value="{{this.domicilio}}">
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-12 text-center">
-                          <label class="lead">Datos del Inmueble</label>
+                          <label class="lead"><strong>Datos del Inmueble</strong></label>
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="disabledInputObjetoPedido">Objeto del Pedido:</label>
+                          <label for="disabledInputObjetoPedido"><strong>Objeto del Pedido:</strong></label>
                           <input type="text" name="objetoPedido" class="form-control" id="disabledInputObjetoPedido"
                             value="{{this.objetoPedido}}">
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="disabledInputUbicacionInmueble">Ubicacion del Inmueble:</label>
+                          <label for="disabledInputUbicacionInmueble"><strong>Ubicacion del Inmueble:</strong></label>
                           <input type="text" name="ubicacionInmueble" class="form-control"
                             id="disabledInputUbicacionInmueble" value="{{this.ubicacionInmueble}}">
                         </div>
@@ -458,12 +458,12 @@
                 </section>
               </div>
               <!-- DIV Realiza el Pago -->
-              <div id="step4" data-aos="flip-up" class="tab-pane" role="tabpanel">
-                <section style="padding-bottom: 50px;" class="invoice">
+              <div id="step4" data-aos="flip-up">
+                <section>
                   <!-- titulo row -->
                   <div class="row">
-                    <div class="col-xs-12">
-                      <h5>Método de pago</h5>
+                    <div class="col-xs-12 text-center">
+                      <h5><strong>Método de pago</strong></h5>
                     </div>
                     <!-- /.col -->
                   </div>
@@ -503,9 +503,9 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>Tipo tramite</th>
+                            <th>Tipo de tramite</th>
                             <th>Descripción</th>
-                            <th>Subtotal</th>
+                            <th>Total</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -532,16 +532,8 @@
                         <table class="table">
                           <tbody>
                             <tr>
-                              <th style="width:50%">Subtotal:</th>
-                              <td>$250.00</td>
-                            </tr>
-                            <tr>
-                              <th>IVA 20%:</th>
-                              <td>$50.00</td>
-                            </tr>
-                            <tr>
                               <th>Total:</th>
-                              <td>{{importe}}</td>
+                              <td>$ {{importe}}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -552,23 +544,27 @@
                   <!-- /.row -->
                   <!--Pago minuta H-->
                   <div class="row no-print pull-right" id="PagarMinH">
-                    <div class="col-12">
+                    <div class="col-6">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i
                           class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                    </div>
+                    <div class="col-6">
                       <button type="button" class="btn btn-success btn-block"
-                        (click)="apiMercadoPago(); createFormH(this.apellido, this.nombre, this.estCivil, this.tdocumento, this.numDocu, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)"><i
-                          class="fa fa-credit-card"></i> Pagar
+                              (click)="apiMercadoPago(); createFormH(this.apellido, this.nombre, this.estCivil, this.tdocumento, this.numDocu, this.nacionalidad, this.fechanac, this.ConyuApellido, this.ConyuNombre, this.tipoTramite, this.tipoFormulario)"><i
+                        class="fa fa-credit-card"></i> Pagar
                       </button>
                     </div>
                   </div>
                   <!--Pago minuta G-->
                   <div class="row no-print pull-right" id="PagarMinG">
-                    <div class="col-12">
+                    <div class="col-6">
                       <button class="btn btn-default" style="margin-right: 10px;" (click)="irPaso(3);"><i
                           class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+                    </div>
+                    <div class="col-6">
                       <button type="button" class="btn btn-success btn-block"
-                        (click)="apiMercadoPago(); createFormG(this.apellido, this.nombre, this.estCivil, this.numDocu, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario)"><i
-                          class="fa fa-credit-card"></i> Pagar
+                              (click)="apiMercadoPago(); createFormG(this.apellido, this.nombre, this.estCivil, this.numDocu, this.domicilio, this.objetoPedido, this.ubicacionInmueble, this.tipoTramite, this.tipoFormulario)"><i
+                        class="fa fa-credit-card"></i> Pagar
                       </button>
                     </div>
                   </div>

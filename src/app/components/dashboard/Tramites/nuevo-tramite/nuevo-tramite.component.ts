@@ -87,7 +87,7 @@ export class NuevoTramiteComponent implements OnInit {
   ngOnInit() {
     // Smart-Wizard
     $('#stepwizard').smartWizard({
-      theme: 'progress',
+      theme: 'dots',
       transitionEffect: 'slide',
       transitionSpeed: '400',
       selected: 0,
@@ -100,6 +100,10 @@ export class NuevoTramiteComponent implements OnInit {
     });
 
     $('#stepwizard #btn-siguiente-1').hide();
+
+    $('#li2').hide('fast');
+    $('#li3').hide('fast');
+    $('#li4').hide('fast');
 
     let localForm = localStorage.getItem('FormularioPedido');
 
@@ -114,22 +118,22 @@ export class NuevoTramiteComponent implements OnInit {
       this.guardar_tipotramite('Búsqueda de titulares dominiales', localForm);
 
       $('#card-h').prop("checked", true);
-      $('#formH').show();
+      $('#formH').show('fast');
       $('#formG').hide();
-      $('#confirmH').show();
+      $('#confirmH').show('fast');
       $('#confirmG').hide();
-      $('#finalizarH').show();
+      $('#finalizarH').show('fast');
       $('#finalizarG').hide();
     } else if (localForm == this.MinG) {
 
       this.guardar_tipotramite('Búsqueda de estado jurídico de inmueble', localForm);
 
       $('#card-g').prop("checked", true);
-      $('#formG').show();
+      $('#formG').show('fast');
       $('#formH').hide();
-      $('#confirmG').show();
+      $('#confirmG').show('fast');
       $('#confirmH').hide();
-      $('#finalizarG').show();
+      $('#finalizarG').show('fast');
       $('#finalizarH').hide();
     }
 
@@ -139,46 +143,61 @@ export class NuevoTramiteComponent implements OnInit {
 
   public irPaso(paso: number) {
     if (paso == 1) {
-      $('#stepwizard #step1').show();
+      $('#stepwizard #step1').show('fast');
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
+      $('#li1').show('fast');
+      $('#li2').hide('fast');
+      $('#li3').hide('fast');
+      $('#li4').hide('fast');
     }
     if (paso == 2) {
       $('#stepwizard #step1').hide();
-      $('#stepwizard #step2').show();
+      $('#stepwizard #step2').show('fast');
       $('#stepwizard #li2').addClass('active');
       $('#stepwizard #li3').removeClass('active');
+      $('#li1').hide();
+      $('#li2').show('fast');
+      $('#li3').hide();
+      $('#li4').hide();
       if (this.tipoFormulario == this.MinH) {
-        $('#formH').show();
+        $('#formH').show('fast');
         $('#formG').hide();
-        $('#confirmH').show();
+        $('#confirmH').show('fast');
         $('#confirmG').hide();
-        $('#finalizarH').show();
+        $('#finalizarH').show('fast');
         $('#finalizarG').hide();
-        $('#PagarMinH').show();
+        $('#PagarMinH').show('fast');
         $('#PagarMinG').hide();
       } else {
-        $('#formG').show();
+        $('#formG').show('fast');
         $('#formH').hide();
-        $('#confirmG').show();
+        $('#confirmG').show('fast');
         $('#confirmH').hide();
-        $('#PagarMinG').show();
+        $('#PagarMinG').show('fast');
         $('#PagarMinH').hide();
       }
       $('#stepwizard #step3').hide();
     }
     if (paso == 3) {
       $('#stepwizard #step2').hide();
-      $('#stepwizard #step3').show();
+      $('#stepwizard #step3').show('fast');
       $('#stepwizard #li3').addClass('active');
       $('#stepwizard #li4').removeClass('active');
-
       $('#stepwizard #step4').hide();
+      $('#li1').hide();
+      $('#li3').show('fast');
+      $('#li2').hide();
+      $('#li4').hide();
     }
     if (paso == 4) {
       $('#stepwizard #step3').hide();
-      $('#stepwizard #step4').show();
+      $('#stepwizard #step4').show('fast');
       $('#stepwizard #li4').addClass('active');
+      $('#li1').hide();
+      $('#li2').hide();
+      $('#li3').hide();
+      $('#li4').show('fast');
     }
 
   }
@@ -186,24 +205,40 @@ export class NuevoTramiteComponent implements OnInit {
   public volverPaso(paso: number) {
 
     if (paso == 1) {
-      $('#stepwizard #step1').show();
+      $('#li1').show('fast');
+      $('#li2').hide('fast');
+      $('#li3').hide('fast');
+      $('#li4').hide('fast');
+      $('#stepwizard #step1').show('fast');
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
     }
     if (paso == 2) {
       $('#stepwizard #step1').hide();
-      $('#stepwizard #step2').show();
+      $('#stepwizard #step2').show('fast');
       $('#stepwizard #li2').addClass('active');
+      $('#li1').hide();
+      $('#li2').show('fast');
+      $('#li3').hide();
+      $('#li4').hide();
     }
     if (paso == 3) {
       $('#stepwizard #step2').hide();
-      $('#stepwizard #step3').show();
+      $('#stepwizard #step3').show('fast');
       $('#stepwizard #li3').addClass('active');
+      $('#li1').hide();
+      $('#li2').hide();
+      $('#li3').show('fast');
+      $('#li4').hide();
     }
     if (paso == 4) {
       $('#stepwizard #step3').hide();
-      $('#stepwizard #step4').show();
+      $('#stepwizard #step4').show('fast');
       $('#stepwizard #li4').addClass('active');
+      $('#li1').hide();
+      $('#li2').hide();
+      $('#li3').hide();
+      $('#li4').show('fast');
     }
 
   }
@@ -265,8 +300,8 @@ export class NuevoTramiteComponent implements OnInit {
   public msgError() {
     this.toastr.error('¡Completar campos!', '', {
       timeOut: 2000,
-      progressBar: true,
-      progressAnimation: 'increasing'
+      progressBar: false,
+      positionClass: 'toast-top-right',
     })
   };
 

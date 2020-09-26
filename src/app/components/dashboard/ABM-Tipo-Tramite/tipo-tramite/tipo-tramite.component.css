@@ -1,0 +1,28 @@
+.content{
+  font-family: "Roboto", sans-serif !important;
+}
+
+#cardsTipoTramites {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+
+  #cardsTipoTramites {
+    display: block;
+  }
+
+  #tableTipoTramites {
+    display: none;
+  }
+}
+
+
+#tituloCard {
+  padding: 15px;
+  text-align: center;
+}
+
+#tituloCard h4 {
+  padding-bottom: 10px;
+}
