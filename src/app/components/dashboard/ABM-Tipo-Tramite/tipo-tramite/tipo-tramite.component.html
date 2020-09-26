@@ -4,16 +4,19 @@
     <app-breadcrumbs></app-breadcrumbs>
     <hr>
     <section class="content">
-        <div class="row">
+
+      <!--TableTipoTramites -->
+
+      <div class="row" data-aos="zoom-in" id="tableTipoTramites">
             <div class="col-12">
                 <!--DataTable -->
-                <div class="row p-2" data-aos="zoom-in">
+                <div class="row p-2">
                     <div class="card col-12">
                         <div class="card-header">
                         <h3 class="card-title">Tipos de Tramites <!--<button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>--></h3>
                         </div>
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped dt-responsive nowrap">
+                            <table id="example1" class="table table-bordered table-striped nowrap">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">N°</th>
@@ -45,6 +48,61 @@
                 </div>
             </div>
         </div>
+
+      <!--CardsTipoTramites -->
+
+      <div class="row" id="cardsTipoTramites">
+        <div class="col-12">
+          <div class="card col-12" id="tituloCard">
+            <h4 class="card-title text-center">Tipos de trámites</h4>
+          </div>
+          <!--DataCards -->
+          <div class="row p-2">
+            <div class="card col-12" *ngFor="let tipo of tipoTram; index as i" data-aos="zoom-in">
+              <div class="card-body text-center">
+                <p>
+                  <strong>N°: </strong>{{i+1}} | <strong>Fecha Alta: </strong> {{tipo.createdAt | date: "dd/MM/yyyy"}}
+                </p>
+
+                <hr>
+
+                <strong>Formulario:</strong>
+
+                <p class="text-muted">{{tipo.formulario}}</p>
+
+                <hr>
+
+                <strong>Descripción:</strong>
+
+                <p class="text-muted">
+                  {{tipo.descripcion}}
+                </p>
+
+                <hr>
+
+                <strong>Costo:</strong>
+
+                <p class="text-center">
+                  ${{tipo.costo}}
+                </p>
+
+                <hr>
+
+                <strong>Editar </strong>
+                <p class="text-center">
+
+
+                  <button class="btn btn-outline-primary" (click)="onPreUdateTipoTramites(tipo)" data-toggle="modal"
+                          data-target="#exampleModal"><i class="fa fa-edit"></i></button>
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </section>
   </div>
   <app-nuevo-tipo-tramite></app-nuevo-tipo-tramite>
