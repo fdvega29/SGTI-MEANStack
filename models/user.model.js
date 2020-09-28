@@ -15,7 +15,7 @@ const usersSchema = new Schema({
 
     telefono: { type: String, required: false, trim: true},
 
-    password: { type: String, required: [true, 'La contraseña es requerida'], trim: true},
+    password: { type: String, required: [true, 'La contraseña es requerida']},
 
     img : { type: String, required: false},        
 
@@ -38,8 +38,10 @@ usersSchema.methods.encryptPassword = async (password) => {
     return hash;
 };
 //Funcion que compara contraseñas ingresadas desde Regist a Login, gracias al metedo compare.
-usersSchema.methods.comparePassword = async function (password2) {
-    return await bcrypt.compareSync(password2, this.password);
+usersSchema.methods.matchPassword = async function (password) {
+    console.log(password);
+    console.log(this.password);
+    return await bcrypt.compare(password, this.password);
 };
 
 usersSchema.plugin(uniqueValidator, {message: '{PATH} debe ser unico'});
