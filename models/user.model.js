@@ -38,8 +38,8 @@ usersSchema.methods.encryptPassword = async (password) => {
     return hash;
 };
 //Funcion que compara contraseñas ingresadas desde Regist a Login, gracias al metedo compare.
-usersSchema.methods.comparePassword = async function (password) {
-    return await bcrypt.compareSync(password, this.password);
+usersSchema.methods.comparePassword = async function (password2) {
+    return await bcrypt.compareSync(password2, this.password);
 };
 
 usersSchema.plugin(uniqueValidator, {message: '{PATH} debe ser unico'});
