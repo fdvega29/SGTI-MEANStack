@@ -3,6 +3,7 @@
 }
 
 .card-header {
-  background-color: #0b58a2;
+  /*background-color: #0b58a2;*/
+  background-color: #2d8cff !important;
   color: #ffffff;
 }
