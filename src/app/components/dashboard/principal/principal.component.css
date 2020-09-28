@@ -1,3 +1,8 @@
 .content-wrapper{
   font-family: "Roboto", sans-serif !important;
 }
+
+.row #region-graficos{
+  padding-left: 6px;
+  padding-right: 6px;
+}

@@ -56,7 +56,7 @@ const dashboardRoutes: Routes = [
       //gestionar tramites
       { path: 'gestion-tramites', component: GestionTramitesComponent, data: {seccion: 'Trámites', titulo: 'Gestión de trámites', icono: "fa fa-list-alt"},canActivate: [AuthGuard]},
       //Principal
-      { path: 'principal-admin', component: PrincipalAdminComponent, data: {seccion: 'Inicio', titulo: 'Principal'},canActivate: [AuthGuard]}
+      { path: 'principal-admin', component: PrincipalAdminComponent, data: {seccion: 'Inicio', titulo: 'Principal', icono: 'fa fa-tachometer'},canActivate: [AuthGuard]}
 
         ,{ path: 'dashboard', component:PrincipalComponent, pathMatch: 'full',canActivate: [AuthGuard]}
 		]
