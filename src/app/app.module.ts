@@ -26,6 +26,8 @@ import { AuthGuard} from './components/core/guards/guards';
 import {SharedModule} from "./components/shared";
 import { PipesModule } from './components/pipes/pipes/pipes.module';
 import { AutenticacionService } from './components/services/autenticacion.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { AutenticacionService } from './components/services/autenticacion.servic
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    PipesModule
+    PipesModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AutenticacionService, AuthGuard],
   bootstrap: [AppComponent]

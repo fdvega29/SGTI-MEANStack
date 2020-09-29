@@ -19,6 +19,7 @@
 
   #cardsUsuarios {
     display: block;
+    margin: auto;
   }
 
   #tableUsuarios {

@@ -48,15 +48,15 @@ const dashboardRoutes: Routes = [
 
       //Perfil de ADMIN
       //Areas
-      { path: 'areas', component: AreasComponent, data: {seccion: 'Areas', titulo: 'Areas'},canActivate: [AuthGuard]},
+      { path: 'areas', component: AreasComponent, data: {seccion: 'Areas', titulo: 'Areas', icono: "fa fa-building-o"},canActivate: [AuthGuard]},
       //Tipo tramite
-      { path: 'tipo-tramite', component: TipoTramiteComponent, data: {seccion: 'Tipo tramite', titulo: 'Tipo tramite'},canActivate: [AuthGuard]},
+      { path: 'tipo-tramite', component: TipoTramiteComponent, data: {seccion: 'Tipo tramite', titulo: 'Tipo tramite', icono: "fa fa-id-card-o"},canActivate: [AuthGuard]},
       //Guia administrador
-      { path: 'guia-administrador', component: GuiaAdministradorComponent, data: {seccion: 'Instructivo de Sistema', titulo: 'Guía de uso'},canActivate: [AuthGuard]},
+      { path: 'guia-administrador', component: GuiaAdministradorComponent, data: {seccion: 'Instructivo de Sistema', titulo: 'Guía de uso', icono: "fa fa-info-circle"},canActivate: [AuthGuard]},
       //gestionar tramites
-      { path: 'gestion-tramites', component: GestionTramitesComponent, data: {seccion: 'Trámites', titulo: 'Gestión de trámites'},canActivate: [AuthGuard]},
+      { path: 'gestion-tramites', component: GestionTramitesComponent, data: {seccion: 'Trámites', titulo: 'Gestión de trámites', icono: "fa fa-list-alt"},canActivate: [AuthGuard]},
       //Principal
-      { path: 'principal-admin', component: PrincipalAdminComponent, data: {seccion: 'Inicio', titulo: 'Principal'},canActivate: [AuthGuard]}
+      { path: 'principal-admin', component: PrincipalAdminComponent, data: {seccion: 'Inicio', titulo: 'Principal', icono: 'fa fa-tachometer'},canActivate: [AuthGuard]}
 
         ,{ path: 'dashboard', component:PrincipalComponent, pathMatch: 'full',canActivate: [AuthGuard]}
 		]

@@ -11,7 +11,7 @@
           <div class="col-12">
               <!--DataTable -->
               <div class="row p-2">
-                  <div class="card col-12">
+                  <div class="card card-primary card-outline col-12">
                       <div class="card-header">
                       <h3 class="card-title text-muted">Listado de areas
                           <button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i>  Nuevo</button>
@@ -52,13 +52,13 @@
       <!-- CardsAreas -->
       <div class="row" id="cardsAreas">
         <div class="col-12">
-          <div class="card col-12" id="tituloCard">
+          <div class="card card-primary card-outline col-12" id="tituloCard">
             <h4 class="card-title text-center">Listado de áreas</h4>
             <button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i>  Nuevo</button>
           </div>
           <!--DataCards -->
           <div class="row p-2">
-            <div class="card col-12" *ngFor="let area of areas; index as i" data-aos="zoom-in">
+            <div class="card card-primary card-outline col-12" *ngFor="let area of areas; index as i" data-aos="zoom-in">
                             <!-- /.card-header -->
               <div class="card-body text-center">
 
