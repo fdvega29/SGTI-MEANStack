@@ -34,13 +34,10 @@ const usersSchema = new Schema({
 //Funcion que encripta la contraseña, gracias al metodo getSalt y hash.
 usersSchema.methods.encryptPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
-    const hash = bcrypt.hash(password, salt);
-    return hash;
+    return await bcrypt.hash(password, salt);
 };
 //Funcion que compara contraseñas ingresadas desde Regist a Login, gracias al metedo compare.
 usersSchema.methods.matchPassword = async function (password) {
-    console.log(password);
-    console.log(this.password);
     return await bcrypt.compare(password, this.password);
 };
 
