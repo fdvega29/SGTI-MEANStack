@@ -44,14 +44,14 @@ export class NuevoTramiteComponent implements OnInit {
 
   minutaH: any = {};
   minutaG: any = {};
-  MinH: any = '5f4abf33aeae370004723e34';
-  MinG: any = '5f4abf44aeae370004723e35';
+  MinH: any = '5f72956e391ebe0004d62574';
+  MinG: any = '5f729584391ebe0004d62575';
 
   domicilio: string;
   objetoPedido: string;
   ubicacionInmueble: string;
   IdTramite: any;
-  areaTramite: any = '5f5d60f57f61c50004819fcd';
+  areaTramite: any = '5f728de1391ebe0004d62571';
   maxcodigo: number = 1;
   dataTipoTramite: any;
   importe: any;
