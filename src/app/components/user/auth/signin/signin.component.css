@@ -1,11 +1,11 @@
 .wrapper {
-  margin-left: 0px !important;
-  padding-bottom: 125px !important;
+  margin-left: 0 !important;
+
   background-color: rgb(45, 140, 255);
 }
 
 .navbar-static-top{
-  margin-left: 0px !important;
+  margin-left: 0 !important;
 }
 
 .main-header {
@@ -49,10 +49,12 @@
 #btnGoogle {
   font-size: medium;
   border-radius: 3.0rem !important;
+  margin-right: 1em;
+  margin-bottom: 15px;
 }
 
 #box-signup{
-  border: 0px solid #00c0ef;
+  border: 0 solid #00c0ef;
   border-radius: 15px;
 }
 
@@ -69,13 +71,12 @@
 }
 
 #box-shadow{
-    -webkit-box-shadow: 0px 4px 19px -5px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 4px 19px -5px rgba(0,0,0,0.5);
-    box-shadow: 0px 4px 19px -5px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 4px 19px -5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 4px 19px -5px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 19px -5px rgba(0,0,0,0.5);
 }
 
 #box-signin{
-    border: 0px solid #00c0ef;
     border-radius: 15px;
     margin: auto;
 }
@@ -87,10 +88,23 @@
 .btn-google {
 	color: white;
 	background-color: #DD4B39;
+  padding: 8px 16px;
 }
 
 .login-box{
-    margin: 0 auto;
-    padding-top: 10px;
-    padding-bottom: 20px;
+  margin-top: 40px;
+}
+
+@media screen and (min-width: 600px) {
+  .wrapper {
+    min-height: 760px;
+  }
+}
+
+/* Diseño responsive para tabletas */
+@media screen and (min-width: 800px) {
+  .wrapper {
+    min-height: 787px;
+  }
+
 }

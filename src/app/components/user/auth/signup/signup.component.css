@@ -1,6 +1,6 @@
 .wrapper {
   margin-left: 0px !important;
-  padding-bottom: 10px !important;
+  min-height: 750px;
   background-color: rgb(45, 140, 255);
 }
 
@@ -55,7 +55,7 @@
 }
 
 .login-box {
-  margin-top: 10px;
+  margin-top: 40px;
 }
 
 .login-box-body{
