@@ -34,11 +34,22 @@ export class UpdateProfileComponent implements OnInit {
     this.userService.editUserById(user)
         .subscribe(data => {
           console.log(data)
-          Swal.fire("Bien hecho", "Usuario actualizado correctamente", "success");
           this.router.navigate(['/dashboard/perfil']);
-          localStorage.setItem("currentUser", JSON.stringify(user));
+          Swal.fire({
+            title: '¡Bien hecho!',
+            text: 'Usuario actualizado correctamente',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#2d8cff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar'
+          }).then((confirm) => {
+            if (confirm.value) {
+              location.reload();
+              localStorage.setItem("currentUser", JSON.stringify(user));
+            }
+          })
         });
-
   }
 
   public seleccionImage( archivo: File ) {

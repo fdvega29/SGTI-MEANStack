@@ -29,6 +29,7 @@ export class SigninComponent implements OnInit {
   roleUsuario : string;
   estadoUsuario: any;
   nombre: string;
+  msgError: boolean = false;
 
   usuario: usersModule;
 
@@ -59,8 +60,7 @@ export class SigninComponent implements OnInit {
     console.log(this.signinFormUser.value);
 
     this.authService.signin(FormGroup.value, FormGroup.recuerdame)
-      .subscribe(
-        data => {
+      .subscribe((data: any) => {
           console.log(data.dataUser.usuario);
           this.userService.setUser(data.dataUser.usuario);
           this.roleUsuario = data.dataUser.usuario.roles;
@@ -82,7 +82,16 @@ export class SigninComponent implements OnInit {
             }
           }
         },
-        err => console.log(err)
+        function(err){
+          this.msgError = true;
+          if(this.msgError){
+            Swal.fire({
+              icon: 'error',
+              title: 'Correo o contraseña incorrecta',
+              text: 'Vuelva a intentar.'
+            });
+          }
+        }
       )
   }
 
@@ -132,6 +141,13 @@ export class SigninComponent implements OnInit {
     });
   }
 
+  showToatrError() {
+    this.toastr.error('Correo o contraseña incorrecto', 'Danger', {
+      timeOut: 1000,
+      progressBar: true,
+      progressAnimation: 'increasing'
+    });
+  }
 
 }
 
