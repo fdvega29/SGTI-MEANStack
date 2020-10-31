@@ -101,9 +101,9 @@ export class NuevoTramiteComponent implements OnInit {
 
     $('#stepwizard #btn-siguiente-1').hide();
 
-    $('#li2').hide('fast');
-    $('#li3').hide('fast');
-    $('#li4').hide('fast');
+    $('#li2').hide();
+    $('#li3').hide();
+    $('#li4').hide();
 
     let localForm = localStorage.getItem('FormularioPedido');
 
@@ -118,22 +118,22 @@ export class NuevoTramiteComponent implements OnInit {
       this.guardar_tipotramite('Búsqueda de titulares dominiales', localForm);
 
       $('#card-h').prop("checked", true);
-      $('#formH').show('fast');
+      $('#formH').show();
       $('#formG').hide();
-      $('#confirmH').show('fast');
+      $('#confirmH').show();
       $('#confirmG').hide();
-      $('#finalizarH').show('fast');
+      $('#finalizarH').show();
       $('#finalizarG').hide();
     } else if (localForm == this.MinG) {
 
       this.guardar_tipotramite('Búsqueda de estado jurídico de inmueble', localForm);
 
       $('#card-g').prop("checked", true);
-      $('#formG').show('fast');
+      $('#formG').show();
       $('#formH').hide();
-      $('#confirmG').show('fast');
+      $('#confirmG').show();
       $('#confirmH').hide();
-      $('#finalizarG').show('fast');
+      $('#finalizarG').show();
       $('#finalizarH').hide();
     }
 
@@ -143,61 +143,61 @@ export class NuevoTramiteComponent implements OnInit {
 
   public irPaso(paso: number) {
     if (paso == 1) {
-      $('#stepwizard #step1').show('fast');
+      $('#stepwizard #step1').show();
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
-      $('#li1').show('fast');
-      $('#li2').hide('fast');
-      $('#li3').hide('fast');
-      $('#li4').hide('fast');
+      $('#li1').show();
+      $('#li2').hide();
+      $('#li3').hide();
+      $('#li4').hide();
     }
     if (paso == 2) {
       $('#stepwizard #step1').hide();
-      $('#stepwizard #step2').show('fast');
+      $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
       $('#stepwizard #li3').removeClass('active');
       $('#li1').hide();
-      $('#li2').show('fast');
+      $('#li2').show();
       $('#li3').hide();
       $('#li4').hide();
       if (this.tipoFormulario == this.MinH) {
-        $('#formH').show('fast');
+        $('#formH').show();
         $('#formG').hide();
-        $('#confirmH').show('fast');
+        $('#confirmH').show();
         $('#confirmG').hide();
-        $('#finalizarH').show('fast');
+        $('#finalizarH').show();
         $('#finalizarG').hide();
-        $('#PagarMinH').show('fast');
+        $('#PagarMinH').show();
         $('#PagarMinG').hide();
       } else {
-        $('#formG').show('fast');
+        $('#formG').show();
         $('#formH').hide();
-        $('#confirmG').show('fast');
+        $('#confirmG').show();
         $('#confirmH').hide();
-        $('#PagarMinG').show('fast');
+        $('#PagarMinG').show();
         $('#PagarMinH').hide();
       }
       $('#stepwizard #step3').hide();
     }
     if (paso == 3) {
       $('#stepwizard #step2').hide();
-      $('#stepwizard #step3').show('fast');
+      $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
       $('#stepwizard #li4').removeClass('active');
       $('#stepwizard #step4').hide();
       $('#li1').hide();
-      $('#li3').show('fast');
+      $('#li3').show();
       $('#li2').hide();
       $('#li4').hide();
     }
     if (paso == 4) {
       $('#stepwizard #step3').hide();
-      $('#stepwizard #step4').show('fast');
+      $('#stepwizard #step4').show();
       $('#stepwizard #li4').addClass('active');
       $('#li1').hide();
       $('#li2').hide();
       $('#li3').hide();
-      $('#li4').show('fast');
+      $('#li4').show();
     }
 
   }
@@ -205,40 +205,40 @@ export class NuevoTramiteComponent implements OnInit {
   public volverPaso(paso: number) {
 
     if (paso == 1) {
-      $('#li1').show('fast');
-      $('#li2').hide('fast');
-      $('#li3').hide('fast');
-      $('#li4').hide('fast');
-      $('#stepwizard #step1').show('fast');
+      $('#li1').show();
+      $('#li2').hide();
+      $('#li3').hide();
+      $('#li4').hide();
+      $('#stepwizard #step1').show();
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
     }
     if (paso == 2) {
       $('#stepwizard #step1').hide();
-      $('#stepwizard #step2').show('fast');
+      $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
       $('#li1').hide();
-      $('#li2').show('fast');
+      $('#li2').show();
       $('#li3').hide();
       $('#li4').hide();
     }
     if (paso == 3) {
       $('#stepwizard #step2').hide();
-      $('#stepwizard #step3').show('fast');
+      $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
       $('#li1').hide();
       $('#li2').hide();
-      $('#li3').show('fast');
+      $('#li3').show();
       $('#li4').hide();
     }
     if (paso == 4) {
       $('#stepwizard #step3').hide();
-      $('#stepwizard #step4').show('fast');
+      $('#stepwizard #step4').show();
       $('#stepwizard #li4').addClass('active');
       $('#li1').hide();
       $('#li2').hide();
       $('#li3').hide();
-      $('#li4').show('fast');
+      $('#li4').show();
     }
 
   }
