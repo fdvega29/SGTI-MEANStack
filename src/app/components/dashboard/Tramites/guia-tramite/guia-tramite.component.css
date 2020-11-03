@@ -1,9 +1,11 @@
 .content-wrapper {
   font-family: "Roboto", sans-serif !important;
+  margin-top: 55px;
+  min-height: 800px !important;
 }
 
 .content {
-  color: rgba(0, 0, 0, 0.6);
+  color: #0c0c0c;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
@@ -13,7 +15,6 @@
 }
 
 .btn {
-  border-radius: 2px;
   padding: 8px 12px;
   font-size: 14px;
   font-weight: 500;
@@ -21,6 +22,8 @@
   text-transform: uppercase;
   -webkit-transition: 0.5s ease;
   transition: 0.5s ease;
+  background-color: rgb(45, 140, 255);
+  color: whitesmoke;
 }
 
 .card {
@@ -34,23 +37,42 @@
   text-align: center;
 }
 
+.card-header {
+  background-color: rgb(45, 140, 255) !important;
+}
+
+.number {
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-align: center;
+  width: 1.6em;
+  background: #00B0FF;
+  color: whitesmoke;
+}
+
 .products {
   position: relative;
   overflow: hidden;
   -webkit-transition: 0.5s ease;
   transition: 0.5s ease;
-  height: 500px;
+  height: 600px;
 }
 
 .product {
   position: absolute;
-  font-variant: small-caps;
+  text-transform: uppercase;
   top: 0;
   left: 0;
   opacity: 0;
   visibility: visible;
   -webkit-transition: 0.5s ease;
   transition: 0.5s ease;
+  height: 500px;
 }
 .product.active {
   opacity: 1;
@@ -60,10 +82,12 @@
 .thumbnail {
   margin: 0 0 0px;
   font-size: 80px;
+  padding: 50px;
 }
 
 .title {
   margin: 0 0 12px;
+  padding-top: 20px;
   font-size: 24px;
   -webkit-transition: 0.5s ease;
   transition: 0.5s ease;
@@ -73,7 +97,7 @@
   margin: 0 0 48px;
 }
 
-.footer {
+.footer-animacion {
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: horizontal;
@@ -82,6 +106,14 @@
   -webkit-box-pack: justify;
   justify-content: space-between;
   margin: 0 -12px -12px;
+}
+
+#prev {
+  border-bottom-left-radius:  13px 14px;
+}
+
+#next {
+  border-bottom-right-radius: 13px 14px;
 }
 
 [ripple] {

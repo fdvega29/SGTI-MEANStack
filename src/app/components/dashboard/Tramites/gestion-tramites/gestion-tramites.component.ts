@@ -9,6 +9,7 @@ import { dataTramites } from 'src/app/components/models/tramites.module';
 //PDFMake
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { async } from '@angular/core/testing';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var $;

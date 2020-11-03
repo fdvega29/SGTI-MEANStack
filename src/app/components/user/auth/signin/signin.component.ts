@@ -89,8 +89,8 @@ export class SigninComponent implements OnInit {
               icon: 'error',
               title: 'Correo o contraseña incorrecta',
               text: 'Vuelva a intentar.'
-            });  
-          }   
+            });
+          }
         }
       )
   }

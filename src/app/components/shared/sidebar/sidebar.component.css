@@ -1,3 +1,7 @@
+.main-sidebar {
+  overflow-x:hidden !important;
+}
+
 .sidebar {
   font-family: 'Roboto', sans-serif;
 }

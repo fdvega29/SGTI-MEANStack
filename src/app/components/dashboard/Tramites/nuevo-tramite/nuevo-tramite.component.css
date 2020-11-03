@@ -1,5 +1,7 @@
 .content-wrapper {
   font-family: "Roboto", sans-serif !important;
+  margin-top: 55px;
+  min-height: 800px !important;
 }
 
 .sw-theme-dots .sw-container {
@@ -21,8 +23,7 @@ a .nav-link:after {
 
 
 .small-box .bg-info-gradient{
-  background-color: #0b58a2 !important;
-  color: #ffffff;
+
 }
 
   /*Selecionar trámite*/
@@ -57,33 +58,19 @@ label:not(.form-check-label):not(.custom-file-label) {
   cursor: pointer;
 }
 
-/* Grow */
-.hvr-grow {
-  display: inline-block;
-  vertical-align: middle;
-  transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  backface-visibility: hidden;
-  -moz-osx-font-smoothing: grayscale;
-  transition-duration: 0.3s;
-  transition-property: transform;
-}
-
-.hvr-grow:hover,
-.hvr-grow:focus,
-.hvr-grow:active {
-  transform: scale(1.1);
-}
 
 .caja {
   display: inline-block;
-  background-color: #0b58a2 !important;
+  background-color: rgb(45, 140, 255) !important;
+  height: 230px;
   border-radius: 25px;
   padding: 0px;
 }
 
+
 .card-input-element + .card-input {
   background-color: #0b58a2 !important;
+  height: 250px;
   border-radius: 25px;
   padding: 0px;
 }
@@ -91,6 +78,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .card-input-element:checked + .card-input {
   display: inline-block;
   border: 5px solid #0c0c0c;
+  height: 250px;
   border-radius: 25px;
 }
 

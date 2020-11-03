@@ -5,7 +5,7 @@
  <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-      <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity: .8">
+      <img src="assets/logoSGTI/logo.png" alt="AdminLTE Logo" class="img-circle img-circle" style="opacity: .8; height: 50px; padding-right: 10px; padding-left: 10px">
       <a routerLink="/home" routerLinkActive="router-link-active" href="#" class="navbar-brand title-sgti">
         {{title}}
       </a>
@@ -21,14 +21,60 @@
           </li>
         </ul>
       </div>
+
+
+
     </div>
   </nav>
-  
+
+<!-- Login
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 text-center">
+      <div class="box box-solid box-primary" id="box-signin">
+        <div class="box-header">
+          <h3>Iniciar Sesión</h3>
+        </div>
+        <div class="box-body">
+          <form [formGroup]="signinFormUser" (ngSubmit)="onSignin(signinFormUser)">
+            <div class="box-body">
+              <div class="col-md-12 input-group">
+                <input type="email" class="form-control" formControlName="email" id="inputEmail3" placeholder="Email">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 input-group mt-3 mb-3">
+                <div>
+                  <input type="password" class="form-control" formControlName="password" id="password"
+                    placeholder="Password">
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="showToatr()">Iniciar
+                  Sesión</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
+
 <div class="login-box text-center" data-aos="zoom-in">
+
+  <!--<div class="login-logo">
+        <img src="./assets/dist/img/avatar.png" id="img-logo">
+      </div>-->
   <div class="login-box-body">
     <div>
       <div class="login-logo">
-        <img src="./assets/dist/img/usuario.png" id="img-logo">
+        <img src="./assets/dist/img/usuario.png" alt="usuario-img" id="img-logo">
       </div>
       <h3 class="text-muted">Iniciar Sesión</h3>
     </div>
@@ -50,14 +96,22 @@
               </div>
             </div>
           </div>
+        <!--<div class="form-group row">
+          <div class="col-md-12">
+              <div class="checkbox checkbox-primary pull-left p-t-0">
+                  <input formControlName="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+                  <label for="checkbox-signup" class="pl-1">Recuérdame</label>
+              </div>
+              <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a> </div>
+        </div>-->
       </div>
       <div class="box-footer">
         <div>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
         </div>
         <div class="social-auth-links text-center">
-          <button class="btn btn-outline-danger btn-block" id="btnGoogle" type="button">
-            <i class="fa fa-google mr-2" aria-hidden="true"></i>Inicia sesión con Google
+          <button class="btn btn-danger btn-block" id="btnGoogle" type="button">
+            <i class="fa fa-google mr-2" aria-hidden="true"></i>Ingresar con Google
           </button>
         </div>
       </div>

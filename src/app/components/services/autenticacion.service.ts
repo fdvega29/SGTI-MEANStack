@@ -27,7 +27,6 @@ export class AutenticacionService {
   ====================================*/
   public signup(user: usersModule): Observable<sessionUser> {
     return this.http.post<sessionUser>('https://app-sgti-v01.herokuapp.com/api/signup',
-    //return this.http.post<sessionUser>('http://localhost:3000/api/signup',
       user).pipe(tap(
         (res: sessionUser) => {
           if (res) {
@@ -51,7 +50,6 @@ export class AutenticacionService {
       localStorage.removeItem("EMAIL");
     }
     return this.http.post<sessionUser>('https://app-sgti-v01.herokuapp.com/api/signin',
-    //return this.http.post<sessionUser>('http://localhost:3000/api/signin',
       user).pipe(tap(
         (res: sessionUser) => {
           if (res) {
