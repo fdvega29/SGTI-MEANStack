@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <app-breadcrumbs></app-breadcrumbs>
   <hr>
-  <div class="row" id="region-info">
+  <div class="row region-info">
     <div class="col-lg-12" data-aos="zoom-in">
       <div class="card card-primary card-outline">
         <div class="card-body">
@@ -15,88 +15,145 @@
       </div>
     </div>
     <!-- /.col-lg-12- -->
+  </div>
+  <div class="row region-info">
+    <div class="col-lg-12">
+      <div class="card card-primary ">
+        <div class="card-header">
+          <h1 class="card-title text-center">Formularios de trámites</h1>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- /.col-md-6 -->
-      <div class="col-md-6" data-aos="zoom-in">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="m-4 text-center">Búsqueda de titulares dominiales</h3>
-          </div>
-          <div class="m-2 card-body">
+  <div class="row region-info">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header text-center">
             <h4 class="m-2 card-title">
-              <i class="fa fa-file-text-o" aria-hidden="true"></i> Formulario "Minuta H"
-
+              <i class="fa fa-file-text-o" aria-hidden="true"></i>
+              Búsqueda de titulares dominiales | Minuta "H"
             </h4>
-            <div class="card-text">
-              <ul>
-                Completar formulario (minuta) con los datos de la persona a la cual desea solicitar si presenta inmuebles a su nombre:
+          </div>
+          <!-- /.card-header -->
+          <div class="m-2 card-body">
+              <div class="m-2 card-text">
                 <ul>
-                  <li>Datos de identidad de la persona: Apellidos, Nombres, Nacionalidad, Estado Civil, Tipo y N° de Documento, Fecha de Nacimiento</li>
+                  <li>
+                    Completar formulario (minuta) con los datos de la persona a la cual desea solicitar si presenta inmuebles a su nombre:
+                  </li>
+                  <ul>
+                    <li><strong>Datos de identidad de la persona: </strong><em>Apellidos, Nombres, Nacionalidad, Estado Civil, Tipo y N° de Documento, Fecha de Nacimiento</em></li>
+                  </ul>
                 </ul>
-              </ul>
-              <ul>
-                Confirmar los datos ingresados, verificando que tanto el tipo de trámite como los datos de la persona sean correctos.
-              </ul>
-              <ul>Realizar el pago del formulario para comenzar a gestionar el mismo.</ul>
-              <ul>
-                Una vez confirmado el pago, se notificará al usuario cuando la minuta ya se encuentre en estado de retiro, podrá hacerlo de Lun. a Vie. en el horario de 8:00 a 13:00 hs.
-              </ul>
+                <ul>
+                  <li>
+                    Confirmar los datos ingresados, verificando que tanto el tipo de trámite como los datos de la persona sean correctos.
+                  </li>
+                  <li>Realizar el pago del formulario para comenzar a gestionar el mismo.</li>
+                  <li>
+                    Una vez confirmado el pago, se notificará al usuario cuando la minuta ya se encuentre en estado de retiro, podrá hacerlo de Lun. a Vie. en el horario de 8:00 a 13:00 hs.
+                  </li>
+                </ul>
+              </div>
+          </div>
+          <div class="card-footer footer-comprar">
+            <button type="button" class="btn btn-primary btn-block" (click)="enviarFormulario('5f3c6a13bc29a408dcd305e5')">Solicitar formulario</button>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- ./col -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header text-center">
+            <h4 class="m-2 card-title">
+              <i class="fa fa-file-text-o" aria-hidden="true"></i>
+              Búsqueda de estado jurídico de inmueble | Minuta "G"
+            </h4>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body clearfix">
+            <div class="card-body">
+              <div class="card-text">
+                <ul>
+                  <li>
+                    Completar formulario (minuta) con los datos de la persona a la cual desea solicitar si presenta inmuebles a su nombre:
+                  </li>
+                  <ul>
+                    <li><strong>Datos de identidad de la persona: </strong><em>Apellidos, Nombres, Nacionalidad, Estado Civil, Tipo y N° de Documento, Fecha de Nacimiento</em></li>
+                  </ul>
+                </ul>
+                <ul>
+                  <li>
+                    Confirmar los datos ingresados, verificando que tanto el tipo de trámite como los datos de la persona sean correctos.
+                  </li>
+                  <li>Realizar el pago del formulario para comenzar a gestionar el mismo.</li>
+                  <li>
+                    Una vez confirmado el pago, se notificará al usuario cuando la minuta ya se encuentre en estado de retiro, podrá hacerlo de Lun. a Vie. en el horario de 8:00 a 13:00 hs.
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="card-footer footer-comprar">
             <button type="button" class="btn btn-primary btn-block" (click)="enviarFormulario('5f3c6a13bc29a408dcd305e5')">Solicitar formulario</button>
           </div>
+          <!-- /.card-body -->
         </div>
+        <!-- /.card -->
       </div>
-
-    <div class="col-md-6" data-aos="zoom-in">
-      <div class="card card-primary card-outline">
-        <div class="card-header">
-          <h3 class="my-4 text-center">Búsqueda de estado jurídico de inmueble</h3>
-        </div>
-        <div class="m-2 card-body">
-          <h4 class="m-2 card-title">
-            <i class="fa fa-file-text-o" aria-hidden="true"></i> Formulario "Minuta G"
-          </h4>
-
-          <div class="card-text">
-            <ul>
-              Completar formulario (minuta) con los datos de la persona a la cual desea solicitar si presenta inmuebles a su nombre:
-              <ul>
-                <li>Datos de identidad de la persona: Apellidos, Nombres, Nacionalidad, Estado Civil, Tipo y N° de Documento, Fecha de Nacimiento</li>
-              </ul>
-            </ul>
-            <ul>
-              Confirmar los datos ingresados, verificando que tanto el tipo de trámite como los datos de la persona sean correctos.
-            </ul>
-            <ul>Realizar el pago del formulario para comenzar a gestionar el mismo.</ul>
-            <ul>
-              Una vez confirmado el pago, se notificará al usuario cuando la minuta ya se encuentre en estado de retiro, podrá hacerlo de Lun. a Vie. en el horario de 8:00 a 13:00 hs.
-            </ul>
-          </div>
-
-        </div>
-        <div class="card-footer footer-comprar">
-          <button type="button" class="btn btn-primary btn-block" (click)="enviarFormulario('5f3b2c61d32fbf223ce446e7')">Solicitar formulario</button>
-        </div>
-      </div>
-    </div>
-    <!-- /.col-md-6 -->
-
-    <div class="col-md-12" data-aos="zoom-in">
-      <div class="card card-primary card-outline">
-        <div class="card-body">
-          <h4 class="card-title">TÉRMINOS Y CONDICIONES DE CONTRATACIÓN DE SGTI ®   </h4>
-
-          <p class="card-text">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
-
-        </div>
-      </div><!-- /.card -->
+      <!-- ./col -->
     </div>
 
+<div class="row region-info">
+  <div class="col-md-12" data-aos="zoom-in">
+    <div class="card card-primary card-outline text-center">
+      <div class="card-body">
+        <h1 class="card-title text-center">TÉRMINOS Y CONDICIONES DE CONTRATACIÓN DE SGTI ® </h1>
+        <p class="card-text text-muted pt-3">
+          Al ingresar a la Aplicación Web, el Usuario declara saber, conocer y aceptar las presentes Condiciones de Uso.
+          La utilización de la aplicación implica el conocimiento y la aceptación plena por parte del Usuario de las Condiciones de Uso.
+          En caso de no aceptar las Condiciones de Uso o cualquier cambio o modificación de las mismas no deberá continuar utilizando la aplicación.
+        </p>
+      </div>
+      <hr>
+      <div class="card-body">
+        <h4 class="card-title text-center">Uso de los Servicios</h4>
+        <p class="card-text text-muted pt-2">
+          El Usuario registrado, declara que la información de contacto que brindará al remitir un pedido será precisa, correcta, completa y actual, no siendo responsable SGTI ® por demoras, inconvenientes, o extravío de trámites en caso de que la información brindada por el Usuario no sea veraz y completa.
+          <br>
+          SGTI ® no tiene responsabilidad o injerencia alguna sobre la información brindada por los organismos, siendo ésta de exclusiva incumbencia de los entes respectivos.
+        </p>
+      </div>
+      <hr>
+      <div class="card-body">
+        <h4 class="card-title text-center">Pedidos y formas de pago</h4>
+        <p class="card-text text-muted pt-2">
+          SGTI ha diseñado diversos formularios para que el Usuario efectúe los pedidos de los trámites. A cada pedido se le asignará un único identificador ("Número de Trámite"). El mismo servirá como medio para identificar el trámite que ha realizado en el sistema.
+          <br>
+          El Usuario podrá abonar los trámites por medio de Mercado Pago, utilizando cualquiera de los medios de pago proporcionados(Pago Fácil, Rapipago, Tarjeta de Crédito, etc).
+        </p>
+      </div>
+      <hr>
+      <div class="card-body">
+        <h4 class="card-title text-center">Entrega de los trámites</h4>
+        <p class="card-text text-muted pt-2">
+          Una vez que SGTI ® recibe los trámites completados, el usuario será informado por medio de la Aplicación, indicando que el trámite se encuentra listo para ser retirado por las oficinas de  la Secretaría de Tierras y Hábitat Social en el horario de 8 a 12 hs de lunes a viernes.
+          <br>
+          El retiro de los trámites puede efectuarlos cualquier persona, debiendo saber dos datos imprescindibles: número de trámite y a nombre de quién lo solicitó.
+        </p>
+      </div>
+
+
+    </div><!-- /.card -->
   </div>
+</div>
+
+
+
+
 
 
 </div>

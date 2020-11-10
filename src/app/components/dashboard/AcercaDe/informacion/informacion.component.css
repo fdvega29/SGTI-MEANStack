@@ -4,11 +4,10 @@
 }
 .content-wrapper{
   font-family: "Roboto", sans-serif !important;
-  margin-top: 55px;
+  }
 
-}
 
-.row #region-info{
-  padding-left: 2px;
-  padding-right: 2px;
+.region-info {
+  margin-left: 10px;
+  margin-right: 10px;
 }
