@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
-              <a href="" class="nav-link">
+              <a href="" class="nav-link hvr-grow">
                 <i [class]="menuSidebar.icono"></i>
                 <p class="pl-2">
                    {{menuSidebar.titulo}}
@@ -53,7 +53,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item" >
-                  <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
+                  <a href="#" class="nav-link hvr-grow" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
                     <i class="fa fa-circle nav-icon"> </i>
                     <p class="pl-1"> {{subMenus.titulo}}
                     </p>
@@ -66,14 +66,14 @@
 
           <ng-template #MenuAdm>
             <li class="nav-item">
-                <a href="javascript=void(0)" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="nav-link">
+                <a href="javascript=void(0)" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="nav-link hvr-grow">
                   <i class="fa fa-home" aria-hidden="true"></i>
                   <p class="pl-2">Inicio
                   </p>
                 </a>
             </li>
             <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item">
-              <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[menuSidebar.url]" routerLinkActive="router-link-active">
+              <a href="#" class="nav-link hvr-grow" routerLinkActive="active" [routerLink]="[menuSidebar.url]" routerLinkActive="router-link-active">
                 <i class="text-center" [class]="menuSidebar.icono"> </i>
                 <p class="pl-2">{{menuSidebar.titulo}}</p>
               </a>
