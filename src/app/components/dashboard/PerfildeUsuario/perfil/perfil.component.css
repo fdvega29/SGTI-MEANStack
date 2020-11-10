@@ -1,13 +1,12 @@
 .content-wrapper {
   font-family: "Roboto", sans-serif !important;
-  margin-top: 55px;
+  min-height: 800px !important;
 }
 #estado{
     color: green;
     font-size: 18px;
 }
 .bg-primary {
-  /*background-color: #0b58a2 !important;*/
   background-color: #2d8cff !important;
 }
 
