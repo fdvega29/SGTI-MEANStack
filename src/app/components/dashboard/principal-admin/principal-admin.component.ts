@@ -25,6 +25,9 @@ export class PrincipalAdminComponent implements OnInit {
   usuarios: usersModule[];
   usuario: usersModule;
 
+  ROL_ADM: string = 'ADMIN_ROLE';
+  ROL_USR: string = 'USER_ROLE';
+
   total: number;
   dataTable: any;
 

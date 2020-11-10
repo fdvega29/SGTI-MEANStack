@@ -136,13 +136,19 @@
             <tr *ngFor="let user of usuarios; index as i">
               <td scope="row">{{i+1}}</td>
                   <td class="text-center">
-                    <img [src]="user.img | imagen" style="width: 30px;">
+                    <img class="img-circle" [src]="user.img | imagen" style="width: 30px;">
                   </td>
                   <td class="text-center">{{user.apellido}}</td>
                   <td class="text-center">{{user.nombre}}</td>
                   <td class="text-center">{{user.email}}</td>
                   <td class="text-center">{{user.telefono}}</td>
-                  <td class="text-center">{{user.roles}}</td>
+                  <td *ngIf="user.roles == ROL_ADM" class="text-center">
+                    Administrador
+                  </td>
+                  <td *ngIf="user.roles == ROL_USR" class="text-center">
+                    Usuario registrado
+                  </td>
+
                   <!--<td class="text-center">{{user.google == true ? 'Google' : 'Normal'}}</td>-->
                   <td class="text-center">
                     <div class="custom-control custom-switch" style="margin: auto;">
@@ -173,9 +179,9 @@
       </div>
       <!--DataCards -->
 
-        <div class="card-deck">
-          <div class="card" *ngFor="let user of usuarios; index as i" style="width: 400px">
-            <div class="card-body" data-aos="zoom-in">
+        <div class="cardUsuarios">
+          <div class="card card-primary card-outline" *ngFor="let user of usuarios; index as i" data-aos="zoom-in">
+            <div class="card-body">
 
               <div class="pull-left col-7 text-center">
                 <img class="img-fluid img-circle" [src]="user.img | imagen" alt="User profile picture">
@@ -184,20 +190,23 @@
 
                 <p class="text-muted email-user">{{user.email}}</p>
 
-                <p class="text-muted "><i class="fa fa-phone-square" aria-hidden="true"></i> {{user.telefono}}</p>
+                <p class="text-muted "><i class="fa fa-phone-square pull-left" aria-hidden="true"></i> {{user.telefono}}</p>
 
 
               </div>
 
               <div class="pull-right col-5">
                 <ul class="list-group list-group-unbordered mb-3 ">
-                  <li class="list-group-item text-center">
-                    <b>Rol: </b> {{user.roles}}
+                  <li *ngIf="user.roles == ROL_ADM"  class="list-group-item text-center">
+                    <strong>Rol:</strong> <br> Administrador
+                  </li>
+                  <li *ngIf="user.roles == ROL_USR" class="list-group-item text-center">
+                    <strong>Rol:</strong> <br> Usuario Registrado
                   </li>
                   <li class="list-group-item text-center">
-                    <b class="text-center">Activar/Desactivar</b> <br>
+                    <b class="text-center labelActivar">Activar/Desactivar</b> <br>
                     <a class="text-center">
-                      <div class="custom-control custom-switch" style="margin: auto;">
+                      <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}" (click)="changeEstado(user)" [(ngModel)]="user.estado">
                         <label class="custom-control-label" for="customSwitch{{i}}"></label>
                       </div>
