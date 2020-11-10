@@ -1,5 +1,6 @@
 .content-wrapper{
   font-family: "Roboto", sans-serif !important;
+  min-height: 800px !important;
 }
 
 .card-header {
