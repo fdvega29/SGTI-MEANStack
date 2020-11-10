@@ -1,3 +1,7 @@
+aside {
+  min-height: 700px !important;
+}
+
 .main-sidebar {
   overflow-x:hidden !important;
 }
@@ -15,8 +19,9 @@
 }
 
 .title-sgti {
+  padding: 0 3.1rem;
   font-family: 'Bebas Neue', cursive !important;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 200;
 }
 
@@ -24,6 +29,13 @@
   cursor: pointer;
   color: #0c0c0c;
 }
+.logo-sidebar {
+  height: 50px;
+  padding-right: 0;
+  padding-left: 0px;
+
+}
+
 .name{
   color: rgb(45, 140, 255);;
 }
