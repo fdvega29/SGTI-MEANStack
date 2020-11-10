@@ -68,8 +68,7 @@
             <li class="nav-item">
                 <a href="javascript=void(0)" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="nav-link">
                   <i class="fa fa-home" aria-hidden="true"></i>
-                  <p class="pl-2">
-                    Inicio
+                  <p class="pl-2">Inicio
                   </p>
                 </a>
             </li>
@@ -82,10 +81,11 @@
           </ng-template>
 
         <!--Boton cerrar sesión-->
-          <li class="nav-item">
+          <li class="nav-item btn-logout">
+            <hr>
               <a href="javascript:void(0)" (click)="_autenticacion.logout()" routerLinkActive="router-link-active" class="nav-link">
                 <i class="fa fa-power-off" aria-hidden="true"></i>
-                <p>&nbsp;Cerrar sesión</p>
+                <p class="pl-2">&nbsp;Cerrar sesión</p>
               </a>
           </li>
 

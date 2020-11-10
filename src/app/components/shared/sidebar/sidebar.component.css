@@ -48,6 +48,10 @@ aside {
   margin-left: 1.1rem !important;
 }
 
+.btn-logout {
+  padding-top: 10px;
+}
+
 .btn-lg {
   color: #fff0ff;
   background-color: rgb(45, 140, 255);
