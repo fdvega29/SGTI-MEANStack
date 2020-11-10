@@ -1,5 +1,24 @@
 .content-wrapper{
   font-family: "Roboto", sans-serif !important;
-  margin-top: 55px;
+}
 
+ul {
+  padding-top: 20px;
+}
+
+ul > li {
+  padding-bottom: 10px;
+}
+
+.callout {
+  min-height: 420px;
+}
+
+.img-div {
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.fa-ul {
+  margin-left: 0px;
 }
