@@ -20,6 +20,8 @@ declare const gapi: any;
 export class SigninComponent implements OnInit {
 
   title = 'SGTI';
+// tslint:disable-next-line: max-line-length
+  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   signinFormUser: FormGroup;
   recuerdame: boolean = false;
@@ -35,7 +37,7 @@ export class SigninComponent implements OnInit {
 
   createFormGroupUser() {
     return new FormGroup({
-      email: new FormControl('', Validators.email),
+      email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(this.emailPattern)]),
       password: new FormControl('', Validators.required),
       recuerdame: new FormControl('')
     });
@@ -149,5 +151,6 @@ export class SigninComponent implements OnInit {
     });
   }
 
+  get emailValido() { return this.signinFormUser.get('email'); }
 }
 
