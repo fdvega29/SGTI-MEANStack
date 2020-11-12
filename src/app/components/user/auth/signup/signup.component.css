@@ -73,3 +73,8 @@
   font-family: "Roboto", sans-serif;
   font-weight: 500;
 }
+
+.container-error-message {
+  font-size: small;
+  margin: 5px 5px;
+}

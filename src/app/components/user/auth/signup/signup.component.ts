@@ -14,17 +14,20 @@ import { AutenticacionService } from 'src/app/components/services/autenticacion.
 export class SignupComponent implements OnInit {
 
   title : string = "SGTI";
+  // tslint:disable-next-line: max-line-length
+  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
   signupFormUser: FormGroup;
 
   createFormGroupUser() {
     return new FormGroup({
-      apellido: new FormControl('', Validators.required),
-      nombre: new FormControl('', Validators.required),
-      telefono: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required)
+      apellido: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      telefono: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(this.emailPattern)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
   }
 
@@ -56,4 +59,10 @@ export class SignupComponent implements OnInit {
     err => console.log(err)
     )
   }
+  get apellido() { return this.signupFormUser.get('apellido'); }
+  get nombre() { return this.signupFormUser.get('nombre'); }
+  get telefono() { return this.signupFormUser.get('telefono'); }
+  get email() { return this.signupFormUser.get('email'); }
+  get password() { return this.signupFormUser.get('password'); }
+  get confirmPassword() { return this.signupFormUser.get('confirmPassword'); }
 }
