@@ -36,7 +36,7 @@
 
           <div *ngIf="roleUsuario=='USER_ROLE'; else MenuAdm">
             <li class="nav-item">
-                <a href="javascript=void(0)" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="nav-link">
+                <a href="javascript=void(0)" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="nav-link hvr-grow">
                   <i class="fa fa-home" aria-hidden="true"></i>
                   <p class="pl-2">
                     Inicio
@@ -48,7 +48,7 @@
                 <i [class]="menuSidebar.icono"></i>
                 <p class="pl-2">
                    {{menuSidebar.titulo}}
-                  <i class="right fa fa-angle-left"> </i>
+                  <i class="right fa fa-angle-left" style="right: 0rem;"> </i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
