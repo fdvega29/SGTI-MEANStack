@@ -26,7 +26,7 @@
   <section class="content">
     <div class="row">
 
-      <div class="col-12">
+      <div class="col-12 pl-4 pr-4">
         <div *ngIf="this.lsNotificacion" class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>Proceso generado con exito!</strong> Total actualizados: {{datosProceso.totActualizados}}
           <button type="button" class="close" (click)="removeItem()" data-dismiss="alert" aria-label="Close">
@@ -55,9 +55,9 @@
 
         <!--DataTable -->
         <div class="row p-2" data-aos="zoom-in" id="tableTramites">
-          <div class="card col-12">
+          <div class="card card-primary card-outline col-12 pl-4 pr-4">
             <div class="card-header">
-              <h3 class="card-title">Listado de tramites generados</h3>
+              <h3 class="card-title text-center">Listado de tramites generados</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
