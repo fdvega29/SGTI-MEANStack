@@ -3,3 +3,19 @@
   margin-top: 55px;
   min-height: 800px !important;
 }
+
+.nav-link {
+  padding: 5px 0;
+}
+
+.coll-all-inic{
+  background: #007bff;
+  color: #FFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.content-all-inic{
+  text-align: left!important;
+}

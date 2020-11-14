@@ -12,24 +12,28 @@
           <button type="button" class="close" (click)="removeItem()" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-      </div>
+        </div>
 
         <div class="card card-primary card-outline">
           <div class="card-body">
-             <div class="row">
-               <div class="col-md-3">
-                  <h5 class="text-muted">Ultima sincronización: <span style="color: black">{{datosProceso.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span></h5>
-               </div>
-               <div class="col-md-3">
-                  <h5 class="text-muted">Total Procesados: <span style="color: black">{{datosProceso.totProcesados}}</span></h5>
-               </div>
-               <div class="col-md-3">
-                  <h5 class="text-muted">Total Actualizados: <span style="color: black">{{datosProceso.totActualizados}}</span></h5>
-               </div>
-               <div class="col-md-3">
-                  <button type="button" (click)="sincronizarPagos()" class="btn btn-success"><i class="fa fa-refresh" aria-hidden="true"></i> Sincronizar Pagos</button>
-               </div>
-             </div>
+            <div class="row">
+              <div class="col-md-3">
+                <h5 class="text-muted">Ultima sincronización: <span
+                    style="color: black">{{datosProceso.createdAt | date: "dd/MM/yyyy"}}</span></h5>
+              </div>
+              <div class="col-md-3">
+                <h5 class="text-muted">Total Procesados: <span
+                    style="color: black">{{datosProceso.totProcesados}}</span></h5>
+              </div>
+              <div class="col-md-3">
+                <h5 class="text-muted">Total Actualizados: <span
+                    style="color: black">{{datosProceso.totActualizados}}</span></h5>
+              </div>
+              <div class="col-md-3">
+                <button type="button" (click)="sincronizarPagos()" class="btn btn-success"><i class="fa fa-refresh"
+                    aria-hidden="true"></i> Sincronizar Pagos</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -76,31 +80,31 @@
                       <p>{{minH.area.nombre}}</p>
                     </td>
                     <td class="text-center">
-                      <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                          data-target="#exampleModal">
-                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                      <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)"
+                        data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </button>
                     </td>
-                    <td>
+                    <td class="text-center">
                       <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
                         id="estado">Aprobado</span>
                       <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
                         id="estado">Pendiente</span>
                       <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
                         id="estado">Rechazado</span>
-                      <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
+                      <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-secondary ml-1"
                         id="estado">Cancelado</span>
                     </td>
                     <td class="text-center">
                       <a class="btn btn-outline-success" *ngIf="minH.estadoTram == 'Finalizado'"
-                      href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
-                      class="fa fa-whatsapp" aria-hidden="true"></i>
+                        href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
+                          class="fa fa-whatsapp" aria-hidden="true"></i>
                       </a>&nbsp;
                       <p>{{minH.usuario.telefono}}</p>
                     </td>
-                    <td *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH"  class="text-center">
+                    <td *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH" class="text-center">
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                         (click)="imprimirFormularioMinG(minH.tipoTram,
+                        (click)="imprimirFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
                                                          minH.ubicacionInmueble,
                                                          minH.apellido,
@@ -113,7 +117,7 @@
                                                          minH.usuario.telefono)" class="btn btn-outline-info"><i
                           class="fa fa-print"></i></a>&nbsp;
                       <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                         (click)="descargarFormularioMinG(minH.tipoTram,
+                        (click)="descargarFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
                                                          minH.ubicacionInmueble,
                                                          minH.apellido,
@@ -130,7 +134,7 @@
                     <ng-template #imprimeMinH>
                       <td class="text-center">
                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                           (click)="imprimirFormularioMinH(minH.tipoTram,
+                          (click)="imprimirFormularioMinH(minH.tipoTram,
                                                          minH.apellido,
                                                          minH.nombre,
                                                          minH.nacionalidad,
@@ -143,9 +147,9 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-outline-info"><i
-                          class="fa fa-print"></i></a>&nbsp;
+                            class="fa fa-print"></i></a>&nbsp;
                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                           (click)="descargarFormularioMinH(minH.tipoTram,
+                          (click)="descargarFormularioMinH(minH.tipoTram,
                                                          minH.apellido,
                                                          minH.nombre,
                                                          minH.nacionalidad,
@@ -158,7 +162,7 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-outline-danger"><i
-                          class="fa fa-download" aria-hidden="true"></i></a>
+                            class="fa fa-download" aria-hidden="true"></i></a>
                       </td>
                     </ng-template>
 
@@ -176,83 +180,94 @@
 
       <!-- Cards -->
       <div class="row p-2" data-aos="zoom-in" id="cardsTramites">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header p-0">
-                <ul class="nav nav-pills row p-2">
-                  <li class="nav-item col-4"><a class="nav-link active text-center" href="#tab_1"
-                                                data-toggle="tab">Todos</a></li>
-                  <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_2" data-toggle="tab">En proceso</a>
-                  </li>
-                  <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_3" data-toggle="tab">Finalizado</a>
-                  </li>
-                </ul>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1">
-                    <div *ngFor="let minH of tramites; index as i">
-                      <div *ngIf="minH.estadoTram == 'Iniciado'" class="row callout callout-info animate__animated animate__flipInX" style="border-left-color: #007bff !important;">
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Nro. de trámite:</strong> {{minH.codigo}}
-                          </p>
-                          <p class="text-muted">
-                            <strong>Generado: </strong>
-                            <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
-                            <strong>Estado tramite: </strong>
-                            <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Area: </strong>
-                            <span style="color: black;">{{minH.area.nombre}}</span>
-                          </p>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header p-0">
+              <ul class="nav nav-pills row p-2">
+                <li class="nav-item col-4"><a class="nav-link active text-center" href="#tab_1"
+                    data-toggle="tab">Todos</a></li>
+                <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_2" data-toggle="tab">En
+                    proceso</a>
+                </li>
+                <li class="nav-item col-4"><a class="nav-link text-center" href="#tab_3"
+                    data-toggle="tab">Finalizado</a>
+                </li>
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                  <div *ngIf="cini == 0 && cproc == 0 && cfina == 0"
+                    class="row callout callout-info animate__animated animate__flipInX"
+                    style="border-left-color: #343a40 !important;">
+                    <p class="text-muted">¡No hay tramites en este estado!</p>
+                  </div>
+                  <div *ngFor="let minH of tramites; index as i">
+                    <div *ngIf="minH.estadoTram == 'Iniciado'"
+                      class="row callout callout-info animate__animated animate__flipInX"
+                      style="border-left-color: #007bff !important;">
+                      <div class="col-md-4 content-all-inic">
+                        <p class="text-muted">
+                          <strong>Nro. de trámite:</strong> {{minH.codigo}}
+                        </p>
+                        <p class="text-muted">
+                          <strong>Generado: </strong>
+                          <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}}
+                            {{minH.usuario.nombre}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
+                          <strong>Estado tramite: </strong>
+                          <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Area: </strong>
+                          <span style="color: black;">{{minH.area.nombre}}</span>
+                        </p>
 
-                          <p class="text-muted"><strong>Estado Pago: </strong>
-                            <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
-                                  id="estado">Aprobado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
-                                  id="estado">Pendiente</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
-                                  id="estado">Rechazado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
-                                  id="estado">Cancelado</span>
-                          </p>
+                        <p class="text-muted"><strong>Estado Pago: </strong>
+                          <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
+                            id="estado">Aprobado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
+                            id="estado">Pendiente</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
+                            id="estado">Rechazado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-secondary ml-1"
+                            id="estado">Cancelado</span>
+                        </p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <div class="coll-all-inic" data-toggle="collapse"
+                          [attr.data-target]="'#collapseTodosIniciados' + minH.codigo" id="tituAllInic{{minH.codigo}}"
+                          (click)="showHideCollapse(minH.codigo)" aria-expanded="false">
+                          Ver más
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="collapse" id="collapseTodosIniciados{{minH.codigo}}">
                           <p class="text-muted">
-                            <strong>Editar: </strong>
+                            <strong>Acciones: </strong>
                           </p>
                           <p class="iconos-formulario">
-                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                                    data-target="#exampleModal">
+                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)"
+                              data-toggle="modal" data-target="#exampleModal">
                               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </button>
                           </p>
-                          <p class="text-muted">
-                            <strong>Formulario: </strong>
-                          </p>
                           <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinG(minH.tipoTram,
+                              (click)="imprimirFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
                                                          minH.ubicacionInmueble,
                                                          minH.apellido,
@@ -263,9 +278,9 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
+                                class="fa fa-print"></i></a>&nbsp;
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinG(minH.tipoTram,
+                              (click)="descargarFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
                                                          minH.ubicacionInmueble,
                                                          minH.apellido,
@@ -276,14 +291,14 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
+                                class="fa fa-download" aria-hidden="true"></i></a>
 
                           </p>
 
                           <ng-template #imprimeMinH>
 
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinH(minH.tipoTram,
+                              (click)="imprimirFormularioMinH(minH.tipoTram,
                                                          minH.apellido,
                                                          minH.nombre,
                                                          minH.nacionalidad,
@@ -296,9 +311,9 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
+                                class="fa fa-print"></i></a>&nbsp;
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinH(minH.tipoTram,
+                              (click)="descargarFormularioMinH(minH.tipoTram,
                                                          minH.apellido,
                                                          minH.nombre,
                                                          minH.nacionalidad,
@@ -311,7 +326,7 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
+                                class="fa fa-download" aria-hidden="true"></i></a>
                           </ng-template>
 
 
@@ -320,77 +335,80 @@
                             <p class="text-center text-muted">
                               <strong>Notificar:</strong> {{minH.usuario.telefono}}
                               <a class="btn btn-success"
-                                 href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
-                                class="fa fa-whatsapp" aria-hidden="true"></i>
+                                href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
+                                  class="fa fa-whatsapp" aria-hidden="true"></i>
                               </a>&nbsp;
                             </p>
                           </div>
-
-
-
                         </div>
+
+
                       </div>
-                      <div *ngIf="minH.estadoTram == 'En proceso'" class="row callout callout-warning animate__animated animate__flipInX">
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Nro. de trámite:</strong> {{minH.codigo}}
-                          </p>
-                          <p class="text-muted">
-                            <strong>Generado: </strong>
-                            <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
-                            <strong>Estado tramite: </strong>
-                            <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Area: </strong>
-                            <span style="color: black;">{{minH.area.nombre}}</span>
-                          </p>
+                    </div>
+                    <div *ngIf="minH.estadoTram == 'En proceso'"
+                      class="row callout callout-warning animate__animated animate__flipInX">
+                      <div class="col-md-4 content-all-proc">
+                        <p class="text-muted">
+                          <strong>Nro. de trámite:</strong> {{minH.codigo}}
+                        </p>
+                        <p class="text-muted">
+                          <strong>Generado: </strong>
+                          <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}}
+                            {{minH.usuario.nombre}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
+                          <strong>Estado tramite: </strong>
+                          <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Area: </strong>
+                          <span style="color: black;">{{minH.area.nombre}}</span>
+                        </p>
 
-                          <p class="text-muted"><strong>Estado Pago: </strong>
-                            <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
-                                  id="estado">Aprobado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
-                                  id="estado">Pendiente</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
-                                  id="estado">Rechazado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
-                                  id="estado">Cancelado</span>
-                          </p>
+                        <p class="text-muted"><strong>Estado Pago: </strong>
+                          <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
+                            id="estado">Aprobado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
+                            id="estado">Pendiente</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
+                            id="estado">Rechazado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-secondary ml-1"
+                            id="estado">Cancelado</span>
+                        </p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <div class="coll-all-proc" data-toggle="collapse"
+                          [attr.data-target]="'#collapseTodosProceso' + minH.codigo" id="tituAllProc{{minH.codigo}}"
+                          (click)="showHideCollapse(minH.codigo)" aria-expanded="false">
+                          Ver más
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="collapse" id="collapseTodosProceso{{minH.codigo}}">
                           <p class="text-muted">
-                            <strong>Editar: </strong>
+                            <strong>Acciones: </strong>
                           </p>
                           <p class="iconos-formulario">
-                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                                    data-target="#exampleModal">
+                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)"
+                              data-toggle="modal" data-target="#exampleModal">
                               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </button>
                           </p>
-                          <p class="text-muted">
-                            <strong>Formulario: </strong>
-                          </p>
                           <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinG(minH.tipoTram,
+                              (click)="imprimirFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
                                                          minH.ubicacionInmueble,
                                                          minH.apellido,
@@ -401,9 +419,9 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
+                                class="fa fa-print"></i></a>&nbsp;
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinG(minH.tipoTram,
+                              (click)="descargarFormularioMinG(minH.tipoTram,
                                                          minH.objetoPedido,
                                                          minH.ubicacionInmueble,
                                                          minH.apellido,
@@ -414,14 +432,14 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
+                                class="fa fa-download" aria-hidden="true"></i></a>
 
                           </p>
 
                           <ng-template #imprimeMinH>
 
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinH(minH.tipoTram,
+                              (click)="imprimirFormularioMinH(minH.tipoTram,
                                                          minH.apellido,
                                                          minH.nombre,
                                                          minH.nacionalidad,
@@ -434,9 +452,9 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
+                                class="fa fa-print"></i></a>&nbsp;
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinH(minH.tipoTram,
+                              (click)="descargarFormularioMinH(minH.tipoTram,
                                                          minH.apellido,
                                                          minH.nombre,
                                                          minH.nacionalidad,
@@ -449,7 +467,7 @@
                                                          minH.usuario.apellido,
                                                          minH.usuario.nombre,
                                                          minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
+                                class="fa fa-download" aria-hidden="true"></i></a>
                           </ng-template>
 
 
@@ -458,77 +476,81 @@
                             <p class="text-center text-muted">
                               <strong>Notificar:</strong> {{minH.usuario.telefono}}
                               <a class="btn btn-success"
-                                 href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
-                                class="fa fa-whatsapp" aria-hidden="true"></i>
+                                href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
+                                  class="fa fa-whatsapp" aria-hidden="true"></i>
                               </a>&nbsp;
                             </p>
                           </div>
-
-
-
                         </div>
+
+
                       </div>
-                      <div *ngIf="minH.estadoTram == 'Finalizado'" class="row callout callout-success animate__animated animate__flipInX" style="border-left-color: #28a745 !important;">
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Nro. de trámite:</strong> {{minH.codigo}}
-                          </p>
-                          <p class="text-muted">
-                            <strong>Generado: </strong>
-                            <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
-                            <strong>Estado tramite: </strong>
-                            <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Area: </strong>
-                            <span style="color: black;">{{minH.area.nombre}}</span>
-                          </p>
+                    </div>
+                    <div *ngIf="minH.estadoTram == 'Finalizado'"
+                      class="row callout callout-success animate__animated animate__flipInX"
+                      style="border-left-color: #28a745 !important;">
+                      <div class="col-md-4 content-all-fina">
+                        <p class="text-muted">
+                          <strong>Nro. de trámite:</strong> {{minH.codigo}}
+                        </p>
+                        <p class="text-muted">
+                          <strong>Generado: </strong>
+                          <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}}
+                            {{minH.usuario.nombre}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
+                          <strong>Estado tramite: </strong>
+                          <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Area: </strong>
+                          <span style="color: black;">{{minH.area.nombre}}</span>
+                        </p>
 
-                          <p class="text-muted"><strong>Estado Pago: </strong>
-                            <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
-                                  id="estado">Aprobado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
-                                  id="estado">Pendiente</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
-                                  id="estado">Rechazado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
-                                  id="estado">Cancelado</span>
-                          </p>
+                        <p class="text-muted"><strong>Estado Pago: </strong>
+                          <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
+                            id="estado">Aprobado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
+                            id="estado">Pendiente</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
+                            id="estado">Rechazado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-secondary ml-1"
+                            id="estado">Cancelado</span>
+                        </p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <div class="coll-all-fina" data-toggle="collapse"
+                          [attr.data-target]="'#collapseTodosFinalizados' + minH.codigo" id="tituAllFina{{minH.codigo}}"
+                          (click)="showHideCollapse(minH.codigo)" aria-expanded="false">
+                          Ver más
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="collapse" id="collapseTodosFinalizados{{minH.codigo}}">
                           <p class="text-muted">
-                            <strong>Editar: </strong>
+                            <strong>Acciones: </strong>
                           </p>
                           <p class="iconos-formulario">
-                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                                    data-target="#exampleModal">
+                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)"
+                              data-toggle="modal" data-target="#exampleModal">
                               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </button>
                           </p>
-                          <p class="text-muted">
-                            <strong>Formulario: </strong>
-                          </p>
                           <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinG(minH.tipoTram,
+                              (click)="imprimirFormularioMinG(minH.tipoTram,
                                                      minH.objetoPedido,
                                                      minH.ubicacionInmueble,
                                                      minH.apellido,
@@ -539,9 +561,9 @@
                                                      minH.usuario.apellido,
                                                      minH.usuario.nombre,
                                                      minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
+                                class="fa fa-print"></i></a>&nbsp;
                             <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinG(minH.tipoTram,
+                              (click)="descargarFormularioMinG(minH.tipoTram,
                                                      minH.objetoPedido,
                                                      minH.ubicacionInmueble,
                                                      minH.apellido,
@@ -552,14 +574,14 @@
                                                      minH.usuario.apellido,
                                                      minH.usuario.nombre,
                                                      minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
+                                class="fa fa-download" aria-hidden="true"></i></a>
 
                           </p>
 
                           <ng-template #imprimeMinH>
 
-                              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                                 (click)="imprimirFormularioMinH(minH.tipoTram,
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                              (click)="imprimirFormularioMinH(minH.tipoTram,
                                                      minH.apellido,
                                                      minH.nombre,
                                                      minH.nacionalidad,
@@ -573,8 +595,8 @@
                                                      minH.usuario.nombre,
                                                      minH.usuario.telefono)" class="btn btn-info"><i
                                 class="fa fa-print"></i></a>&nbsp;
-                              <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                                 (click)="descargarFormularioMinH(minH.tipoTram,
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                              (click)="descargarFormularioMinH(minH.tipoTram,
                                                      minH.apellido,
                                                      minH.nombre,
                                                      minH.nacionalidad,
@@ -596,313 +618,329 @@
                             <p class="text-center text-muted">
                               <strong>Notificar:</strong> {{minH.usuario.telefono}}
                               <a class="btn btn-success"
-                                 href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
-                                class="fa fa-whatsapp" aria-hidden="true"></i>
+                                href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
+                                  class="fa fa-whatsapp" aria-hidden="true"></i>
                               </a>&nbsp;
                             </p>
                           </div>
-
-
-
                         </div>
+
+
+
                       </div>
                     </div>
                   </div>
-                  <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2">
-                    <div *ngFor="let minH of tramites; index as i">
-                      <div *ngIf="minH.estadoTram == 'En proceso'" class="row callout callout-warning animate__animated animate__flipInX">
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Nro. de trámite:</strong> {{minH.codigo}}
-                          </p>
-                          <p class="text-muted">
-                            <strong>Generado: </strong>
-                            <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
-                            <strong>Estado tramite: </strong>
-                            <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Area: </strong>
-                            <span style="color: black;">{{minH.area.nombre}}</span>
-                          </p>
-
-                          <p class="text-muted"><strong>Estado Pago: </strong>
-                            <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
-                                  id="estado">Aprobado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
-                                  id="estado">Pendiente</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
-                                  id="estado">Rechazado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
-                                  id="estado">Cancelado</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Editar: </strong>
-                          </p>
-                          <p class="iconos-formulario">
-                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                                    data-target="#exampleModal">
-                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Formulario: </strong>
-                          </p>
-                          <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinG(minH.tipoTram,
-                                                         minH.objetoPedido,
-                                                         minH.ubicacionInmueble,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.numDoc,
-                                                         minH.estCivil,
-                                                         minH.domicilio,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinG(minH.tipoTram,
-                                                         minH.objetoPedido,
-                                                         minH.ubicacionInmueble,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.numDoc,
-                                                         minH.estCivil,
-                                                         minH.domicilio,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
-
-                          </p>
-
-                          <ng-template #imprimeMinH>
-
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinH(minH.tipoTram,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.nacionalidad,
-                                                         minH.estCivil,
-                                                         minH.nomConyu,
-                                                         minH.apeConyu,
-                                                         minH.tipoDoc,
-                                                         minH.numDoc,
-                                                         minH.fechNac,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinH(minH.tipoTram,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.nacionalidad,
-                                                         minH.estCivil,
-                                                         minH.nomConyu,
-                                                         minH.apeConyu,
-                                                         minH.tipoDoc,
-                                                         minH.numDoc,
-                                                         minH.fechNac,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
-                          </ng-template>
-
-
-                          <div class="col-md-12 text-center" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <br>
-                            <p class="text-center text-muted">
-                              <strong>Notificar:</strong> {{minH.usuario.telefono}}
-                              <a class="btn btn-success"
-                                 href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
-                                class="fa fa-whatsapp" aria-hidden="true"></i>
-                              </a>&nbsp;
-                            </p>
-                          </div>
-
-
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3">
-                    <div *ngFor="let minH of tramites; index as i">
-                      <div *ngIf="minH.estadoTram == 'Finalizado'" class="row callout callout-success animate__animated animate__flipInX" style="border-left-color: #28a745 !important;">
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Nro. de trámite:</strong> {{minH.codigo}}
-                          </p>
-                          <p class="text-muted">
-                            <strong>Generado: </strong>
-                            <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}} {{minH.usuario.nombre}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
-                            <strong>Estado tramite: </strong>
-                            <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <strong>Estado tramite:</strong>
-                            <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Area: </strong>
-                            <span style="color: black;">{{minH.area.nombre}}</span>
-                          </p>
-
-                          <p class="text-muted"><strong>Estado Pago: </strong>
-                            <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
-                                  id="estado">Aprobado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
-                                  id="estado">Pendiente</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
-                                  id="estado">Rechazado</span>
-                            <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-default ml-1"
-                                  id="estado">Cancelado</span>
-                          </p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                          <p class="text-muted">
-                            <strong>Editar: </strong>
-                          </p>
-                          <p class="iconos-formulario">
-                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)" data-toggle="modal"
-                                    data-target="#exampleModal">
-                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </p>
-                          <p class="text-muted">
-                            <strong>Formulario: </strong>
-                          </p>
-                          <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinG(minH.tipoTram,
-                                                         minH.objetoPedido,
-                                                         minH.ubicacionInmueble,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.numDoc,
-                                                         minH.estCivil,
-                                                         minH.domicilio,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinG(minH.tipoTram,
-                                                         minH.objetoPedido,
-                                                         minH.ubicacionInmueble,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.numDoc,
-                                                         minH.estCivil,
-                                                         minH.domicilio,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
-
-                          </p>
-
-                          <ng-template #imprimeMinH>
-
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
-                               (click)="imprimirFormularioMinH(minH.tipoTram,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.nacionalidad,
-                                                         minH.estCivil,
-                                                         minH.nomConyu,
-                                                         minH.apeConyu,
-                                                         minH.tipoDoc,
-                                                         minH.numDoc,
-                                                         minH.fechNac,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-info"><i
-                              class="fa fa-print"></i></a>&nbsp;
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
-                               (click)="descargarFormularioMinH(minH.tipoTram,
-                                                         minH.apellido,
-                                                         minH.nombre,
-                                                         minH.nacionalidad,
-                                                         minH.estCivil,
-                                                         minH.nomConyu,
-                                                         minH.apeConyu,
-                                                         minH.tipoDoc,
-                                                         minH.numDoc,
-                                                         minH.fechNac,
-                                                         minH.usuario.apellido,
-                                                         minH.usuario.nombre,
-                                                         minH.usuario.telefono)" class="btn btn-danger"><i
-                              class="fa fa-download" aria-hidden="true"></i></a>
-                          </ng-template>
-
-
-                          <div class="col-md-12 text-center" *ngIf="minH.estadoTram == 'Finalizado'">
-                            <br>
-                            <p class="text-center text-muted">
-                              <strong>Notificar:</strong> {{minH.usuario.telefono}}
-                              <a class="btn btn-success"
-                                 href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
-                                class="fa fa-whatsapp" aria-hidden="true"></i>
-                              </a>&nbsp;
-                            </p>
-                          </div>
-
-
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.tab-pane -->
                 </div>
-                <!-- /.tab-content -->
-              </div><!-- /.card-body -->
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                  <div *ngIf="cproc == 0" class="row callout callout-warning animate__animated animate__flipInX">
+                    <p class="text-muted">¡No hay tramites en este estado!</p>
+                  </div>
+                  <div *ngFor="let minH of tramites; index as i">
+                    <div *ngIf="minH.estadoTram == 'En proceso'"
+                      class="row callout callout-warning animate__animated animate__flipInX">
+                      <div class="col-md-4 content-proc">
+                        <p class="text-muted">
+                          <strong>Nro. de trámite:</strong> {{minH.codigo}}
+                        </p>
+                        <p class="text-muted">
+                          <strong>Generado: </strong>
+                          <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}}
+                            {{minH.usuario.nombre}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
+                          <strong>Estado tramite: </strong>
+                          <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Area: </strong>
+                          <span style="color: black;">{{minH.area.nombre}}</span>
+                        </p>
 
-            </div>
+                        <p class="text-muted"><strong>Estado Pago: </strong>
+                          <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
+                            id="estado">Aprobado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
+                            id="estado">Pendiente</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
+                            id="estado">Rechazado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-secondary| ml-1"
+                            id="estado">Cancelado</span>
+                        </p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <div class="coll-proc" data-toggle="collapse"
+                          [attr.data-target]="'#collapseProcesados' + minH.codigo" id="tituProc{{minH.codigo}}"
+                          (click)="showHideCollapse(minH.codigo)" aria-expanded="false">
+                          Ver más
+                        </div>
+                        <div class="collapse" id="collapseProcesados{{minH.codigo}}">
+                          <p class="text-muted">
+                            <strong>Acciones: </strong>
+                          </p>
+                          <p class="iconos-formulario">
+                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)"
+                              data-toggle="modal" data-target="#exampleModal">
+                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </button>
+                          </p>
+                          <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                              (click)="imprimirFormularioMinG(minH.tipoTram,
+                                                         minH.objetoPedido,
+                                                         minH.ubicacionInmueble,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.numDoc,
+                                                         minH.estCivil,
+                                                         minH.domicilio,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-info"><i
+                                class="fa fa-print"></i></a>&nbsp;
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                              (click)="descargarFormularioMinG(minH.tipoTram,
+                                                         minH.objetoPedido,
+                                                         minH.ubicacionInmueble,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.numDoc,
+                                                         minH.estCivil,
+                                                         minH.domicilio,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-danger"><i
+                                class="fa fa-download" aria-hidden="true"></i></a>
+
+                          </p>
+
+                          <ng-template #imprimeMinH>
+
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                              (click)="imprimirFormularioMinH(minH.tipoTram,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.nacionalidad,
+                                                         minH.estCivil,
+                                                         minH.nomConyu,
+                                                         minH.apeConyu,
+                                                         minH.tipoDoc,
+                                                         minH.numDoc,
+                                                         minH.fechNac,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-info"><i
+                                class="fa fa-print"></i></a>&nbsp;
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                              (click)="descargarFormularioMinH(minH.tipoTram,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.nacionalidad,
+                                                         minH.estCivil,
+                                                         minH.nomConyu,
+                                                         minH.apeConyu,
+                                                         minH.tipoDoc,
+                                                         minH.numDoc,
+                                                         minH.fechNac,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-danger"><i
+                                class="fa fa-download" aria-hidden="true"></i></a>
+                          </ng-template>
+
+
+                          <div class="col-md-12 text-center" *ngIf="minH.estadoTram == 'Finalizado'">
+                            <br>
+                            <p class="text-center text-muted">
+                              <strong>Notificar:</strong> {{minH.usuario.telefono}}
+                              <a class="btn btn-success"
+                                href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
+                                  class="fa fa-whatsapp" aria-hidden="true"></i>
+                              </a>&nbsp;
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+                  <div *ngIf="cfina == 0" class="row callout callout-success animate__animated animate__flipInX">
+                    <p class="text-muted">¡No hay tramites en este estado!</p>
+                  </div>
+                  <div *ngFor="let minH of tramites; index as i">
+                    <div *ngIf="minH.estadoTram == 'Finalizado'"
+                      class="row callout callout-success animate__animated animate__flipInX"
+                      style="border-left-color: #28a745 !important;">
+                      <div class="col-md-4 content-fina">
+                        <p class="text-muted">
+                          <strong>Nro. de trámite:</strong> {{minH.codigo}}
+                        </p>
+                        <p class="text-muted">
+                          <strong>Generado: </strong>
+                          <span style="color: black;">{{minH.createdAt | date: "dd/MM/yyyy | HH:MM:ss"}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Usuario: </strong> <span style="color: black;">{{minH.usuario.apellido}}
+                            {{minH.usuario.nombre}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Producto: </strong> <span style="color: black;">{{minH.producto.formulario}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Iniciado'">
+                          <strong>Estado tramite: </strong>
+                          <span class="badge bg-primary ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'En proceso'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-warning ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted" *ngIf="minH.estadoTram == 'Finalizado'">
+                          <strong>Estado tramite:</strong>
+                          <span class="badge bg-success ml-1" id="estado">{{minH.estadoTram}}</span>
+                        </p>
+                        <p class="text-muted">
+                          <strong>Area: </strong>
+                          <span style="color: black;">{{minH.area.nombre}}</span>
+                        </p>
+
+                        <p class="text-muted"><strong>Estado Pago: </strong>
+                          <span *ngIf="minH.comprobantePago.estado == 'approved'" class="badge bg-success ml-1"
+                            id="estado">Aprobado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'pending'" class="badge bg-warning ml-1"
+                            id="estado">Pendiente</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'rejected'" class="badge bg-danger ml-1"
+                            id="estado">Rechazado</span>
+                          <span *ngIf="minH.comprobantePago.estado == 'cancelled'" class="badge bg-secondary ml-1"
+                            id="estado">Cancelado</span>
+                        </p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <div class="coll-fina" data-toggle="collapse"
+                          [attr.data-target]="'#collapseFinalizados' + minH.codigo" id="tituFina{{minH.codigo}}"
+                          (click)="showHideCollapse(minH.codigo)" aria-expanded="false">
+                          Ver más
+                        </div>
+                        <div class="collapse" id="collapseFinalizados{{minH.codigo}}">
+                          <p class="text-muted">
+                            <strong>Acciones: </strong>
+                          </p>
+                          <p class="iconos-formulario">
+                            <button type="button" class="btn btn-outline-primary" (click)="cargarModal(minH)"
+                              data-toggle="modal" data-target="#exampleModal">
+                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </button>
+                          </p>
+                          <p class="iconos-formulario" *ngIf="minH.producto.formulario == 'Minuta G' else imprimeMinH">
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                              (click)="imprimirFormularioMinG(minH.tipoTram,
+                                                         minH.objetoPedido,
+                                                         minH.ubicacionInmueble,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.numDoc,
+                                                         minH.estCivil,
+                                                         minH.domicilio,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-info"><i
+                                class="fa fa-print"></i></a>&nbsp;
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                              (click)="descargarFormularioMinG(minH.tipoTram,
+                                                         minH.objetoPedido,
+                                                         minH.ubicacionInmueble,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.numDoc,
+                                                         minH.estCivil,
+                                                         minH.domicilio,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-danger"><i
+                                class="fa fa-download" aria-hidden="true"></i></a>
+
+                          </p>
+
+                          <ng-template #imprimeMinH>
+
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Imprimir"
+                              (click)="imprimirFormularioMinH(minH.tipoTram,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.nacionalidad,
+                                                         minH.estCivil,
+                                                         minH.nomConyu,
+                                                         minH.apeConyu,
+                                                         minH.tipoDoc,
+                                                         minH.numDoc,
+                                                         minH.fechNac,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-info"><i
+                                class="fa fa-print"></i></a>&nbsp;
+                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Descargar"
+                              (click)="descargarFormularioMinH(minH.tipoTram,
+                                                         minH.apellido,
+                                                         minH.nombre,
+                                                         minH.nacionalidad,
+                                                         minH.estCivil,
+                                                         minH.nomConyu,
+                                                         minH.apeConyu,
+                                                         minH.tipoDoc,
+                                                         minH.numDoc,
+                                                         minH.fechNac,
+                                                         minH.usuario.apellido,
+                                                         minH.usuario.nombre,
+                                                         minH.usuario.telefono)" class="btn btn-danger"><i
+                                class="fa fa-download" aria-hidden="true"></i></a>
+                          </ng-template>
+
+
+                          <div class="col-md-12 text-center" *ngIf="minH.estadoTram == 'Finalizado'">
+                            <br>
+                            <p class="text-center text-muted">
+                              <strong>Notificar:</strong> {{minH.usuario.telefono}}
+                              <a class="btn btn-success"
+                                href="https://api.whatsapp.com/send?phone=54{{minH.usuario.telefono}}&text=Hola%20{{minH.usuario.nombre}},%20Te%20informamos%20que%20ya%20puedes%20pasar%20por%20la%20institución%20a%20retirar%20tu%20tramite:%20{{minH.producto.formulario}}."><i
+                                  class="fa fa-whatsapp" aria-hidden="true"></i>
+                              </a>&nbsp;
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+
           </div>
+        </div>
       </div>
-      </div>
+    </div>
   </section>
 </div>
 <app-edit-tramites></app-edit-tramites>

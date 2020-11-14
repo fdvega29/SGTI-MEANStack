@@ -17,6 +17,11 @@
   text-align: center;
 }
 
+#tableUsuarios {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
 #tituloCard h4 {
   padding-bottom: 10px;
 }
@@ -41,6 +46,11 @@
 
   .info-box-text {
     font-size: x-small;
+  }
+
+  .contenedor-user {
+    margin-right: -15px!important;
+    margin-left: -15px!important;
   }
 
   #tableUsuarios {

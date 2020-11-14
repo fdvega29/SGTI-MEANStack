@@ -4,7 +4,6 @@ import { UsuarioService } from 'src/app/components/services/usuario.service';
 import { usersModule } from '../../../models/user.module';
 //sweetalert2
 import Swal from 'sweetalert2'
-import { sessionUser } from 'src/app/components/models/session.module';
 
 @Component({
   selector: 'app-update-profile',
