@@ -65,8 +65,7 @@
 }
 
 .input-group {
-  padding-bottom: 5px;
-  padding-top: 5px;
+  margin-bottom: 15px;
 }
 
 .titulo-box {
@@ -74,7 +73,15 @@
   font-weight: 500;
 }
 
+.alert-danger {
+  background-color: white !important;
+}
+
 .container-error-message {
+  background-color: white !important;
+  color: darkred;
   font-size: small;
   margin: 5px 5px;
 }
+
+
