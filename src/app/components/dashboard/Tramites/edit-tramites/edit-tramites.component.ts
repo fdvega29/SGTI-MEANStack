@@ -35,24 +35,7 @@ export class EditTramitesComponent implements OnInit {
   };
 
   public updateTramite(tramite: dataTramites) {
-
-    /*let areaTramite : string = tramite.area;
-
-    switch (areaTramite) {
-      case "Mesa de entrada": {
-        tramite.estadoTram = 'Iniciado';
-        break;
-      }
-      case "Coordinación de trámites oficiales": {
-        tramite.estadoTram = 'En proceso';
-        break;
-      }
-      case "Despacho - Mesa de entrada": {
-        tramite.estadoTram = 'Finalizado';
-        break;
-      }
-    }*/
-
+    
     this.dataService.editDataTram(tramite)
       .subscribe( (data: any) => {
         location.reload()

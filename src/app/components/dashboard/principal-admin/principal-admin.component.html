@@ -5,58 +5,6 @@
   <hr>
 
   <div class="row" data-aos="zoom-in">
-    <!--#small-box
-    <div class="col-lg-3 col-6 p-4" data-aos="fade-up"
-         data-aos-duration="1200">
-      <div class="small-box bg-info">
-        <div class="inner">
-          <h3>{{total}}</h3>
-          <p>Usuarios</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-users"></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-6 p-4" data-aos="fade-up"
-         data-aos-duration="1200">
-      <div class="small-box bg-warning">
-        <div class="inner">
-          <h3>{{cIniciados}}</h3>
-          <p>Tramites iniciados</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-bar-chart"></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-6 p-4" data-aos="fade-up"
-         data-aos-duration="1200">
-      <div class="small-box bg-success">
-        <div class="inner">
-          <h3>{{cProceso}}</h3>
-          <p>Tramites en proceso</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-pie-chart"></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-6 p-4" data-aos="fade-up"
-         data-aos-duration="1200">
-      <div class="small-box bg-danger">
-        <div class="inner">
-          <h3>{{cFinalizados}}</h3>
-          <p>Tramites finalizados</p>
-        </div>
-        <div class="icon">
-          <i class="fa fa-exclamation-triangle"></i>
-        </div>
-      </div>
-    </div>-->
    <!-- /.info-box -->
       <!-- Info Boxes Style 2 -->
       <div class="col-lg-3 col-6 pl-4 pr-4" data-aos="flip-up" data-aos-duration="900">
@@ -126,7 +74,6 @@
                   <th>Email</th>
                   <th>Teléfono</th>
                   <th>Roles</th>
-                  <!--<th>Autenticación</th>-->
                   <th>Activo</th>
                   <th>Accion</th>
 
@@ -149,15 +96,14 @@
                     Usuario registrado
                   </td>
 
-                  <!--<td class="text-center">{{user.google == true ? 'Google' : 'Normal'}}</td>-->
                   <td class="text-center">
-                    <div class="custom-control custom-switch" style="margin: auto;">
+                    <div *ngIf="user.roles === 'USER_ROLE'" class="custom-control custom-switch" style="margin: auto;">
                       <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}" (click)="changeEstado(user)" [(ngModel)]="user.estado">
                       <label class="custom-control-label" for="customSwitch{{i}}"></label>
                     </div>
                   </td>
                   <td class="text-center">
-                    <button class="btn btn-outline-danger" (click)="deleteUser(user)"><i class="fa fa-times"></i></button>
+                    <button *ngIf="user.roles === 'USER_ROLE'" class="btn btn-outline-danger" (click)="deleteUser(user)"><i class="fa fa-times"></i></button>
                   </td>
             </tr>
             </tbody>
@@ -206,14 +152,14 @@
                   <li class="list-group-item text-center">
                     <b class="text-center labelActivar">Activar/Desactivar</b> <br>
                     <a class="text-center">
-                      <div class="custom-control custom-switch">
+                      <div *ngIf="user.roles === 'USER_ROLE'" class="custom-control custom-switch" style="margin: auto;">
                         <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}" (click)="changeEstado(user)" [(ngModel)]="user.estado">
                         <label class="custom-control-label" for="customSwitch{{i}}"></label>
                       </div>
                     </a>
                   </li>
                   <li class="list-group-item text-center">
-                    <button class="btn btn-outline-danger text-center" (click)="deleteUser(user)"><i class="fa fa-times"></i> Eliminar</button>
+                    <button *ngIf="user.roles === 'USER_ROLE'" class="btn btn-outline-danger text-center" (click)="deleteUser(user)"><i class="fa fa-times"></i> Eliminar</button>
                   </li>
                 </ul>
               </div>

@@ -43,6 +43,10 @@ export class GestionTramitesComponent implements OnInit {
   datosProceso: any;
   notificacion = '0';
   lsNotificacion: any;
+  cini: number = 0;
+  cproc: number = 0;
+  cfina: number = 0;
+  expanded: boolean = false;
 
   ngOnInit() {
     this.usuario = this.userService.getCurrentUser();
@@ -56,8 +60,9 @@ export class GestionTramitesComponent implements OnInit {
       .getAllTramites()
       .subscribe((resp: any) => {
         this.tramites = resp.allDataMinH;
-        //this.producto = resp.allDataMinH.producto.formulario;
-        console.log(this.tramites);
+        this.cini = resp.iniciados;
+        this.cproc = resp.proceso;
+        this.cfina = resp.finalizados;
 
         this.chRef.detectChanges();
         const table: any = $('#example1');
@@ -112,7 +117,6 @@ export class GestionTramitesComponent implements OnInit {
                       totProcesados: this.totProcesados,
                       totActualizados: this.totActualizados
                     }
-                    console.log('Ingresa primer if')
                     this.sicronizarPagos.postDataProceso(this.proceso)
                       .subscribe((res: any) => {
                         location.reload();
@@ -129,7 +133,6 @@ export class GestionTramitesComponent implements OnInit {
                   totProcesados: this.totProcesados,
                   totActualizados: this.totActualizados
                 }
-                console.log('Ingresa segundo IF')
                 this.sicronizarPagos.postDataProceso(this.proceso)
                   .subscribe((res: any) => {
                     location.reload();
@@ -145,8 +148,30 @@ export class GestionTramitesComponent implements OnInit {
     this.sicronizarPagos.getAllProcesos()
       .subscribe((res: any) => {
         this.datosProceso = res.data[0];
-        console.log(res);
+        console.log('Res', res);
       })
+  }
+
+  public showHideCollapse(codigo: number){
+    var btnAllInic = $('#tituAllInic' + codigo).text();
+    var btnAllProc = $('#tituAllProc' + codigo).text();
+    var btnAllFina = $('#tituAllFina' + codigo).text();
+    var btnProc = $('#tituProc' + codigo).text();
+    var btnFina = $('#tituFina' + codigo).text();
+
+    if(btnAllInic == 'Ver menos' || btnAllProc == 'Ver menos' || btnAllFina == 'Ver menos' ||  btnProc == 'Ver menos' || btnFina == 'Ver menos' ){
+      $('#tituAllInic' + codigo).html('Ver más');
+      $('#tituAllProc' + codigo).html('Ver más');
+      $('#tituAllFina' + codigo).html('Ver más');
+      $('#tituProc' + codigo).html('Ver más');
+      $('#tituFina' + codigo).html('Ver más');
+    }else{
+      $('#tituAllInic' + codigo).html('Ver menos');
+      $('#tituAllProc' + codigo).html('Ver menos');
+      $('#tituAllFina' + codigo).html('Ver menos');
+      $('#tituProc' + codigo).html('Ver menos');
+      $('#tituFina' + codigo).html('Ver menos');
+    }
   }
 
   public removeItem() {

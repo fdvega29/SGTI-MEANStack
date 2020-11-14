@@ -8,9 +8,6 @@
 }
 
 
-#btn-whatsapp {
-}
-
 .btn-outline-success {
   cursor: pointer !important;
 }
@@ -34,8 +31,85 @@
   font-size: 15px !important;
 }
 
+.nav-link {
+  padding: 5px 0;
+}
+
 #cardsTramites {
   display: none;
+}
+
+#cardsTramites .card{
+  box-shadow: none;
+}
+
+#cardsTramites .card-body{
+  padding-right: 7.5px;
+  padding-left: 7.5px;
+  background: #f4f6f9;
+  border: none;
+  padding-top: 5px;
+  text-align: left;
+}
+
+.coll-all-inic{
+  background: #007bff;
+  color: #FFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.content-all-inic{
+  text-align: left!important;
+}
+
+.coll-all-proc{
+  background: #ffc107;
+  color: #FFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.content-all-proc{
+  text-align: left!important;
+}
+
+.coll-all-fina{
+  background: #28a745;
+  color: #FFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.content-all-fina{
+  text-align: left!important;
+}
+
+.coll-proc{
+  background: #ffc107;
+  color: #FFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.content-proc{
+  text-align: left!important;
+}
+
+.coll-fina{
+  background: #28a745;
+  color: #FFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.content-fina{
+  text-align: left!important;
 }
 
 @media screen and (max-width: 725px) {
