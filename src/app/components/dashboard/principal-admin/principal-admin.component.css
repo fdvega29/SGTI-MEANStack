@@ -33,6 +33,11 @@ ul li {
   padding-right: 24px;
 }
 
+#tableUsuarios {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
 #tituloCard h4 {
   padding-bottom: 10px;
 }
