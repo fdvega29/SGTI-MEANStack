@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -65,14 +65,15 @@ import { NuevoTipoTramiteComponent } from './ABM-Tipo-Tramite/nuevo-tipo-tramite
 	exports: [
 		PerfilComponent,
 	],
-	imports:[
-		SharedModule,
-		Dashboard_ROUTES,
-		CommonModule,
-		FormsModule,
-		HttpClientModule,
-		PipesModule
-	],
+    imports: [
+        SharedModule,
+        Dashboard_ROUTES,
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        PipesModule,
+        ReactiveFormsModule
+    ],
 	providers: [AutenticacionService, AuthGuard]
 })
 

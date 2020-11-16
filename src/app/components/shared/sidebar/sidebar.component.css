@@ -1,3 +1,7 @@
+aside {
+  min-height: 700px !important;
+}
+
 .main-sidebar {
   overflow-x:hidden !important;
 }
@@ -15,8 +19,9 @@
 }
 
 .title-sgti {
+  padding: 0 3.1rem;
   font-family: 'Bebas Neue', cursive !important;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 200;
 }
 
@@ -24,6 +29,13 @@
   cursor: pointer;
   color: #0c0c0c;
 }
+.logo-sidebar {
+  height: 50px;
+  padding-right: 0;
+  padding-left: 0px;
+
+}
+
 .name{
   color: rgb(45, 140, 255);;
 }
@@ -32,6 +44,13 @@
   color: #0c0c0c;
 }
 
+.pl-2 {
+  margin-left: 1.1rem !important;
+}
+
+.btn-logout {
+  padding-top: 10px;
+}
 
 .btn-lg {
   color: #fff0ff;
@@ -45,5 +64,23 @@
 
 .btn-lg:hover {
   background: #ffffff;
+  color: rgb(45, 140, 255);
+}
+
+/* Grow */
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
   color: rgb(45, 140, 255);;
 }

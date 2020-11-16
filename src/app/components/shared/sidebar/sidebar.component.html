@@ -2,11 +2,11 @@
 <aside class="main-sidebar sidebar-light elevation-4">
   <!-- Brand Logo -->
   <a *ngIf="usuario.roles == 'USER_ROLE'" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="brand-link">
-    <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
+    <img src="assets/logoSGTI/logo.png" alt="Logo" class="logo-sidebar">
     <span class="brand-text text-white title-sgti">SGTI</span>
   </a>
   <a *ngIf="usuario.roles == 'ADMIN_ROLE'" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="brand-link">
-    <img src="assets/AdminLTE-3.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
+    <img src="assets/logoSGTI/logo.png" alt="Logo" class="logo-sidebar">
     <span class="brand-text text-white title-sgti">SGTI</span>
   </a>
 
@@ -36,24 +36,27 @@
 
           <div *ngIf="roleUsuario=='USER_ROLE'; else MenuAdm">
             <li class="nav-item">
-                <a href="javascript=void(0)" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="nav-link">
+                <a href="javascript=void(0)" routerLink="/dashboard/principal" routerLinkActive="router-link-active" class="nav-link hvr-grow">
                   <i class="fa fa-home" aria-hidden="true"></i>
-                  <p>Inicio</p>
+                  <p class="pl-2">
+                    Inicio
+                  </p>
                 </a>
             </li>
             <li *ngFor="let menuSidebar of _sidebar.menuUsuario.elementos" class="nav-item has-treeview">
-              <a href="" class="nav-link">
+              <a href="" class="nav-link hvr-grow">
                 <i [class]="menuSidebar.icono"></i>
-                <p class="pl-1">
+                <p class="pl-2">
                    {{menuSidebar.titulo}}
-                  <i class="right fa fa-angle-left"> </i>
+                  <i class="right fa fa-angle-left" style="right: 0rem;"> </i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li *ngFor="let subMenus of menuSidebar.submenu" class="nav-item" >
-                  <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
+                  <a href="#" class="nav-link hvr-grow" routerLinkActive="active" [routerLink]="[subMenus.url]" routerLinkActive="router-link-active">
                     <i class="fa fa-circle nav-icon"> </i>
-                    <p> {{subMenus.titulo}} </p>
+                    <p class="pl-1"> {{subMenus.titulo}}
+                    </p>
                   </a>
                 </li>
               </ul>
@@ -63,24 +66,26 @@
 
           <ng-template #MenuAdm>
             <li class="nav-item">
-                <a href="javascript=void(0)" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="nav-link">
+                <a href="javascript=void(0)" routerLink="/dashboard/principal-admin" routerLinkActive="router-link-active" class="nav-link hvr-grow">
                   <i class="fa fa-home" aria-hidden="true"></i>
-                  <p>&nbsp;Inicio</p>
+                  <p class="pl-2">Inicio
+                  </p>
                 </a>
             </li>
             <li *ngFor="let menuSidebar of _sidebar.menuAdmin.elementos" class="nav-item">
-              <a href="#" class="nav-link" routerLinkActive="active" [routerLink]="[menuSidebar.url]" routerLinkActive="router-link-active">
-                <i [class]="menuSidebar.icono"> </i>
-                <p>&nbsp;{{menuSidebar.titulo}}</p>
+              <a href="#" class="nav-link hvr-grow" routerLinkActive="active" [routerLink]="[menuSidebar.url]" routerLinkActive="router-link-active">
+                <i class="text-center" [class]="menuSidebar.icono"> </i>
+                <p class="pl-2">{{menuSidebar.titulo}}</p>
               </a>
             </li>
           </ng-template>
 
         <!--Boton cerrar sesión-->
-          <li class="nav-item">
+          <li class="nav-item btn-logout">
+            <hr>
               <a href="javascript:void(0)" (click)="_autenticacion.logout()" routerLinkActive="router-link-active" class="nav-link">
                 <i class="fa fa-power-off" aria-hidden="true"></i>
-                <p>&nbsp;Cerrar sesión</p>
+                <p class="pl-2">&nbsp;Cerrar sesión</p>
               </a>
           </li>
 

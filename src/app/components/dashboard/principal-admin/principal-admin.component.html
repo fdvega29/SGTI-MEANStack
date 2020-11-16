@@ -57,7 +57,7 @@
   <div class="row" data-aos="zoom-in">
 
     <!--DataTable USUARIOS -->
-    <div class="text-center col-12" id="tableUsuarios">
+    <div class="text-center col-12 pl-4 pr-4" id="tableUsuarios">
       <div class="card card-primary card-outline">
         <div class="card-header">
           <h3 class="card-title">Listado de usuarios registrados</h3>
@@ -83,13 +83,19 @@
             <tr *ngFor="let user of usuarios; index as i">
               <td scope="row">{{i+1}}</td>
                   <td class="text-center">
-                    <img [src]="user.img | imagen" style="width: 30px;">
+                    <img class="img-circle" [src]="user.img | imagen" style="width: 30px;">
                   </td>
                   <td class="text-center">{{user.apellido}}</td>
                   <td class="text-center">{{user.nombre}}</td>
                   <td class="text-center">{{user.email}}</td>
                   <td class="text-center">{{user.telefono}}</td>
-                  <td class="text-center">{{user.roles}}</td>
+                  <td *ngIf="user.roles == ROL_ADM" class="text-center">
+                    Administrador
+                  </td>
+                  <td *ngIf="user.roles == ROL_USR" class="text-center">
+                    Usuario registrado
+                  </td>
+
                   <td class="text-center">
                     <div *ngIf="user.roles === 'USER_ROLE'" class="custom-control custom-switch" style="margin: auto;">
                       <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}" (click)="changeEstado(user)" [(ngModel)]="user.estado">
@@ -109,19 +115,19 @@
 
   </div>
 
-  <div class="row contenedor-user" data-aos="zoom-in">
+  <div class="row" data-aos="zoom-in">
     <!-- Cards USUARIOS -->
     <div id="cardsUsuarios">
-      <div class="col-12">
+      <div class="col-12 pl-3 pr-3">
         <div class="card card-primary card-outline col-12" id="tituloCard">
           <h4 class="card-title text-center">Listado de Usuarios</h4>
         </div>
       </div>
       <!--DataCards -->
 
-        <div class="card-deck">
-          <div class="card" *ngFor="let user of usuarios; index as i" style="width: 400px">
-            <div class="card-body" data-aos="zoom-in">
+        <div class="cardUsuarios">
+          <div class="card card-primary card-outline" *ngFor="let user of usuarios; index as i" data-aos="zoom-in">
+            <div class="card-body">
 
               <div class="pull-left col-7 text-center">
                 <img class="img-fluid img-circle" [src]="user.img | imagen" alt="User profile picture">
@@ -130,18 +136,21 @@
 
                 <p class="text-muted email-user">{{user.email}}</p>
 
-                <p class="text-muted "><i class="fa fa-phone-square" aria-hidden="true"></i> {{user.telefono}}</p>
+                <p class="text-muted "><i class="fa fa-phone-square pull-left" aria-hidden="true"></i> {{user.telefono}}</p>
 
 
               </div>
 
               <div class="pull-right col-5">
                 <ul class="list-group list-group-unbordered mb-3 ">
-                  <li class="list-group-item text-center">
-                    <b>Rol: </b> {{user.roles}}
+                  <li *ngIf="user.roles == ROL_ADM"  class="list-group-item text-center">
+                    <strong>Rol:</strong> <br> Administrador
+                  </li>
+                  <li *ngIf="user.roles == ROL_USR" class="list-group-item text-center">
+                    <strong>Rol:</strong> <br> Usuario Registrado
                   </li>
                   <li class="list-group-item text-center">
-                    <b class="text-center">Activar/Desactivar</b> <br>
+                    <b class="text-center labelActivar">Activar/Desactivar</b> <br>
                     <a class="text-center">
                       <div *ngIf="user.roles === 'USER_ROLE'" class="custom-control custom-switch" style="margin: auto;">
                         <input type="checkbox" class="custom-control-input" id="customSwitch{{i}}" (click)="changeEstado(user)" [(ngModel)]="user.estado">

@@ -44,12 +44,12 @@ export class SidebarService {
       },
       {
         titulo: 'Tipo tramite',
-        icono: 'fa fa-id-card-o',
+        icono: 'fa fa-wpforms',
         url: '/dashboard/tipo-tramite'
       },
       {
         titulo: 'Gestión de trámites',
-        icono: 'fa fa-file-text-o',
+        icono: 'fa fa-cogs',
         url:'/dashboard/gestion-tramites'
       },
       {

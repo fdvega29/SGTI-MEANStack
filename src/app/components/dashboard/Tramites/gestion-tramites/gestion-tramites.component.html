@@ -1,12 +1,32 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <app-breadcrumbs></app-breadcrumbs>
+
+  <!-- Breadcrumbs -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <h4 class="m-0 text-black-50">
+            <i class="fa fa-list-alt" id="icono" aria-hidden="true" style="color: #2d8cff;"></i>
+            Gestión de trámites</h4>
+        </div>
+        <!-- Breadcrumb -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Trámites</a></li>
+            <li class="breadcrumb-item active">Gestión de trámites</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
   <hr>
   <section class="content">
     <div class="row">
 
-      <div class="col-12">
+      <div class="col-12 pl-4 pr-4">
         <div *ngIf="this.lsNotificacion" class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>Proceso generado con exito!</strong> Total actualizados: {{datosProceso.totActualizados}}
           <button type="button" class="close" (click)="removeItem()" data-dismiss="alert" aria-label="Close">
@@ -39,9 +59,9 @@
 
         <!--DataTable -->
         <div class="row p-2" data-aos="zoom-in" id="tableTramites">
-          <div class="card col-12">
+          <div class="card card-primary card-outline col-12 pl-4 pr-4">
             <div class="card-header">
-              <h3 class="card-title">Listado de tramites generados</h3>
+              <h3 class="card-title text-center">Listado de tramites generados</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
