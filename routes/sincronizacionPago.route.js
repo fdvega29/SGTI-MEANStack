@@ -20,4 +20,14 @@ app.get('/all/procesos', async (req, res) =>{
     });
 });
 
+app.get('/auditoria/pagos', async (req, res) =>{
+    const audiPagos = await sincronizacionPagos.find()
+                                                .populate('usuario')
+                                                .sort({_id:-1});
+    return res.status(200).json({
+        data: audiPagos
+    });
+
+});    
+
 module.exports = app;
