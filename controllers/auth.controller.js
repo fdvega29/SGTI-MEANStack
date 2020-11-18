@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 //Google-Auth-Library
 const { OAuth2Client } = require('google-auth-library');
 //Credenciales
-const CLIENT_ID = '521536697432-9q3arjpcgm0fucbd5m6vtcsl6el34r45.apps.googleusercontent.com';
-const SECRET_KEY = 'KCprHvF3Bkl-IsOpD0uYNlX3';
+const CLIENT_ID = '521536697432-nqok1bpd2a5h5ltad2nbarpfpekk5v8d.apps.googleusercontent.com';
+const SECRET_KEY = 'sfDpFCUjQwRmGCn1edDuT7c_';
 
 //Array de objetos
 const usersCtrl = {}
