@@ -21,15 +21,14 @@ a .nav-link:after {
 }
 
 
-.small-box .bg-info-gradient{
-
-}
-
   /*Selecionar trámite*/
 
+.titulo-tramites {
+  padding-bottom: 1.5em;
+}
 
-label:not(.form-check-label):not(.custom-file-label) {
-  font-weight: 100;
+.alert-info strong   {
+  color: #e9ecef;
 }
 
 .card {
@@ -57,33 +56,53 @@ label:not(.form-check-label):not(.custom-file-label) {
   cursor: pointer;
 }
 
+.check {
+  display: none;
+  font-size: 50px;
+}
+
+.check:checked {
+  display: block;
+}
 
 .caja {
-  display: inline-block;
-  background-color: rgb(45, 140, 255) !important;
-  height: 230px;
-  border-radius: 25px;
-  padding: 0px;
+  display: block;
 }
 
 
 .card-input-element + .card-input {
-  background-color: #0b58a2 !important;
+  background-color: rgb(45, 140, 255) !important;
   height: 250px;
   border-radius: 25px;
   padding: 0px;
 }
 
 .card-input-element:checked + .card-input {
-  display: inline-block;
+  display: block;
   border: 5px solid #0c0c0c;
   height: 250px;
   border-radius: 25px;
+  padding: 0px;
+}
+
+.help-block {
+  color: #9e0505;
+}
+
+.validacion {
+  color: #9e0505;
+  font-size: large;
+}
+
+.btn-secondary {
+  font-size: small;
+  border-radius: 1.25rem;
+  margin-right: 10px;
 }
 
 
 .small-box .bg-info-gradient {
-  background-color: #0b58a2 !important;
+
   padding: 40px;
   margin: 20px;
 }
@@ -141,3 +160,61 @@ label:not(.form-check-label):not(.custom-file-label) {
 .btn-success .btn-block {
   padding: 20px;
 }
+
+
+
+
+@media screen and (max-width: 768px) {
+
+  .sw-theme-dots>ul.step-anchor>li>a:after {
+    top: -20px;
+  }
+
+  .card-input {
+    max-width: 300px;
+  }
+
+  .sw-theme-dots>ul.step-anchor>li {
+    margin-left: 30px;
+    padding-bottom: 0;
+  }
+
+  #stepwizard > h3 {
+    font-size: 1.5rem;
+  }
+
+
+
+  .titulo-tramites {
+    padding-bottom: 0.5em;
+  }
+
+}
+
+/* Diseño responsive para tabletas */
+@media screen and (min-width: 400px) {
+
+
+  .lead {
+    font-size: 1.0rem;
+  }
+
+  .card-input-element + .card-input {
+    display: block;
+    background-color: rgb(45, 140, 255) !important;
+    height: 70%;
+    border-radius: 25px;
+    padding: 0px;
+  }
+
+  .card-input-element:checked + .card-input {
+    display: block;
+    border: 5px solid #0c0c0c;
+    height: 70%;
+    border-radius: 25px;
+    padding: 0px;
+  }
+
+}
+
+

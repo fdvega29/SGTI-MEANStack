@@ -112,14 +112,14 @@
 
 @media screen and (min-width: 600px) {
   .wrapper {
-    min-height: 760px;
+    min-height: 720px;
   }
 }
 
 /* Diseño responsive para tabletas */
 @media screen and (min-width: 800px) {
   .wrapper {
-    min-height: 787px;
+    min-height: 720px;
   }
 
 }
