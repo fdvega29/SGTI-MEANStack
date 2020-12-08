@@ -85,7 +85,7 @@ export class AutenticacionService {
     localStorage.removeItem("EXPIRES_IN");
     localStorage.removeItem("currentUser");
     //window.location.href = '#/home'
-    window.location.href = 'https://total-tooling-272001.web.app/user/signin';
+    window.location.href = 'https://sgti-lr.web.app/user/signin';
   };
 
   getToken() {

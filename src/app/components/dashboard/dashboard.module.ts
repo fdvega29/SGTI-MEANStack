@@ -39,6 +39,7 @@ import { TipoTramiteComponent } from './ABM-Tipo-Tramite/tipo-tramite/tipo-trami
 import { HistorialComponent } from './historial/historial.component';
 import { NuevoAreaComponent } from './ABM-Area/nuevo-area/nuevo-area.component';
 import { NuevoTipoTramiteComponent } from './ABM-Tipo-Tramite/nuevo-tipo-tramite/nuevo-tipo-tramite.component';
+import { AuditoriaPagosComponent } from './auditoria-pagos/auditoria-pagos.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { NuevoTipoTramiteComponent } from './ABM-Tipo-Tramite/nuevo-tipo-tramite
 		TipoTramiteComponent,
 		HistorialComponent,
 		NuevoAreaComponent,
-		NuevoTipoTramiteComponent
+		NuevoTipoTramiteComponent,
+		AuditoriaPagosComponent
 	],
 	exports: [
 		PerfilComponent,

@@ -4,4 +4,11 @@
 
 .content-wrapper{
     font-family: "Roboto", sans-serif !important;
+    margin-top: 56px;
 }
+
+.hr-historial{
+    margin-top: 0px!important;
+}
+
+

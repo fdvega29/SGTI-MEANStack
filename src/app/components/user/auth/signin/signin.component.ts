@@ -102,7 +102,7 @@ export class SigninComponent implements OnInit {
     gapi.load('auth2', () => {
 
       this.auth2 = gapi.auth2.init({
-        client_id: '521536697432-9q3arjpcgm0fucbd5m6vtcsl6el34r45.apps.googleusercontent.com',
+        client_id: '521536697432-nqok1bpd2a5h5ltad2nbarpfpekk5v8d.apps.googleusercontent.com',
         cookiepolicy: 'single_host_origin',
         scope: 'profile email'
       });

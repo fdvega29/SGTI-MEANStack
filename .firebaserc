@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "total-tooling-272001"
+    "default": "total-tooling-272001",
+    "produccion": "sgti-lr"
   }
 }

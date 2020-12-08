@@ -65,7 +65,7 @@ export class GestionTramitesComponent implements OnInit {
         this.cfina = resp.finalizados;
 
         this.chRef.detectChanges();
-        const table: any = $('#example1');
+        const table: any = $('#t-gestion');
         this.dataTable = table.DataTable();
       })
   }

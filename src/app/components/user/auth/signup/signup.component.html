@@ -1,7 +1,5 @@
 <div class="wrapper" >
 
-
-
    <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
@@ -14,195 +12,21 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+      <div class="navbar-collapse order-3 collapse" id="navbarCollapse">
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
           <li class="nav-item">
             <a routerLink="/user/signin" routerLinkActive="router-link-active" href="#" class="btn btn-light btn-lg inicio-sesion-btn">Iniciar Sesión</a>
           </li>
         </ul>
       </div>
-
-
-
     </div>
   </nav>
-
-<!-- Contenido
-<div class="container">
-  <div class="row text-center">
-      <div class="col-md-12" id="col">
-              <div class="box box-solid box-info" id="box-signup">
-                <div class="box-header">
-                  <h2 class="display-4 text-uppercase">Registro de usuario</h2>
-                </div>
-                <div class="box-body">
-                 <nav>
-                    <ul class="nav nav-tabs" id="tab" role="tablist">
-                        <li class="nav-item">
-                          <a href="#nav_pers" data-toggle="tab" role="tab" class="nav-link active" aria-controls="personal" aria-selected="true" id="nav-pers-tab">Personal</a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="#nav_admin" data-toggle="tab" role="tab" class="nav-link" aria-controls="administrador" aria-selected="false" id="nav-admin-tab">Administrador</a>
-                        </li>
-                      </ul>
-                    <div class="tab-content" id="tabContent">
-                      <div class="tab-pane active" id="nav_pers" role="tabpanel" aria-labelledby="nav-pers-tab">
-                          <div class="col-md-12">
-                                    <h3 class="display-4" >Personal</h3>
-                                      <div class="box-body" id="personal">
-                                        <form class="form-horizontal" [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
-                                          <div class="form-group">
-                                            <label for="inputApe" class="col-sm-3 control-label">Ingrese Apellido</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" formControlName = "apellido" name="apellido" id="apellido">
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="inputNomb" class="col-sm-3 control-label">Ingrese Nombre</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre">
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="inputTelf" class="col-sm-3 control-label">Ingrese Telefono</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono">
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                              <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
-                                              <div class="col-sm-8">
-                                                  <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="usuario@mail.com" value="{{email}}">
-                                              </div>
-                                          </div>
-                                          <div class="form-group">
-                                              <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
-                                              <div class="col-sm-8">
-                                                  <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="********" value="{{password}}">
-                                              </div>
-                                          </div>
-                                          <div class="form-group">
-                                              <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
-                                              <div class="col-sm-8">
-                                                  <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="********" value="{{confirmPassword}}">
-                                              </div>
-                                          </div>
-                                          <div class="box-footer">
-                                              <div class="col-md-12">
-                                                <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
-                                              </div>
-                                            </div>
-                                            <div>
-                                                <a href="/user/signin">¿Ya estas registrado?</a>
-                                            </div>
-                                        </form>
-                                  </div>
-                          </div>
-                      </div>
-                      <div class="tab-pane fade" id="nav_admin" role="tabpanel" aria-labelledby="nav-admin-tab">
-                          <div class="col-md-12">
-                                      <h3 class="display-4" >Administrador</h3>
-                                        <div class="box-body" id="administrador">
-                                          <form class="form-horizontal">
-                                            <div class="form-group">
-                                                <label for="inputUsuario" class="col-sm-3 control-label">usuario</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control " name="usuario" id="usuario" placeholder="usuario" value="{{usuario}}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputemail" class="col-sm-3 control-label">Ingrese correo electrónico</label>
-                                                <div class="col-sm-8">
-                                                    <input type="email" class="form-control " name="email" placeholder="usuario@mail.com" value="{{email}}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputpass1" class="col-sm-3 control-label">Contraseña</label>
-                                                <div class="col-sm-8">
-                                                    <input type="password" class="form-control " name="password" placeholder="********" value="{{password}}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputpass2" class="col-sm-3 control-label">Confirmar Contraseña</label>
-                                                <div class="col-sm-8">
-                                                    <input type="password" class="form-control" name="confirmPassword2" id="confirmPassword2" placeholder="********" value="{{confirmPassword}}">
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-md-12">
-                                                  <button class="btn btn-lg btn-success btn-block" type="submit" (click)="msgSuccess()">Registrarme</button>
-                                                </div>
-                                              </div>
-                                              <div>
-                                                  <a href="/user/signin">¿Ya estas registrado?</a>
-                                              </div>
-                                          </form>
-                                    </div>
-                            </div>
-                      </div>
-                    </div>
-                  </nav>
-                </div>
-            </div>
-      </div>
-  </div>
-</div>-->
 
 <div class="login-box text-center" data-aos="zoom-in">
   <div class="login-box-body">
     <div>
       <h3 class="text-muted titulo-box">Crear cuenta</h3>
     </div>
-<!--     <form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
-      <div class="box-body">
-        <div class="row">
-      <div class="form-group has-feedback">
-        <div>
-            <input type="text" class="form-control" formControlName="apellido" name="apellido" id="apellido" placeholder="Ingrese Apellido">
-            <i class="fa fa-user form-control-feedback" aria-hidden="true"></i>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <div>
-            <input type="text" class="form-control" formControlName = "nombre" name="nombre" id="nombre" placeholder="Ingrese Nombre">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <div>
-            <input type="text" class="form-control" formControlName = "telefono" name="telefono" id="telefono" placeholder="Ingrese Telefono">
-            <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-          <div>
-              <input type="email" class="form-control" formControlName = "email" name="email" id="email" placeholder="Correo" value="{{email}}">
-              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-          </div>
-      </div>
-      <div class="form-group has-feedback">
-          <div>
-              <input type="password" class="form-control" formControlName = "password" name="password" id="password" placeholder="Contraseña" value="{{password}}">
-              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-      </div>
-      <div class="form-group has-feedback">
-          <div>
-              <input type="password" class="form-control" formControlName = "confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirma Contraseña" value="{{confirmPassword}}">
-              <span class="glyphicon glyphicon-ok form-control-feedback"></span>
-          </div>
-      </div>
-      <div class="box-footer">
-          <div class="col-md-12">
-            <button class="btn btn-lg btn-success btn-block" type="submit" >Registrarme</button>
-          </div>
-        </div>
-        <div>
-            <a href="/user/signin">¿Ya estas registrado?</a>
-        </div>
-      </div>
-    </div>
-    </form> -->
 
     <form [formGroup]="signupFormUser" (ngSubmit)="onSignup(signupFormUser)">
     <div class="box-body">
@@ -217,7 +41,7 @@
           Apellido es un dato requerido.
         </div>
         <div class="container-error-message" *ngIf="apellido.errors.minlength">
-          Apellido debe tener al menos 3 caracteres de longitud.
+          Apellido debe tener al menos 3 caracteres.
         </div>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
@@ -231,7 +55,7 @@
           Nombre es un dato requerido.
         </div>
         <div class="container-error-message" *ngIf="nombre.errors.minlength">
-          Nombre debe tener al menos 3 caracteres de longitud.
+          Nombre debe tener al menos 3 caracteres.
         </div>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
@@ -245,7 +69,7 @@
           Teléfono es un dato requerido.
         </div>
         <div class="container-error-message" *ngIf="telefono.errors.minlength">
-          Teléfono debe tener al menos 10 caracteres de longitud.
+          Teléfono debe tener al menos 10 caracteres.
         </div>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
@@ -260,7 +84,7 @@
           E-mail es un dato requerido.
         </div>
         <div class="container-error-message" *ngIf="email.errors.minlength">
-          E-mail debe tener al menos 8 caracteres de longitud.
+          E-mail debe tener al menos 8 caracteres.
         </div>
         <div class="container-error-message" *ngIf="(email.dirty || email.touched) && email.invalid && email.errors.pattern">
           El valor ingresado no es un e-mail válido.
@@ -278,7 +102,7 @@
           La contraseña es un dato requerido.
         </div>
         <div class="container-error-message" *ngIf="password.errors.minlength">
-          La contraseña debe tener al menos 8 caracteres de longitud.
+          La contraseña debe tener al menos 8 caracteres.
         </div>
       </div>
       <div class="input-group mb-12 form-group has-feedback">
@@ -290,10 +114,10 @@
       </div>
       <div class="alert-danger" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
         <div class="container-error-message" *ngIf="confirmPassword.errors.required">
-          La confirmar contraseña es un dato requerido.
+          Confirmar contraseña es un dato requerido.
         </div>
         <div class="container-error-message" *ngIf="confirmPassword.errors.minlength">
-          La contraseña debe tener al menos 8 caracteres de longitud.
+          La contraseña debe tener al menos 8 caracteres.
         </div>
       </div>
     </div>

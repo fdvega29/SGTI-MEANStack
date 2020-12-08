@@ -27,7 +27,7 @@ export class TipoTramiteComponent implements OnInit {
         this.tipoTram = resp.data;
         
         this.chRef.detectChanges();
-        const table: any = $('#example1');
+        const table: any = $('#t-tipo-tramite');
         this.dataTable = table.DataTable();
       })
   }

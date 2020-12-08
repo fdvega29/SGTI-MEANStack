@@ -17,6 +17,11 @@ export class SincronizacionPagosService {
     return this.http.get(url_api); 
   }
 
+  public getAuditariaPagos(){
+    const url_api = this.AUTH_SERVER + '/sincronizacionPago/auditoria/pagos';
+    return this.http.get(url_api);
+  }
+
   public postDataProceso(proceso: SincronizacionPagos){
     const url_api = this.AUTH_SERVER + '/sincronizacionPago/add';
     return this.http.post(url_api, proceso);

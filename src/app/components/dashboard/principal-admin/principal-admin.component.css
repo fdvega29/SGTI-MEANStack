@@ -43,11 +43,11 @@ ul li {
 }
 
 .email-user {
-  font-size: x-small;
+  font-size: small;
 }
 
 .labelActivar {
-  font-size: x-small;
+  font-size: small;
 }
 
 .btn {
@@ -59,7 +59,7 @@ ul li {
 }
 
 .fa-phone-square {
-  color: #0c0c0c;
+  color: #2d8cff;
   margin-right: 10px;
 }
 @media screen and (max-width: 985px) {

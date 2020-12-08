@@ -26,6 +26,7 @@ import {PrincipalComponent } from "./principal/principal.component";
 //Servicies
 import { AuthGuard} from '../../components/core/guards/guards';
 import { UpdateProfileComponent } from './PerfildeUsuario/update-profile/update-profile.component';
+import { AuditoriaPagosComponent } from './auditoria-pagos/auditoria-pagos.component';
 
 const dashboardRoutes: Routes = [
 	{
@@ -55,6 +56,8 @@ const dashboardRoutes: Routes = [
       { path: 'guia-administrador', component: GuiaAdministradorComponent, data: {seccion: 'Instructivo de Sistema', titulo: 'Guía de uso', icono: "fa fa-info-circle"},canActivate: [AuthGuard]},
       //gestionar tramites
       { path: 'gestion-tramites', component: GestionTramitesComponent, data: {seccion: 'Trámites', titulo: 'Gestión de trámites', icono: "fa fa-list-alt"},canActivate: [AuthGuard]},
+      //Auditoria Pagos
+      { path: 'auditoria-pagos', component: AuditoriaPagosComponent, data: {seccion: 'Auditoria', titulo: 'Auditoria pagos'},canActivate: [AuthGuard]},
       //Principal
       { path: 'principal-admin', component: PrincipalAdminComponent, data: {seccion: 'Inicio', titulo: 'Principal', icono: 'fa fa-tachometer'},canActivate: [AuthGuard]}
 
