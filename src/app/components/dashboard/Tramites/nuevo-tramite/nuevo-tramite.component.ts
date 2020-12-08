@@ -101,6 +101,10 @@ export class NuevoTramiteComponent implements OnInit {
 
     $('#stepwizard #btn-siguiente-1').hide();
 
+    $('#li2').hide();
+    $('#li3').hide();
+    $('#li4').hide();
+
 
     const localForm = localStorage.getItem('FormularioPedido');
 
@@ -144,13 +148,19 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
       $('#li1').show();
+      $('#li2').hide();
+      $('#li3').hide();
+      $('#li4').hide();
     }
     if (paso == 2) {
       $('#stepwizard #step1').hide();
       $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
       $('#stepwizard #li3').removeClass('active');
+      $('#li1').hide();
       $('#li2').show();
+      $('#li3').hide();
+      $('#li4').hide();
       if (this.tipoFormulario == this.MinH) {
         $('#formH').show();
         $('#formG').hide();
@@ -176,12 +186,18 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #li3').addClass('active');
       $('#stepwizard #li4').removeClass('active');
       $('#stepwizard #step4').hide();
+      $('#li1').hide();
       $('#li3').show();
+      $('#li2').hide();
+      $('#li4').hide();
     }
     if (paso == 4) {
       $('#stepwizard #step3').hide();
       $('#stepwizard #step4').show();
       $('#stepwizard #li4').addClass('active');
+      $('#li1').hide();
+      $('#li2').hide();
+      $('#li3').hide();
       $('#li4').show();
     }
 
@@ -191,6 +207,9 @@ export class NuevoTramiteComponent implements OnInit {
 
     if (paso == 1) {
       $('#li1').show();
+      $('#li2').hide();
+      $('#li3').hide();
+      $('#li4').hide();
       $('#stepwizard #step1').show();
       $('#stepwizard #step2').hide();
       $('#stepwizard #li2').removeClass('active');
@@ -199,18 +218,27 @@ export class NuevoTramiteComponent implements OnInit {
       $('#stepwizard #step1').hide();
       $('#stepwizard #step2').show();
       $('#stepwizard #li2').addClass('active');
+      $('#li1').hide();
       $('#li2').show();
+      $('#li3').hide();
+      $('#li4').hide();
     }
     if (paso == 3) {
       $('#stepwizard #step2').hide();
       $('#stepwizard #step3').show();
       $('#stepwizard #li3').addClass('active');
+      $('#li1').hide();
+      $('#li2').hide();
       $('#li3').show();
+      $('#li4').hide();
     }
     if (paso == 4) {
       $('#stepwizard #step3').hide();
       $('#stepwizard #step4').show();
       $('#stepwizard #li4').addClass('active');
+      $('#li1').hide();
+      $('#li2').hide();
+      $('#li3').hide();
       $('#li4').show();
     }
 
@@ -219,7 +247,7 @@ export class NuevoTramiteComponent implements OnInit {
   public validacionNulo(valor, elementHTML) {
     if (valor.length === 0 ) {
       elementHTML.innerHTML = 'Dato Obligatorio';
-      elementHTML.style.border = '1px solid #9e0505';
+      // elementHTML.style.border = '1px solid #9e0505';
       return true;
     } else {
       elementHTML.innerHTML = '';
@@ -231,7 +259,7 @@ export class NuevoTramiteComponent implements OnInit {
   public validarNuloMenorA2caracteres(valor, elementHTML) {
     if (valor.length < 2 || valor.length === 0) {
       elementHTML.innerHTML = 'Dato Obligatorio. Debe ingresar al menos 2 carácteres';
-      elementHTML.style.border = '1px solid #9e0505';
+      // elementHTML.style.border = '1px solid #9e0505';
       return true;
     } else {
       elementHTML.innerHTML = '';
@@ -243,7 +271,19 @@ export class NuevoTramiteComponent implements OnInit {
   private validarNuloMenorA6Caracteres(valor, elementHTML) {
     if (valor.length < 6 || valor.length === 0) {
       elementHTML.innerHTML = 'Dato Obligatorio. Debe ingresar al menos 6 carácteres' ;
-      elementHTML.style.border = '1px solid #9e0505';
+     // elementHTML.style.border = '1px solid #9e0505';
+      return true;
+    } else {
+      elementHTML.innerHTML = '';
+      elementHTML.style.border = '1px solid #218838';
+      return false;
+    }
+  }
+
+  private validarDNI(valor, elementHTML) {
+     if (valor.length !== 8) {
+      elementHTML.innerHTML = 'Dato Obligatorio. Debe ingresar 8 carácteres' ;
+      // elementHTML.style.border = '1px solid #9e0505';
       return true;
     } else {
       elementHTML.innerHTML = '';
@@ -255,7 +295,7 @@ export class NuevoTramiteComponent implements OnInit {
   private validarNuloMenorA10Caracteres(valor, elementHTML) {
     if (valor.length < 10 || valor.length === 0) {
       elementHTML.innerHTML = 'Dato Obligatorio. Debe ingresar al menos 10 carácteres' ;
-      elementHTML.style.border = '1px solid #9e0505';
+      // elementHTML.style.border = '1px solid #9e0505';
       return true;
     } else {
       elementHTML.innerHTML = '';
@@ -267,10 +307,8 @@ export class NuevoTramiteComponent implements OnInit {
 
   public validarUbicacion(valor, elementHTML) {
     if (valor.length <= 10 || valor.length === 0) {
-      elementHTML.innerHTML = 'Dato Obligatorio. Debe ingresar al menos 10 caracteres <br>' +
-                                '*Agregar datos relacionados a la ubicación del inmueble: <br>' +
-                                  '<strong>Dirección, N° Matricula, Datos Catastrales.</strong> ';
-      elementHTML.style.border = '1px solid #9e0505';
+      elementHTML.innerHTML = 'Dato Obligatorio. Debe ingresar al menos 10 caracteres';
+      // elementHTML.style.border = '1px solid #9e0505';
       return true;
     } else {
       elementHTML.innerHTML = '';
@@ -316,7 +354,7 @@ export class NuevoTramiteComponent implements OnInit {
   }
   public guardar_ndoc(ndoc: string) {
     const elementoHelpHTML = document.getElementById('helpNumDoc');
-    if (this.validarNuloMenorA6Caracteres(ndoc, elementoHelpHTML)) {
+    if (this.validarDNI(ndoc, elementoHelpHTML)) {
       this.numDocu = ndoc;
     }
   }
@@ -374,14 +412,14 @@ export class NuevoTramiteComponent implements OnInit {
 
   public guardar_ndocG(ndoc: string) {
     const elementoHelpHTML = document.getElementById('helpNumDocG');
-    if (this.validarNuloMenorA6Caracteres(ndoc, elementoHelpHTML)) {
+    if (this.validarDNI(ndoc, elementoHelpHTML)) {
       this.numDocu = ndoc;
     }
   }
 
   public guardar_domicilio(domicilio: string) {
     const elementoHelpHTML = document.getElementById('helpDomicilio');
-    if (this.validarNuloMenorA10Caracteres(domicilio, elementoHelpHTML)) {
+    if (this.validarNuloMenorA6Caracteres(domicilio, elementoHelpHTML)) {
       this.domicilio = domicilio;
     }
   }

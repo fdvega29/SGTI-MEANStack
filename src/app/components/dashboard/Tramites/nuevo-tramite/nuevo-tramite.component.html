@@ -100,27 +100,30 @@
                   <form id="formulario-minutaH" novalidate>
                     <div class="form-row text-center">
                       <div class="form-group col-md-4">
-                        <label for="inputApellido"><strong>Apellido/s:</strong></label>
+                        <label for="inputApellido"><strong>Apellido/s: <span class="validacion">*</span></strong></label>
                         <input type="text" class="form-control"
                                id="inputApellido" name="inputApellido" required minlength="2"
                                value=""
+                               (keyup)="guardar_apellido(apel.value);"
                                (focusout)="guardar_apellido(apel.value);" #apel
                                 autocomplete="off">
                         <p class="help-block" id="helpApellido"></p>
                       </div>
 
                       <div class="form-group col-md-4">
-                        <label for="inputNombres"><strong>Nombre completo:</strong></label>
+                        <label for="inputNombres"><strong>Nombre completo: <span class="validacion">*</span></strong></label>
                         <input type="text" class="form-control"
                                id="inputNombres" name="inputNombres" required  minlength="2"
                                value=""
+                               (keyup)="guardar_nombre(nomb.value);"
                                (focusout)="guardar_nombre(nomb.value);" #nomb autocomplete="off">
                         <p class="help-block" id="helpNombre"></p>
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="inputEstadoCivil"><strong>Estado Civil</strong></label>
+                        <label for="inputEstadoCivil"><strong>Estado Civil: <span class="validacion">*</span></strong></label>
                         <select id="inputEstadoCivil" class="form-control"
-                          (focusout)="guardar_estadocivil(ecivi.value);" #ecivi autocomplete="off">
+                                (keyup)="guardar_estadocivil(ecivi.value);"
+                                (focusout)="guardar_estadocivil(ecivi.value);" #ecivi autocomplete="off">
                           <option selected value="">Seleccione..</option>
                           <option value="Soltero/a">Soltero/a</option>
                           <option value="Casado/a">Casado/a.</option>
@@ -132,8 +135,10 @@
                     </div>
                     <div class="form-row text-center">
                       <div class="form-group col-md-4">
-                        <label for="inputTipoDoc"><strong>Tipo de documento:</strong></label>
-                        <select id="inputTipoDoc" class="form-control" (focusout)="guardar_tdoc(tdoc.value);" #tdoc>
+                        <label for="inputTipoDoc"><strong>Tipo de documento: <span class="validacion">*</span></strong></label>
+                        <select id="inputTipoDoc" class="form-control"
+                                (keyup)="guardar_tdoc(tdoc.value);"
+                                (focusout)="guardar_tdoc(tdoc.value);" #tdoc>
                           <option selected value="">Seleccione..</option>
                           <option value="Documento Nacional de Identidad (DNI)">Documento Nacional de Identidad (DNI)
                           </option>
@@ -144,20 +149,23 @@
                         <p class="help-block" id="helpTipoDoc"></p>
                       </div>
                       <div class="form-group col-md-2">
-                        <label for="inputNumeroDocumento"><strong>Número:</strong></label>
-                        <input type="number" class="form-control" id="inputNumeroDocumento"
+                        <label for="inputNumeroDocumento"><strong>Número: <span class="validacion">*</span></strong></label>
+                        <input type="number" class="form-control" id="inputNumeroDocumento" maxlength="12"
+                               (keyup)="guardar_ndoc(ndoc.value);"
                           (focusout)="guardar_ndoc(ndoc.value);" #ndoc autocomplete="off">
                         <p class="help-block" id="helpNumDoc"></p>
                       </div>
                       <div class="form-group col-md-3">
-                        <label for="inputNacionalidad"><strong>Nacionalidad</strong></label>
+                        <label for="inputNacionalidad"><strong>Nacionalidad: <span class="validacion">*</span></strong></label>
                         <input type="text" class="form-control" id="inputNacionalidad"
+                               (keyup)="guardar_nacion(nacion.value);"
                           (focusout)="guardar_nacion(nacion.value);" #nacion>
                         <p class="help-block" id="helpNacion"></p>
                       </div>
                       <div class="form-group col-md-3">
-                        <label for="inputFecha"><strong>Fecha de nacimiento:</strong></label>
+                        <label for="inputFecha"><strong>Fecha de nacimiento: <span class="validacion">*</span></strong></label>
                         <input class="form-control" value="" type="date" id="inputFecha"
+                               (keyup)="guardar_fechanac(fnac.value);"
                           (focusout)="guardar_fechanac(fnac.value);" #fnac>
                         <p class="help-block" id="helpFechaNac"></p>
                       </div>
@@ -167,12 +175,16 @@
                     <div class="form-row text-center">
                       <div class="form-group col-md-6">
                         <label for="inputApellidoConyugue"><strong>Apellido/s</strong></label>
-                        <input type="text" class="form-control" id="inputApellidoConyugue" (focusout)="guardar_con_ape(conApe.value);" #conApe>
+                        <input type="text" class="form-control" id="inputApellidoConyugue"
+                               (keyup)="guardar_con_ape(conApe.value);"
+                               (focusout)="guardar_con_ape(conApe.value);" #conApe>
                         <p class="help-block" id="helpConApe"></p>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="inputNombresConyugue"><strong>Nombre completo</strong></label>
-                        <input type="text" class="form-control" id="inputNombresConyugue" (focusout)="guardar_con_nomb(conNomb.value);" #conNomb>
+                        <input type="text" class="form-control" id="inputNombresConyugue"
+                               (keyup)="guardar_con_nomb(conNomb.value);"
+                               (focusout)="guardar_con_nomb(conNomb.value);" #conNomb>
                         <p class="help-block" id="helpConNom"></p>
                       </div>
                     </div>
@@ -222,20 +234,23 @@
                       </div>
 
                       <div class="col-md-4 text-center">
-                        <label for="inputApellido"><strong>Apellido/s:</strong></label>
+                        <label for="inputApellido"><strong>Apellido/s: <span class="validacion">*</span></strong></label>
                         <input type="text" class="form-control" id="inputApellidoMinG" placeholder=""
+                               (keyup)="guardar_apellidoG(apelG.value);"
                           (focusout)="guardar_apellidoG(apelG.value);" #apelG>
                         <p class="help-block" id="helpApellidoG"></p>
                       </div>
                       <div class="col-md-4 text-center">
-                        <label for="inputNombres"><strong>Nombre completo:</strong></label>
+                        <label for="inputNombres"><strong>Nombre completo: <span class="validacion">*</span></strong></label>
                         <input type="text" class="form-control" id="inputNombresMinG" placeholder=""
+                               (keyup)="guardar_nombreG(nombG.value);"
                           (focusout)="guardar_nombreG(nombG.value);" #nombG>
                         <p class="help-block" id="helpNombreG"></p>
                       </div>
                       <div class="col-md-4 text-center">
-                        <label for="inputEstadoCivilMinG"><strong>Estado Civil</strong></label>
+                        <label for="inputEstadoCivilMinG"><strong>Estado Civil: <span class="validacion">*</span></strong></label>
                         <select id="inputEstadoCivilMinG" class="form-control"
+                                (keyup)="guardar_estadocivilG(eciviG.value);"
                           (focusout)="guardar_estadocivilG(eciviG.value);" #eciviG>
                           <option selected value="">Seleccione..</option>
                           <option value="Soltero/a">Soltero/a</option>
@@ -248,14 +263,16 @@
                     </div>
                     <div class="form-row">
                       <div class="col-md-4 text-center">
-                        <label for="inputNumeroDocumentoMinG"><strong>Número de Documento:</strong></label>
+                        <label for="inputNumeroDocumentoMinG"><strong>Número de Documento: <span class="validacion">*</span></strong></label>
                         <input type="number" class="form-control" id="inputNumeroDocumentoMinG"
+                               (keyup)="guardar_ndocG(ndocG.value);"
                           (focusout)="guardar_ndocG(ndocG.value);" #ndocG>
                         <p class="help-block" id="helpNumDocG"></p>
                       </div>
                       <div class="col-md-8 text-center">
-                        <label for="inputDomicilioMinG"><strong>Domicilio:</strong></label>
+                        <label for="inputDomicilioMinG"><strong>Domicilio: <span class="validacion">*</span></strong></label>
                         <input type="text" class="form-control" id="inputDomicilioMinG"
+                               (keyup)="guardar_domicilio(domiG.value);"
                           (focusout)="guardar_domicilio(domiG.value);" #domiG>
                         <p class="help-block" id="helpDomicilio"></p>
                       </div>
@@ -270,8 +287,9 @@
                     </div>
                     <div class="row">
                       <div class="col-md-6 text-center">
-                        <label for="inputObjetoPedidoMinG"><strong>Objeto del Pedido:</strong></label>
+                        <label for="inputObjetoPedidoMinG"><strong>Objeto del Pedido: <span class="validacion">*</span></strong></label>
                         <select id="inputObjetoPedidoMinG" class="form-control"
+                                (keyup)="guardar_objetoPedido(objPedido.value);"
                           (focusout)="guardar_objetoPedido(objPedido.value);" #objPedido>
                           <option selected value="">Seleccione..</option>
                           <option value="Dominio">Dominio</option>
@@ -282,9 +300,16 @@
                         <p class="help-block" id="helpObjPedido"></p>
                       </div>
                       <div class="col-md-6">
-                        <label for="inputUbicacionMinG"><strong>Ubicación del inmueble:</strong></label>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Agregar datos relacionados a la ubicación del inmueble: Dirección, N° Matricula, Datos Catastrales.">
+                          <i class="icon fa fa-info"></i>
+                        </button>
+                        <label for="inputUbicacionMinG"><strong>Ubicación del inmueble: <span class="validacion">*</span>
+                        </strong></label>
+
+
                         <input type="text" name="UbicacionInmueble" value="" id="inputUbicacionMinG"
                                   class="form-control"
+                               (keyup)="guardar_ubicacionInmueble(ubiInm.value);"
                                   (focusout)="guardar_ubicacionInmueble(ubiInm.value);" #ubiInm>
                         <p class="help-block" id="helpUbicacion"></p>
                       </div>

@@ -89,6 +89,18 @@ a .nav-link:after {
   color: #9e0505;
 }
 
+.validacion {
+  color: #9e0505;
+  font-size: large;
+}
+
+.btn-secondary {
+  font-size: small;
+  border-radius: 1.25rem;
+  margin-right: 10px;
+}
+
+
 .small-box .bg-info-gradient {
 
   padding: 40px;
