@@ -1,0 +1,69 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header p-0"  data-aos="zoom-in">
+        <div class="container-fluid">
+          <div class="row p-2">
+            <div class="col-sm-6">
+              <h4 class="m-0 text-black-50"><i class="fa fa-file-text-o" aria-hidden="true" style="color: #2d8cff"></i>  Detalle auditoria pagos</h4>
+            </div>
+            <!-- Breadcrumb -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" [routerLink]="['/dashboard/gestion-tramites']" routerLinkActive="router-link-active">Gestion Tramites</a></li>
+                <li class="breadcrumb-item active"> Detalle auditoria pagos</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      <hr class="hr-auditoria">
+      <section class="content"  data-aos="zoom-in">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <h4 class="card-title text-muted"> Auditoria sincronización pagos</h4>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body t-body">
+                <table id="example1" class="table table-bordered table-striped dt-responsive">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-center">N°</th>  
+                      <th scope="col" class="text-center">Fecha</th>
+                      <th scope="col" class="text-center">Usuario</th>
+                      <th scope="col" class="text-center">Total Procesados</th>
+                      <th scope="col" class="text-center">Total Actualizados</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let pagos of audiPagos; index as i">
+                        <td class="text-center" scope="row">{{i+1}}</td>
+                        <td class="text-center">{{pagos.createdAt | date: "dd/MM/yyyy"}}</td>
+                        <td class="text-center">{{pagos.usuario.apellido}} {{pagos.usuario.nombre}}</td>
+                        <td class="text-center">{{pagos.totProcesados}}</td>
+                        <td class="text-center">{{pagos.totActualizados}}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+    </section> 
+</div>
+<script>
+    $(function(){ $('#example1').DataTable({
+     "paging": true,
+     "lengthChange": true [5, 10, 20, 50],
+     "searching": true,
+     "ordering": true,
+     "info": true,
+     "autoWidth": true,
+     "responsive": true
+   })
+  });
+  </script>

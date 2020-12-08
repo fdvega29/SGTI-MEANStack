@@ -50,7 +50,7 @@ export class PrincipalAdminComponent implements OnInit {
         console.log(this.usuarios);
 
         this.chRef.detectChanges();
-        const table: any = $('#example1');
+        const table: any = $('#t-usuarios');
         this.dataTable = table.DataTable();
       })
   }

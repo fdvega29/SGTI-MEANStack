@@ -1,0 +1,16 @@
+.content-wrapper {
+    margin-top: 56px;
+}
+.hr-auditoria{
+    margin-top: 0px!important;
+}
+
+#example1{
+    width: 100%!important;
+}
+
+@media screen and (max-width: 985px){
+    .t-body {
+        padding: 0!important;
+    }
+}

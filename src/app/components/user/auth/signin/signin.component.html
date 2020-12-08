@@ -1,6 +1,4 @@
-
 <div class="wrapper" >
-
 
  <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
@@ -14,14 +12,13 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="navbar-collapse order-3 collapse show" id="navbarCollapse">
+      <div class="navbar-collapse order-3 collapse" id="navbarCollapse">
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
           <li class="nav-item">
             <a routerLink="/user/signup" routerLinkActive="router-link-active" href="#" class="btn btn-light btn-lg">Registrarse</a>
           </li>
         </ul>
       </div>
-
     </div>
   </nav>
 
@@ -49,7 +46,7 @@
             E-mail es un dato requerido.
           </div>
           <div class="container-error-message" *ngIf="emailValido.errors.minlength">
-            E-mail debe tener al menos 8 caracteres de longitud.
+            E-mail debe tener al menos 8 caracteres.
           </div>
           <div class="container-error-message" *ngIf="(emailValido.dirty || emailValido.touched) && emailValido.invalid && emailValido.errors.pattern">
             El valor ingresado no es un e-mail válido.
@@ -63,14 +60,6 @@
               </div>
             </div>
           </div>
-        <!--<div class="form-group row">
-          <div class="col-md-12">
-              <div class="checkbox checkbox-primary pull-left p-t-0">
-                  <input formControlName="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
-                  <label for="checkbox-signup" class="pl-1">Recuérdame</label>
-              </div>
-              <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a> </div>
-        </div>-->
       </div>
       <div class="box-footer">
         <div>
@@ -85,9 +74,6 @@
     </form>
   </div>
 </div>
-
-
-
 </div>
 
 <footer class="bg-white text-center">

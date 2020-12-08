@@ -597,9 +597,9 @@ export class NuevoTramiteComponent implements OnInit {
     const preference = {
       back_urls:
         {
-          failure: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite',
-          pending: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite',
-          success: 'https://total-tooling-272001.web.app/dashboard/nuevo-tramite'
+          failure: 'https://sgti-lr.web.app/dashboard/nuevo-tramite',
+          pending: 'https://sgti-lr.web.app/dashboard/nuevo-tramite',
+          success: 'https://sgti-lr.web.app/dashboard/nuevo-tramite'
         },
       auto_return: 'approved',
       items: [

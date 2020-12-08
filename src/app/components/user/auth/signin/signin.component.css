@@ -22,11 +22,12 @@
   font-family: 'Bebas Neue', cursive !important;
   font-size: 3em;
   font-weight: 400;
+  margin-right: none!important;
 }
 
 .title-sgti:hover {
   cursor: pointer;
-  color: #0c0c0c;
+  color: #6c757d;
 }
 
 .btn-lg {
@@ -39,6 +40,7 @@
   color: #fff0ff;
   background-color: #0b58a2;
   border: 2px solid #0b58a2;
+  margin-right: none!important;
 }
 
 .inicio-sesion-btn:hover {

@@ -28,7 +28,7 @@ export class AreasComponent implements OnInit {
         this.areas = data.area;
 
         this.chRef.detectChanges();
-        const table: any = $('#example1');
+        const table: any = $('#t-areas');
         this.dataTable = table.DataTable();
       })
   }

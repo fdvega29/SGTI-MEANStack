@@ -8,9 +8,9 @@
       <!-- TableAreas -->
 
       <div class="row" data-aos="zoom-in" id="tableAreas">
-          <div class="col-12 pl-4 pr-4">
+          <div class="col-12 pl-2 pr-2">
               <!--DataTable -->
-              <div class="row pl-3 pr-3">
+              <div class="row pl-2 pr-2">
                   <div class="card card-primary card-outline col-12">
                       <div class="card-header">
                       <h3 class="card-title text-center">Listado de Áreas
@@ -18,7 +18,7 @@
                       </h3>
                       </div>
                       <div class="card-body">
-                          <table id="example1" class="table table-bordered table-striped nowrap">
+                          <table id="t-areas" class="table table-bordered table-striped nowrap">
                               <thead>
                                   <tr>
                                       <th scope="col" class="text-center">N°</th>
@@ -51,7 +51,7 @@
 
       <!-- CardsAreas -->
       <div class="row" id="cardsAreas">
-        <div class="col-12 pl-3 pr-3">
+        <div class="col-12 pl-2 pr-2">
           <div class="card card-primary card-outline col-12" id="tituloCard">
             <h4 class="card-title text-center">Listado de áreas</h4>
             <button type="button" class="btn btn-success" (click)="vaciarCampos()" data-toggle="modal" data-target="#exampleModal" style="float: right;"><i class="fa fa-plus" aria-hidden="true"></i>  Nuevo</button>
@@ -105,7 +105,7 @@
   <app-nuevo-area></app-nuevo-area>
   <script>
     $(function () {
-      $('#example1').DataTable({
+      $('#t-areas').DataTable({
         "paging": true,
         "lengthChange": true[5, 10, 20, 50, 100, 200, 500],
         "searching": true,
